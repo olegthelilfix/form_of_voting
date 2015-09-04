@@ -80,7 +80,7 @@ def get_head():
     html += "<style>"
     html += " .title{ text-align: center; } "
     html += " .rightimg { float: right; } "
-    html += " body { margin-top: 0; margin-left: 0; margin-right: 0; } "
+   # html += " body { margin-top: 0; margin-left: 0; margin-right: 0; } "
     html += " button { border: 2px solid black; background: white; font-size: 14px; padding: 10px 20px;} "
     html += " .qs { display:inline-block; } "
     html += "</style>"
