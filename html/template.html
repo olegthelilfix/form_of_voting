@@ -20,64 +20,46 @@
             display:inline-block;
         }
 
-
     </style>
 </head>
 <body>
-    <h1><div class="title">Заголовок2</div> </h1> <br>
-        <img src="test.png"class="rightimg">
-            Ф.И.О. собственника: Петров Петр Петрович<br>
-            Адрес помещения: город Таганрог,
-            Улица: Безумия Дом: 42,<br>
-            Квартира: 42,<br>
-            Телефон: 891100000000<br>
-            Свидетельство о государственной регистрации права собственности: бланк серии 9890,
-            № 88878878877,
-            Дата выдачи: 19.13.1812,<br>
-            Тип помещения: Жилое<br>
-            Общая площадь помещения(кв.м): 1000<br>
-            Размер доли в праве собственности: 101%<br>
+    <h1><div class="title">{{ title }}</div> </h1> <br>
+        <img src="{{ big_qr_code }}"class="rightimg">
+            Ф.И.О. собственника: {{ fio }}<br>
+            Адрес помещения: город {{ city }},
+            Улица: {{ street }} Дом: {{ houseNumb }},<br>
+            Квартира: {{ apartment }},<br>
+            Телефон: {{ phoneNumber }}<br>
+            Свидетельство о государственной регистрации права собственности: бланк серии {{ formSeries }},
+            № {{ formNumber }},
+            Дата выдачи: {{ formDateOfIssue }},<br>
+            Тип помещения: {{ propertyType }}<br>
+            Общая площадь помещения(кв.м): {{ propertyS }}<br>
+            Размер доли в праве собственности: {{ share }}<br>
     <h1><div class="title">Вопросы, поставленные на голосование:</div> </h1> <br>
-        что делать Unable to find vcvarsall.bat?<br>
-            <div class="qs">
-                <div><img src="test1qr.png" ></div>
+
+        {% for item in item_list %}
+            {{ item.qs }}{% if not loop.last %},{% endif %} <br>
+        <div class="qs">
+                <div><img src="{{ item.dir }}" ></div>
             </div>
             <div class="qs">
                 <div>За<br><button></button></div>
             </div>
             <div class="qs">
-                <div><img src="test1qr.png"></div>
+                <div><img src="{{ item.dir }}"></div>
             </div>
             <div class="qs">
                 <div>Против<br><button></button></div>
             </div>
              <div class="qs">
-                <div><img src="test1qr.png"></div>
+                <div><img src="{{ item.dir }}"></div>
             </div>
             <div class="qs">
                <div>Воздерживаюсь<br><button></button></div>
             </div>
 
             <br>
-            Как жить с Unable to find vcvarsall.bat?<br>
-            <div class="qs">
-                <div><img src="test1qr.png"></div>
-            </div>
-            <div class="qs">
-                <div>За<br><button></button></div>
-            </div>
-            <div class="qs">
-                <div><img src="test1qr.png"></div>
-            </div>
-            <div class="qs">
-                <div>Против<br><button></button></div>
-            </div>
-             <div class="qs">
-                <div><img src="test1qr.png"></div>
-            </div>
-            <div class="qs">
-               <div>Воздерживаюсь<br><button></button></div>
-            </div>
-
+        {% endfor %}
 </body>
 </html>
