@@ -13,12 +13,19 @@
         button {
             border: 2px solid black; /* Параметры рамки */
             background: white;
-            font-size: 14px; /* Размер текста */
+            font-size: 9px; /* Размер текста */
             padding: 10px 20px; /* Поля вокруг текста */
         }
         .qs {
             display:inline-block;
         }
+
+        .qsbig{
+            padding-left: 40px;
+            padding-right: 40px;
+            display:inline-block;
+        }
+
 
     </style>
 </head>
@@ -37,29 +44,38 @@
             Общая площадь помещения(кв.м): {{ propertyS }}<br>
             Размер доли в праве собственности: {{ share }}<br>
     <h1><div class="title">Вопросы, поставленные на голосование:</div> </h1> <br>
-
+    <div class="title">
         {% for item in item_list %}
             {{ item.qs }}{% if not loop.last %},{% endif %} <br>
-        <div class="qs">
-                <div><img src="{{ item.dir }}" ></div>
+            <div class="qsbig">
+                За<br>
+                <div class="qs">
+                    <div><img src="{{ item.dir }}" ></div>
+                </div>
+                <div class="qs">
+                    <div><button></button></div>
+                </div>
+             </div>
+            <div class="qsbig">
+                Против<br>
+                <div class="qs">
+                     <div><img src="{{ item.dir }}"></div>
+                </div>
+                <div class="qs">
+                    <div><button></button></div>
+                </div>
             </div>
-            <div class="qs">
-                <div>За<br><button></button></div>
+            <div class="qsbig">
+                Воздерж.<br>
+                <div class="qs">
+                    <div><img src="{{ item.dir }}"></div>
+                </div>
+                <div class="qs">
+                    <div><button></button></div>
+                </div>
             </div>
-            <div class="qs">
-                <div><img src="{{ item.dir }}"></div>
-            </div>
-            <div class="qs">
-                <div>Против<br><button></button></div>
-            </div>
-             <div class="qs">
-                <div><img src="{{ item.dir }}"></div>
-            </div>
-            <div class="qs">
-               <div>Воздерживаюсь<br><button></button></div>
-            </div>
-
             <br>
         {% endfor %}
+        </div>
 </body>
 </html>

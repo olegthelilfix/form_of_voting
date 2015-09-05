@@ -58,12 +58,10 @@ def render_html(open_file):
     date = get_date()
     return tmpl.render(title=date["title"], fio=date["fio"], city=date["city"], street=date["street"],
                    houseNumb=date["houseNumb"], apartment=date["apartment"], phoneNumber=date["phoneNumber"],
-                   formSeries=date["formSeries"],
-                   formNumber=date["formNumber"], formDateOfIssue=date["formDateOfIssue"],
-                   propertyType=date["propertyType"],
+                   formSeries=date["formSeries"], formNumber=date["formNumber"],
+                   formDateOfIssue=date["formDateOfIssue"], propertyType=date["propertyType"],
                    propertyS=date["propertyS"], share=date["share"],
-                   big_qr_code=create_big_qr_code(get_big_qr_code_date()),
-                   item_list=get_qs_and_small_qr_code())
+                   big_qr_code=create_big_qr_code(get_big_qr_code_date()), item_list=get_qs_and_small_qr_code())
 
 
 """Заглушка для данных"""
