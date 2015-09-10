@@ -1,4 +1,7 @@
 # -*- coding: utf8 -*-
+import timer
+import time
+
 __author__ = 'Aleksandrov Oleg'
 import codecs
 import qrcode
@@ -18,7 +21,7 @@ key = ("title", "fio", "city", "street", "houseNumb", "apartment", "phoneNumber"
        "formDateOfIssue", "propertyType", "propertyS", "share")
 
 """Функция создает qr code с задаными параметрами"""
-def create_qr_code(text, version=1, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=3, border=4):
+def create_qr_code(text, version=1, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=5, border=2):
     qr = qrcode.QRCode(version, error_correction, box_size, border)
     qr.add_data(text)
     qr.make(fit=qr_code_fit)
@@ -37,7 +40,7 @@ def create_big_qr_code(text):
 
 """Функция для создания qr code, который размещается возле вариантов ответа, функция возвращает путь до qr кода"""
 def create_small_qr_code(text, index):
-    code = create_qr_code(text, 1, qrcode.constants.ERROR_CORRECT_H, 2, 0)
+    code = create_qr_code(text, 1, qrcode.constants.ERROR_CORRECT_H, 4, 0)
     new_dir = qr_code_dir_to_small + str(index) + "." + qr_code_form
     save_qr_code_in_file(code, new_dir)
     return new_dir
@@ -66,7 +69,7 @@ def render_html(open_file):
 
 """Заглушка для данных"""
 def get_date():
-    return {key[0]: "Заголовок", key[1]: "тестовое имя", key[2]: "Город", key[3]: "Улица", key[4]: "42", key[5]: "42",
+    return {key[0]: "Заголовок", key[1]: "Петров Петр Петрович", key[2]: "Город", key[3]: "Улица", key[4]: "42", key[5]: "42",
             key[6]: "+799999999999", key[7]: "4444", key[8]: "999999", key[9]: "10-11-1019",
             key[10]: "Существует в 5 измерении", key[11]: "1000", key[12]: "1000%"}
 
@@ -77,15 +80,21 @@ def get_big_qr_code_date():
 
 """Заглушка для данных"""
 def get_small_qr_code_dates():
-    return ["id_1", "id_2", "id_3", "id_4"]
+    return ["id_1", "id_2", "id_3", "id_4", "id_5", "id_6"]
+
 
 
 """Заглушка для данных"""
 def get_questions():
-    return ["вопрос 1", "Вопрос 2", "Вопрос 3", "Вопрос 4"]
+    return ["вопрос 1", "Вопрос 2", "Вопрос 3", "Вопрос 4", "Вопрос 5", "Вопрос 6"]
+
+
+t1 = time.clock()
 
 file = open('html/template.html', 'r')
 with codecs.open(html_dir_to_file, 'w', 'utf8') as f2:
     f2.write(render_html(file.read()))
 pdf = HTML(html_dir_to_file)
 pdf.write_pdf(dir_to_pdf)
+
+print(time.clock() - t1)
