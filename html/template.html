@@ -13,30 +13,38 @@
         button {
             border: 2px solid black; /* Параметры рамки */
             background: white;
-            font-size: 9px; /* Размер текста */
-            padding: 10px 20px; /* Поля вокруг текста */
+            font-size: 12px; /* Размер текста */
+            padding: 20px 30px; /* Поля вокруг текста */
         }
         .qs {
             display:inline-block;
         }
 
-        .qsbig{
-            padding-left: 40px;
-            padding-right: 40px;
+        .qsbig {
+            padding-left: 25px;
+            padding-right: 25px;
             display:inline-block;
+            font-size: 20px;
         }
-
+        .fio {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .address {
+            font-size: 16px;
+            font-weight: bold;
+        }
 
     </style>
 </head>
 <body>
     <h1><div class="title">{{ title }}</div> </h1> <br>
         <img src="{{ big_qr_code }}"class="rightimg">
-            Ф.И.О. собственника: {{ fio }}<br>
-            Адрес помещения: город {{ city }},
-            Улица: {{ street }} Дом: {{ houseNumb }},<br>
-            Квартира: {{ apartment }},<br>
-            Телефон: {{ phoneNumber }}<br>
+            Ф.И.О. собственника: <span class="fio">{{ fio }}</span> <br>
+            Адрес помещения: город <span class="address">{{ city }}</span>,
+            Улица: <span class="address"> {{ street }} </span> Дом: <span class="address">{{ houseNumb }}</span>,<br>
+            Квартира: <span class="address">{{ apartment }}</span>,<br>
+            Телефон: {{ phoneNumber }}
             Свидетельство о государственной регистрации права собственности: бланк серии {{ formSeries }},
             № {{ formNumber }},
             Дата выдачи: {{ formDateOfIssue }},<br>
@@ -46,12 +54,9 @@
     <h1><div class="title">Вопросы, поставленные на голосование:</div> </h1> <br>
     <div class="title">
         {% for item in item_list %}
-            {{ item.qs }}{% if not loop.last %},{% endif %} <br>
+            {{ item.qs }}{% if not loop.last %}{% endif %} <br>
             <div class="qsbig">
-                За<br>
-                <div class="qs">
-                    <div><img src="{{ item.dir }}" ></div>
-                </div>
+                <span style="color: white; ">__</span>За<span style="color: white; ">__</span><br>
                 <div class="qs">
                     <div><button></button></div>
                 </div>
@@ -59,21 +64,18 @@
             <div class="qsbig">
                 Против<br>
                 <div class="qs">
-                     <div><img src="{{ item.dir }}"></div>
-                </div>
-                <div class="qs">
                     <div><button></button></div>
                 </div>
             </div>
             <div class="qsbig">
-                Воздерж.<br>
-                <div class="qs">
-                    <div><img src="{{ item.dir }}"></div>
-                </div>
+                Воздерживаюсь<br>
                 <div class="qs">
                     <div><button></button></div>
                 </div>
             </div>
+            <div class="qs">
+                    <div><img src="{{ item.dir }}" ></div>
+                </div>
             <br>
         {% endfor %}
         </div>
