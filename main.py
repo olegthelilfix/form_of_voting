@@ -17,11 +17,9 @@ qr_code_fit = True
 html_dir_to_file = os.getcwd() + "/html/htmlcode.html"
 dir_to_pdf = "generate.pdf"
 
-key = ("title", "fio", "city", "street", "houseNumb", "apartment", "phoneNumber", "formSeries", "formNumber",
-       "formDateOfIssue", "propertyType", "propertyS", "share")
 
 """Функция создает qr code с задаными параметрами"""
-def create_qr_code(text, version=1, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=5, border=2):
+def create_qr_code(text, version=1, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=3, border=2):
     qr = qrcode.QRCode(version, error_correction, box_size, border)
     qr.add_data(text)
     qr.make(fit=qr_code_fit)
@@ -40,7 +38,7 @@ def create_big_qr_code(text):
 
 """Функция для создания qr code, который размещается возле вариантов ответа, функция возвращает путь до qr кода"""
 def create_small_qr_code(text, index):
-    code = create_qr_code(text, 1, qrcode.constants.ERROR_CORRECT_H, 4, 0)
+    code = create_qr_code(text, 1, qrcode.constants.ERROR_CORRECT_H, 3, 0)
     new_dir = qr_code_dir_to_small + str(index) + "." + qr_code_form
     save_qr_code_in_file(code, new_dir)
     return new_dir
@@ -69,24 +67,26 @@ def render_html(open_file):
 
 """Заглушка для данных"""
 def get_date():
-    return {key[0]: "Заголовок", key[1]: "Петров Петр Петрович", key[2]: "Город", key[3]: "Улица", key[4]: "42", key[5]: "42",
-            key[6]: "+799999999999", key[7]: "4444", key[8]: "999999", key[9]: "10-11-1019",
-            key[10]: "Существует в 5 измерении", key[11]: "1000", key[12]: "1000%"}
+    return {"title": "Заголовок", "fio": "Петров Петр Петрович", "city": "Город", "street": "Улица", "houseNumb": "42",
+            "apartment": "42", "phoneNumber": "+799999999999", "formSeries": "4444", "formNumber": "999999",
+            "formDateOfIssue": "10-11-1019", "propertyType": "Существует в 5 измерении", "propertyS": "1000",
+            "share": "1000%"}
 
 """Заглушка для данных"""
 def get_big_qr_code_date():
-    return "blablablablablablablabla"
+    return "B12321321321313,123213213"
 
 
 """Заглушка для данных"""
 def get_small_qr_code_dates():
-    return ["id_1", "id_2", "id_3", "id_4", "id_5", "id_6"]
+    return ["S2000", "S2", "S3", "S4"]
 
 
 
 """Заглушка для данных"""
 def get_questions():
-    return ["вопрос 1", "Вопрос 2", "Вопрос 3", "Вопрос 4", "Вопрос 5", "Вопрос 6"]
+    return ["1. К1ак разобрать XML полученный из OpenStreetMap?", "2. Закинул в папку drawable изображение jpeg 1920x1080 весом 373КБ. Когда установил задал его фоном для своего приложения через XML, отображение этого фона стало занимать 80МБ оперативки. Поискал решение, вычитал что надо кинуть в папку drawable-nodpi, что уменьши объем занимаемой оперативы до 16МБ (Напишите почему это помогло), но этого все равно много.",
+            "3. как создать QPixmap с размерами 30000x30000?", "4. Уменьшить память занимаемую изображением background?"]
 
 
 t1 = time.clock()

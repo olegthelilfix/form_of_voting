@@ -14,7 +14,7 @@
             border: 2px solid black; /* Параметры рамки */
             background: white;
             font-size: 12px; /* Размер текста */
-            padding: 20px 30px; /* Поля вокруг текста */
+            padding: 31px 30px; /* Поля вокруг текста */
         }
         .qs {
             display:inline-block;
@@ -34,50 +34,90 @@
             font-size: 16px;
             font-weight: bold;
         }
+        .td{
+            width: 90px;
+        }
+        .bgtd{
+            width: 510px;
+        }
 
     </style>
 </head>
 <body>
-    <h1><div class="title">{{ title }}</div> </h1> <br>
-        <img src="{{ big_qr_code }}"class="rightimg">
-            Ф.И.О. собственника: <span class="fio">{{ fio }}</span> <br>
-            Адрес помещения: город <span class="address">{{ city }}</span>,
-            Улица: <span class="address"> {{ street }} </span> Дом: <span class="address">{{ houseNumb }}</span>,<br>
-            Квартира: <span class="address">{{ apartment }}</span>,<br>
-            Телефон: {{ phoneNumber }}
-            Свидетельство о государственной регистрации права собственности: бланк серии {{ formSeries }},
-            № {{ formNumber }},
-            Дата выдачи: {{ formDateOfIssue }},<br>
-            Тип помещения: {{ propertyType }}<br>
-            Общая площадь помещения(кв.м): {{ propertyS }}<br>
-            Размер доли в праве собственности: {{ share }}<br>
-    <h1><div class="title">Вопросы, поставленные на голосование:</div> </h1> <br>
-    <div class="title">
+        <table>
+            <tr>
+                <td><img src='img/black.jpg'></td>
+                <td></td>
+                <td><img src='img/black.jpg'></td>
+                <td></td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td class="bgtd">
+                    Ф.И.О. собственника: <span class="fio">{{ fio }}</span>
+                    Адрес помещения: город <span class="address">{{ city }}</span>,
+                    Улица: <span class="address"> {{ street }} </span> Дом: <span class="address">{{ houseNumb }}</span>,<br>
+                    Квартира: <span class="address">{{ apartment }}</span>,<br>
+                    Телефон: {{ phoneNumber }},
+                    Свидетельство о государственной регистрации права собственности: бланк серии {{ formSeries }},
+                    № {{ formNumber }},
+                    Дата выдачи: {{ formDateOfIssue }},<br>
+                    Тип помещения: {{ propertyType }}<br>
+                    Общая площадь помещения(кв.м): {{ propertyS }}<br>
+                    Размер доли в праве собственности: {{ share }}<br>
+                </td>
+                <td></td>
+                <td><img src='{{ big_qr_code }}'></td>
+            </tr>
+            <tr>
+                <td><img src='img/black.jpg'></td>
+                <td></td>
+                <td><img src='img/black.jpg'></td>
+                <td></td>
+
+            </tr>
+        </table>
+
+        <h1><div class="title">Вопросы, поставленные на голосование:</div> </h1> <br>
         {% for item in item_list %}
-            {{ item.qs }}{% if not loop.last %}{% endif %} <br>
-            <div class="qsbig">
-                <span style="color: white; ">__</span>За<span style="color: white; ">__</span><br>
-                <div class="qs">
-                    <div><button></button></div>
-                </div>
-             </div>
-            <div class="qsbig">
-                Против<br>
-                <div class="qs">
-                    <div><button></button></div>
-                </div>
-            </div>
-            <div class="qsbig">
-                Воздерживаюсь<br>
-                <div class="qs">
-                    <div><button></button></div>
-                </div>
-            </div>
-            <div class="qs">
-                    <div><img src="{{ item.dir }}" ></div>
-                </div>
-            <br>
-        {% endfor %}
-        </div>
+        <table>
+            <tr>
+                <th colspan="6"> {{ item.qs }}{% if not loop.last %}{% endif %}</th>
+            </tr>
+            <tr>
+                <td class="td">
+                    <div class="qsbig">
+                        <span style="color: white; ">__</span>За<span style="color: white; ">__</span><br>
+                        <div class="qs">
+                            <div><button></button></div>
+                        </div>
+                     </div>
+                </td>
+                <td class="td"></td>
+                <td class="td">
+                    <div class="qsbig">
+                        Против<br>
+                        <div class="qs">
+                            <div><button></button></div>
+                        </div>
+                    </div>
+                </td>
+                <td class="td"></td>
+                <td class="td">
+                    <div class="qsbig">
+                        Воздерж.<br>
+                        <div class="qs">
+                            <div><button></button></div>
+                        </div>
+                    </div>
+                </td>
+                <td class="td"></td>
+                <td>
+                    <td><img src="{{ item.dir }}" ></td>
+                </td>
+            </tr>
+        </table>
+            {% endfor %}
 </body>
 </html>
