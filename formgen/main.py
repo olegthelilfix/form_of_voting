@@ -38,7 +38,7 @@ def create_big_qr_code(text):
 
 """Функция для создания qr code, который размещается возле вариантов ответа, функция возвращает путь до qr кода"""
 def create_small_qr_code(text, index):
-    code = create_qr_code(text, 1, qrcode.constants.ERROR_CORRECT_H, 3, 0)
+    code = create_qr_code(text, 1, qrcode.constants.ERROR_CORRECT_H, 2, 0)
     new_dir = qr_code_dir_to_small + str(index) + "." + qr_code_form
     save_qr_code_in_file(code, new_dir)
     return new_dir
@@ -79,7 +79,7 @@ def get_big_qr_code_date():
 
 """Заглушка для данных"""
 def get_small_qr_code_dates():
-    return ["S1", "S2", "S3", "S4","S5","S6","S7","S8"]
+    return ["S111111111111111111111", "S2", "S3", "S4","S5","S6","S7","S8"]
 
 
 
