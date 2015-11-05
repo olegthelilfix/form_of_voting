@@ -62,20 +62,20 @@
     <tr>
         <td></td>
         <td class="bgtd">
-            Ф.И.О. собственника: <span class="fio">{{ fio }}</span><br>
-            Адрес помещения: город <span class="address">{{ city }}</span>,<br>
-            Улица: <span class="address"> {{ street }} </span> Дом: <span class="address">{{ houseNumb }}</span>,<br>
-            Квартира: <span class="address">{{ apartment }}</span>,<br>
-            Телефон: {{ phoneNumber }},
-            Свидетельство о государственной регистрации права собственности: бланк серии {{ formSeries }},
-            № {{ formNumber }},
-            Дата выдачи: {{ formDateOfIssue }},<br>
-            Тип помещения: {{ propertyType }}<br>
-            Общая площадь помещения(кв.м): {{ propertyS }}<br>
-            Размер доли в праве собственности: {{ share }}<br>
+            Ф.И.О. собственника: <span class="fio">Петров Петр Петрович</span><br>
+            Адрес помещения: город <span class="address">Город</span>,<br>
+            Улица: <span class="address"> Улица </span> Дом: <span class="address">42</span>,<br>
+            Квартира: <span class="address">42</span>,<br>
+            Телефон: +799999999999,
+            Свидетельство о государственной регистрации права собственности: бланк серии 4444,
+            № 999999,
+            Дата выдачи: 10-11-1019,<br>
+            Тип помещения: Существует в 5 измерении<br>
+            Общая площадь помещения(кв.м): 1000<br>
+            Размер доли в праве собственности: 1000%<br>
         </td>
         <td></td>
-        <td><img src='{{ big_qr_code }}'></td>
+        <td><img src='img/big.PNG'></td>
     </tr>
     <tr>
         <td><img src='img/black.jpg'></td>
@@ -90,10 +90,10 @@
     </h1>
 <div>
     <br>
-    {% for item in item_list %}
+    
     <table>
         <tr>
-            <th colspan="6"> {{ item.qs }}{% if not loop.last %}{% endif %}</th>
+            <th colspan="6"> 5suck56789012345678901234567890123456789012345678912345-<br>40123456789012345678901234567890123456789<br></th>
         </tr>
         <tr>
             <td class="td">
@@ -133,11 +133,58 @@
             </td>
             <td class="td"></td>
             <td>
-            <td><img src="{{ item.dir }}"></td>
+            <td><img src="img/small0.PNG"></td>
             </td>
         </tr>
     </table>
-    {% endfor %}
+    
+    <table>
+        <tr>
+            <th colspan="6"> 6suck56789012345678901234567890123456789012345678912345-<br>40123456789012345678901234567890123456789<br></th>
+        </tr>
+        <tr>
+            <td class="td">
+                <div class="qsbig">
+                    <span style="color: white; ">__</span>За<span style="color: white; ">__</span><br>
+
+                    <div class="qs">
+                        <div>
+                            <button></button>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="td"></td>
+            <td class="td">
+                <div class="qsbig">
+                    Против<br>
+
+                    <div class="qs">
+                        <div>
+                            <button></button>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="td"></td>
+            <td class="td">
+                <div class="qsbig">
+                    Воздерж.<br>
+
+                    <div class="qs">
+                        <div>
+                            <button></button>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="td"></td>
+            <td>
+            <td><img src="img/small1.PNG"></td>
+            </td>
+        </tr>
+    </table>
+    
 </div>
 </body>
 </html>
