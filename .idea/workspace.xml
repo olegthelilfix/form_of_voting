@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f31a6d14-023c-44cb-803a-c3a69feb6a1c" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\WorkDir\code\py\pdfgen\formgen\html\htmlcode0.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\WorkDir\code\py\pdfgen\formgen\html\htmlcode1.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\WorkDir\code\py\pdfgen\formgen\main2.py" afterPath="" />
-    </list>
+    <list default="true" id="f31a6d14-023c-44cb-803a-c3a69feb6a1c" name="Default" comment="" />
     <ignored path="pdfgen.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
