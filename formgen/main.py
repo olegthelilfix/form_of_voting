@@ -8,7 +8,7 @@ import qrcode
 import os
 
 from weasyprint import HTML
-from jinja import from_string
+from jinja2 import Environment, FileSystemLoader
 
 qr_code_form = "PNG"
 qr_code_dir_to_big = "img/big"
@@ -67,14 +67,18 @@ def get_qs_and_small_qr_code(qs, date):
         i += 1
     return item_list
 
-def render_html(open_file, qs, date):
-    tmpl = from_string(open_file)
-    return tmpl.render(title=date["title"], fio=date["fio"], city=date["city"], street=date["street"],
+def render_html(qs, date):
+    tmpl = Environment(loader=FileSystemLoader("html/"), trim_blocks=True)
+    return tmpl.get_template('template.html').render(title=date["title"], fio=date["fio"], city=date["city"], street=date["street"],
                    houseNumb=date["houseNumb"], apartment=date["apartment"], phoneNumber=date["phoneNumber"],
                    formSeries=date["formSeries"], formNumber=date["formNumber"],
                    formDateOfIssue=date["formDateOfIssue"], propertyType=date["propertyType"],
                    propertyS=date["propertyS"], share=date["share"],
                    big_qr_code=create_big_qr_code(get_big_qr_code_date()), item_list=qs)
+
+def render_html_until_title(qs):
+    tmpl = Environment(loader=FileSystemLoader("html/"), trim_blocks=True)
+    return tmpl.get_template('template.html').render(big_qr_code=create_big_qr_code(get_big_qr_code_date()), item_list=qs)
 
 def split_string(string, max_count):
     result_mas = []
@@ -107,8 +111,6 @@ def split_questions():
     return list
 
 def split_question_on_pages():
-    # TODO передовать ниже перечисленны параметры в joun_question
-    # для того что бы мелкие qr code коректно связывались с большими
     title_date = get_date()
     small_qr_code_date = get_small_qr_code_dates()
     questions = split_questions()
@@ -116,12 +118,27 @@ def split_question_on_pages():
     pageID = -1
     while len(questions) > 0:
         pageID += 1
-        if culcSelectedElement(questions, 4) <= 8:
-            questions = join_questions(questions, small_qr_code_date, 4, pageID, title_date)
-        elif culcSelectedElement(questions, 3) <= 14:
-            questions = join_questions(questions, small_qr_code_date, 3, pageID, title_date)
-        elif culcSelectedElement(questions, 2) <= 20:
-            questions = join_questions(questions, small_qr_code_date, 2, pageID, title_date)
+        if pageID == 0:
+            if culcSelectedElement(questions, 4) < 8:
+                questions = join_questions(questions, small_qr_code_date, 4, pageID, title_date, True)
+            elif culcSelectedElement(questions, 3) <= 14:
+                questions = join_questions(questions, small_qr_code_date, 3, pageID, title_date, True)
+            elif culcSelectedElement(questions, 2) <= 20:
+                questions = join_questions(questions, small_qr_code_date, 2, pageID, title_date, True)
+            elif culcSelectedElement(questions, 2) <= 26:
+                questions = join_questions(questions, small_qr_code_date, 2, pageID, title_date, True)
+        else:
+            if culcSelectedElement(questions, 6) <= 20:
+                questions = join_questions(questions, small_qr_code_date, 6, pageID, title_date, False)
+            elif culcSelectedElement(questions, 5) <= 26:
+                questions = join_questions(questions, small_qr_code_date, 5, pageID, title_date, False)
+            elif culcSelectedElement(questions, 4) <= 32:
+                questions = join_questions(questions, small_qr_code_date, 4, pageID, title_date, False)
+            elif culcSelectedElement(questions, 2) <= 38:
+                questions = join_questions(questions, small_qr_code_date, 2, pageID, title_date, False)
+            elif culcSelectedElement(questions, 1) <= 44:
+                questions = join_questions(questions, small_qr_code_date, 1, pageID, title_date, False)
+
 
     return pageID
 
@@ -138,7 +155,7 @@ def remove_element(qs, numb):
         i += 1
     return qs
 
-def join_questions(qs, qr, numb, pageID, date):
+def join_questions(qs, qr, numb, pageID, date, isFirstPage):
     join_qs = []
     ln = calcLen(qs)
 
@@ -152,9 +169,14 @@ def join_questions(qs, qr, numb, pageID, date):
         join_qs.append(join_str(element))
         i += 1
 
-    file = open('html/template.html', 'r')
-    with codecs.open(html_dir_to_file + str(pageID) + ".html", 'w', 'utf8') as f2:
-         f2.write(render_html(file.read(), get_qs_and_small_qr_code(join_qs, qrcodes), date))
+    if isFirstPage:
+      #  file = open('html/template.html', 'r')
+        with codecs.open(html_dir_to_file + str(pageID) + ".html", 'w', 'utf8') as f2:
+             f2.write(render_html(get_qs_and_small_qr_code(join_qs, qrcodes), date))
+    else:
+#        file = open('html/template_until_title.html', 'r')
+        with codecs.open(html_dir_to_file + str(pageID) + ".html", 'w', 'utf8') as f2:
+             f2.write(render_html_until_title(get_qs_and_small_qr_code(join_qs, qrcodes)))
 
     return qs
 
@@ -189,17 +211,29 @@ def get_big_qr_code_date():
 
 """Заглушка для данных"""
 def get_small_qr_code_dates():
-    return ["S1", "S2", "S3", "S4", "S5", "S6", "S7"]
+    return ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11", "s12", "S13", "S14", "S15", "S16", "S17"]
+
 
 
 """Заглушка для данных"""
 def get_questions():
-    return ["1fuck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
-            "2suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
-            "3suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
-            "4suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
-            "5suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
-            "6suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789"]
+    return ["15678901234567890123456<br>789012345678901234567891234540123456789012345678901234567890123456789",
+            "25678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "35678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "45678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "55678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "6suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "7suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "8suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "9suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "10suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "11suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "12suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "13suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "14suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "15suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "16suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789",
+            "17suck5678901234567890123456789012345678901234567891234540123456789012345678901234567890123456789"]
 
 val = split_question_on_pages()
 

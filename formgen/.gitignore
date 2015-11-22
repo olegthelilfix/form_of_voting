@@ -61,3 +61,7 @@ target/
 *.png
 *.pdf
 htmlcode.html
+./idea
+
+html/htmlcode*
+*.pdf
