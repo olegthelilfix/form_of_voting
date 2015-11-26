@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 __author__ = 'Aleksandrov Oleg, 4231'
 
-from RenderHtml import RenderHtml
+from core.formgen.RenderHtml import RenderHtml
 from weasyprint import HTML
 
 render = RenderHtml()
