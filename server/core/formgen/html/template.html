@@ -47,8 +47,19 @@
         .bgtd {
         width: 510px;
         }
-        @page :first {
-            margin-top: 10cm
+        @page {
+
+            @bottom-center  {
+                content: "Дата__________ Подпись________________";
+            }
+
+            @top-left-corner {
+                content: url(img/black.jpg);
+            }
+
+            @top-right-corner {
+                content: url(img/black.jpg);
+            }
         }
 
     </style>
@@ -58,14 +69,14 @@
 
 <table>
     <tr>
-        <td><img src='img/black.jpg'></td>
+        <!--<td><img src='img/black.jpg'></td>-->
         <td></td>
-        <td><img src='img/black.jpg'></td>
+        <!--<td><img src='img/black.jpg'></td>-->
         <td></td>
 
     </tr>
     <tr>
-        <td></td>
+        <!--<td></td>-->
         <td class="bgtd">
             Ф.И.О. собственника: <span class="fio">{{ fio }}</span><br>
             Адрес помещения: город <span class="address">{{ city }}</span>,<br>
@@ -79,13 +90,13 @@
             Общая площадь помещения(кв.м): {{ propertyS }}<br>
             Размер доли в праве собственности: {{ share }}<br>
         </td>
-        <td></td>
+        <!--<td></td>-->
         <td><img src='{{ big_qr_code }}'></td>
     </tr>
     <tr>
-        <td><img src='img/black.jpg'></td>
+        <!--<td><img src='img/black.jpg'></td>-->
         <td></td>
-        <td><img src='img/black.jpg'></td>
+        <!--<td><img src='img/black.jpg'></td>-->
         <td></td>
 
     </tr>
@@ -145,6 +156,5 @@
     </table>
 </div>
 {% endfor %}
-
 </body>
 </html>
