@@ -63,5 +63,5 @@ target/
 htmlcode.html
 ./idea
 
-html/htmlcode*
+result/htmlcode*
 *.pdf
