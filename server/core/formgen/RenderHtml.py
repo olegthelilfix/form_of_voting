@@ -89,29 +89,31 @@ class RenderHtml:
         questions = self.split_questions()
         small_qr_code_date = self.create_small_qr_code_dates(len(questions))
 
-        pageID = -1
-        while len(questions) > 0:
-            pageID += 1
-            if pageID == 0:
-                if self.culcSelectedElement(questions, 4) < 8:
-                    questions = self.join_questions(questions, small_qr_code_date, 4, pageID, title_date, True)
-                elif self.culcSelectedElement(questions, 3) <= 14:
-                    questions = self.join_questions(questions, small_qr_code_date, 3, pageID, title_date, True)
-                elif self.culcSelectedElement(questions, 2) <= 20:
-                    questions = self.join_questions(questions, small_qr_code_date, 2, pageID, title_date, True)
-                elif self.culcSelectedElement(questions, 2) <= 26:
-                    questions = self.join_questions(questions, small_qr_code_date, 2, pageID, title_date, True)
-            else:
-                if self.culcSelectedElement(questions, 6) <= 20:
-                    questions = self.join_questions(questions, small_qr_code_date, 6, pageID, title_date, False)
-                elif self.culcSelectedElement(questions, 5) <= 26:
-                    questions = self.join_questions(questions, small_qr_code_date, 5, pageID, title_date, False)
-                elif self.culcSelectedElement(questions, 4) <= 32:
-                    questions = self.join_questions(questions, small_qr_code_date, 4, pageID, title_date, False)
-                elif self.culcSelectedElement(questions, 2) <= 38:
-                    questions = self.join_questions(questions, small_qr_code_date, 2, pageID, title_date, False)
-                elif self.culcSelectedElement(questions, 1) <= 44:
-                    questions = self.join_questions(questions, small_qr_code_date, 1, pageID, title_date, False)
+        self.join_questions(questions, small_qr_code_date, len(questions), 0, title_date)
+
+        # pageID = -1
+        # while len(questions) > 0:
+        #     pageID += 1
+        #     if pageID == 0:
+        #         if self.culcSelectedElement(questions, 4) < 8:
+        #             questions = self.join_questions(questions, small_qr_code_date, 4, pageID, title_date, True)
+        #         elif self.culcSelectedElement(questions, 3) <= 14:
+        #             questions = self.join_questions(questions, small_qr_code_date, 3, pageID, title_date, True)
+        #         elif self.culcSelectedElement(questions, 2) <= 20:
+        #             questions = self.join_questions(questions, small_qr_code_date, 2, pageID, title_date, True)
+        #         elif self.culcSelectedElement(questions, 2) <= 26:
+        #             questions = self.join_questions(questions, small_qr_code_date, 2, pageID, title_date, True)
+        #     else:
+        #         if self.culcSelectedElement(questions, 6) <= 20:
+        #             questions = self.join_questions(questions, small_qr_code_date, 6, pageID, title_date, False)
+        #         elif self.culcSelectedElement(questions, 5) <= 26:
+        #             questions = self.join_questions(questions, small_qr_code_date, 5, pageID, title_date, False)
+        #         elif self.culcSelectedElement(questions, 4) <= 32:
+        #             questions = self.join_questions(questions, small_qr_code_date, 4, pageID, title_date, False)
+        #         elif self.culcSelectedElement(questions, 2) <= 38:
+        #             questions = self.join_questions(questions, small_qr_code_date, 2, pageID, title_date, False)
+        #         elif self.culcSelectedElement(questions, 1) <= 44:
+        #             questions = self.join_questions(questions, small_qr_code_date, 1, pageID, title_date, False)
 
         return self.resultList
 
@@ -128,7 +130,7 @@ class RenderHtml:
             i += 1
         return qs
 
-    def join_questions(self, qs, qr, numb, pageID, date, isFirstPage):
+    def join_questions(self, qs, qr, numb, pageID, date):
         join_qs = []
         ln = self.calcLen(qs)
 
@@ -144,12 +146,8 @@ class RenderHtml:
 
         dir_to_file = self.html_dir_to_file + str(pageID) + ".html"
 
-        if isFirstPage:
-            with codecs.open(dir_to_file, 'w', 'utf8') as f2:
+        with codecs.open(dir_to_file, 'w', 'utf8') as f2:
                 f2.write(self.render_html(self.get_qs_and_small_qr_code(join_qs, qrcodes), date))
-        else:
-            with codecs.open(dir_to_file, 'w', 'utf8') as f2:
-                f2.write(self.render_html_until_title(self.get_qs_and_small_qr_code(join_qs, qrcodes)))
 
         self.resultList.append(dir_to_file)
 

@@ -47,8 +47,8 @@
         .bgtd {
         width: 510px;
         }
-        @page {
 
+        @page {
             @bottom-center  {
                 content: "Дата__________ Подпись________________";
             }
@@ -60,7 +60,61 @@
             @top-right-corner {
                 content: url(img/black.jpg);
             }
+
+            @bottom-left-corner {
+                content: url(img/black.jpg);
+            }
+
+            @bottom-right-corner {
+                content: url(img/black.jpg);
+            }
+
+            @bottom-left {
+                content: " Страница " counter(page);
+            }
+            @top-center { content: url({{ big_qr_code }}); }
         }
+
+        @page :first {
+            @bottom-center  {
+                content: "Дата__________ Подпись________________";
+            }
+
+            @top-left-corner {
+                content: url(img/black.jpg);
+            }
+
+            @top-right-corner {
+                content: url(img/black.jpg);
+            }
+
+            @bottom-left-corner {
+                content: url(img/black.jpg);
+            }
+
+            @bottom-right-corner {
+                content: url(img/black.jpg);
+            }
+
+            @bottom-left {
+                content: " Страница " counter(page);
+            }
+
+            @top-center { content: none}
+        }
+
+        @page {
+            margin-top: 5cm;
+            margin-left: 1cm;
+            margin-right: 1cm;
+        } /* All margins set to 2cm */
+
+        @page :first {
+            margin-top: 1cm;
+            margin-left: 1cm;
+            margin-right: 1cm;
+        }
+
 
     </style>
 </head>
