@@ -15,7 +15,7 @@ pip install Pillow
 
 pip install qrcode
 
-pip install jinjia
+pip install jinjia2
 
 
 

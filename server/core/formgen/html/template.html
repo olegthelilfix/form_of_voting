@@ -5,52 +5,57 @@
     <title></title>
     <style>
         .title {
-            text-align: center;
+        text-align: center;
         }
 
         .rightimg {
-            float: right; /* Выравнивание по правому краю  */
+        float: right; /* Выравнивание по правому краю */
         }
 
         button {
-            border: 2px solid black; /* Параметры рамки */
-            background: white;
-            font-size: 12px;
-            padding: 20px 30px;
+        border: 2px solid black; /* Параметры рамки */
+        background: white;
+        font-size: 12px;
+        padding: 20px 30px;
         }
 
         .qs {
-            display: inline-block;
+        display: inline-block;
         }
 
         .qsbig {
-            padding-left: 25px;
-            padding-right: 25px;
-            display: inline-block;
-            font-size: 20px;
+        padding-left: 25px;
+        padding-right: 25px;
+        display: inline-block;
+        font-size: 20px;
         }
 
         .fio {
-            font-size: 20px;
-            font-weight: bold;
+        font-size: 20px;
+        font-weight: bold;
         }
 
         .address {
-            font-size: 16px;
-            font-weight: bold;
+        font-size: 16px;
+        font-weight: bold;
         }
 
         .td {
-            width: 90px;
+        width: 90px;
         }
 
         .bgtd {
-            width: 510px;
+        width: 510px;
+        }
+        @page :first {
+            margin-top: 10cm
         }
 
     </style>
 </head>
+
 <body>
+
 <table>
     <tr>
         <td><img src='img/black.jpg'></td>
@@ -85,12 +90,13 @@
 
     </tr>
 </table>
-    <h1>
-        <div class="title">Вопросы, поставленные на голосование:</div>
-    </h1>
+
+<h1>
+    <div class="title">Вопросы, поставленные на голосование:</div>
+</h1>
+
+{% for item in item_list %}
 <div>
-    <br>
-    {% for item in item_list %}
     <table>
         <tr>
             <th colspan="6"> {{ item.qs }}{% if not loop.last %}{% endif %}</th>
@@ -137,7 +143,8 @@
             </td>
         </tr>
     </table>
-    {% endfor %}
 </div>
+{% endfor %}
+
 </body>
 </html>
