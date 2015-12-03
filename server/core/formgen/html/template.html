@@ -41,11 +41,12 @@
         }
 
         .td {
-        width: 90px;
+            max-width: 100px;
+            min-width: 100px
         }
 
         .bgtd {
-        width: 510px;
+            max-width: 1000px;
         }
 
         @page {
@@ -115,6 +116,10 @@
             margin-right: 1cm;
         }
 
+        .pageBreaker {
+        page-break-inside: avoid;
+        }
+
 
     </style>
 </head>
@@ -161,46 +166,49 @@
 </h1>
 
 {% for item in item_list %}
-<div>
+<div class="pageBreaker">
     <table>
         <tr>
-            <th colspan="6"> {{ item.qs }}{% if not loop.last %}{% endif %}</th>
+            <th colspan="3"> {{ item.qs }}{% if not loop.last %}{% endif %}</th>
         </tr>
         <tr>
-            <td class="td">
-                <div class="qsbig">
-                    <span style="color: white; ">__</span>За<span style="color: white; ">__</span><br>
-
-                    <div class="qs">
-                        <div>
-                            <button></button>
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td class="td"></td>
-            <td class="td">
-                <div class="qsbig">
-                    Против<br>
-
-                    <div class="qs">
-                        <div>
-                            <button></button>
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td class="td"></td>
-            <td class="td">
-                <div class="qsbig">
-                    Воздерж.<br>
-
-                    <div class="qs">
-                        <div>
-                            <button></button>
-                        </div>
-                    </div>
-                </div>
+            <td>
+                <table>
+                    <tr>
+                        <td class="td">
+                            <div class="qsbig">
+                                <span style="color: white; ">__</span>За<span style="color: white; ">____</span><br>
+                                <div class="qs">
+                                    <div>
+                                        <button></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="td"></td>
+                        <td class="td">
+                            <div class="qsbig">
+                                Против<br>
+                                <div class="qs">
+                                    <div>
+                                        <button></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="td"></td>
+                        <td class="td">
+                            <div class="qsbig">
+                                Воздерж.<br>
+                                <div class="qs">
+                                    <div>
+                                        <button></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </td>
             <td class="td"></td>
             <td>
