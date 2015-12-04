@@ -1,13 +1,6 @@
-# Mac
-.DS_Store
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
 
-# Node
-npm-debug.log
-/node_modules
-
-# Cordova
-/platforms
-/plugins
-
-# res
-resources/signing
+node_modules/
+platforms/
+plugins/
