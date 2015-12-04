@@ -1,0 +1,11 @@
+<ion-view view-title="Home">
+    <ion-content padding="true">
+        <button class="button button-block" ng-click="takePhoto()">
+            Take Photo
+        </button>
+        <button class="button button-block" ng-click="choosePhoto()">
+            Choose Photo
+        </button>
+        <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
+    </ion-content>
+</ion-view>
