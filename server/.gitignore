@@ -58,6 +58,7 @@ target/
 
 .idea/
 *.PNG
+*.jpg
 *.png
 *.pdf
 */htmlcode*
