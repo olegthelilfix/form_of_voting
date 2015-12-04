@@ -1,16 +1,12 @@
 # -*- coding: utf8 -*-
 __author__ = 'Aleksandrov Oleg, 4231'
 
-import codecs
-import os
 from jinja2 import Environment, FileSystemLoader
 from core.formgen.QrCodeGen import QrCodeGen
 from core.formgen.FormData import FormData
 
 
 class RenderHtml:
-    html_dir_to_file = os.getcwd() + "/result/htmlcode"
-    max_string_len = 55
     qr = QrCodeGen()
     formData = FormData()
     resultList = []
@@ -51,6 +47,7 @@ class RenderHtml:
         return tmpl.get_template('template.html').render(
             big_qr_code=self.qr.create_big_qr_code(self.formData.get_big_qr_code_date()),
             item_list=qs)
+
     def split_question_on_pages(self):
         self.resultList = []
 
@@ -58,12 +55,7 @@ class RenderHtml:
         questions = self.formData.get_questions()
         small_qr_code_date = self.create_small_qr_code_dates(len(questions))
 
-        dir_to_file = self.html_dir_to_file + ".html"
-
-        with codecs.open(dir_to_file, 'w', 'utf8') as f2:
-            f2.write(self.render_html(self.get_qs_and_small_qr_code(questions, small_qr_code_date), title_date))
-
-        return dir_to_file
+        return self.render_html(self.get_qs_and_small_qr_code(questions, small_qr_code_date), title_date)
 
 
 
