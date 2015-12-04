@@ -20,53 +20,47 @@
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
-    <script src="js/services.js"></script>
+    <script src="js/home/controller.js"></script>
+    <script src="js/auth/controller.js"></script>
     <script src="js/app.js"></script>
 </head>
-<body ng-app="voting" ng-controller="VotingCtrl">
-<ion-side-menus>
+<body ng-app="voting">
 
-    <!-- Center content -->
-    <ion-side-menu-content>
-        <ion-header-bar class="bar-dark">
-            <button class="button button-icon" ng-click="toggleSideBar()">
-                <i class="icon ion-navicon"></i>
-            </button>
-            <h1 class="title">{{ activeForm.title }}</h1>
-            <!-- New Task button-->
-            <button class="button button-icon" ng-click="newTask()">
-                <i class="icon ion-compose"></i>
-            </button>
-        </ion-header-bar>
+<ion-nav-bar class="bar-dark">
+    <ion-nav-back-button class="button-icon ion-arrow-left-c">
+    </ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-nav-view></ion-nav-view>
+
+<script id="templates/tabs.html" type="text/ng-template">
+    <ion-view>
+        <ion-tabs class="tabs-icon-top tabs-dark">
+
+            <ion-tab title="Home" icon="ion-home" href="#/tab/home">
+                <ion-nav-view name="home-tab"></ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="About" icon="ion-ios-information" href="#/tab/about">
+                <ion-nav-view name="about-tab"></ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="Sign-Out" icon="ion-log-out" href="#/auth">
+            </ion-tab>
+
+        </ion-tabs>
+    </ion-view>
+</script>
+
+<script id="templates/about.html" type="text/ng-template">
+    <ion-view view-title="About">
         <ion-content padding="true">
-            <button class="button button-full" ng-click="takePhoto()">
-                Take Photo
-            </button>
-            <button class="button button-full" ng-click="choosePhoto()">
-                Choose Photo
-            </button>
-            <img ng-show="imgURI !== undefined" ng-src="{{ imgURI }}" style="text-align: center">
+            <h3>Create hybrid mobile apps with the web technologies you love.</h3>
+            <p>Free and open source, Ionic offers a library of mobile-optimized HTML, CSS and JS components for building highly interactive apps.</p>
+            <p>Built with Sass and optimized for AngularJS.</p>
         </ion-content>
-    </ion-side-menu-content>
+    </ion-view>
+</script>
 
-
-    <!-- Left menu -->
-    <ion-side-menu side="left">
-        <ion-header-bar class="bar-dark">
-            <h1 class="title">Forms</h1>
-            <button class="button button-icon ion-plus" ng-click="newForm()">
-            </button>
-        </ion-header-bar>
-        <ion-content scroll="false">
-            <ion-list>
-                <ion-item ng-repeat="form in forms" ng-click="selectForm(form, $index)"
-                          ng-class="{active: activeForm == form}">
-                    {{ form.title }}
-                </ion-item>
-            </ion-list>
-        </ion-content>
-    </ion-side-menu>
-
-</ion-side-menus>
 </body>
 </html>
