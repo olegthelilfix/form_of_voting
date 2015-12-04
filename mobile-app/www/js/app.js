@@ -3,158 +3,135 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('todo', ['ionic'])
-  .run(function ($ionicPlatform)
-  {
+angular.module('voting', [
+    'starter.services',
+    'ionic',
+    'ngCordova'
+])
+.run(function ($ionicPlatform)
+{
     $ionicPlatform.ready(function ()
     {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-      if (window.cordova && window.cordova.plugins.Keyboard)
-      {
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      }
-      if (window.StatusBar)
-      {
-        StatusBar.styleDefault();
-      }
-    });
-  })
-/**
- * The Projects factory handles saving and loading projects
- * from local storage, and also lets us save and load the
- * last active project index.
- */
-  .factory('Projects', function ()
-  {
-    return {
-      all: function ()
-      {
-        var projectString = window.localStorage['projects'];
-        if (projectString)
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins.Keyboard)
         {
-          return angular.fromJson(projectString);
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }
-        return [];
-      },
-      save: function (projects)
-      {
-        window.localStorage['projects'] = angular.toJson(projects);
-      },
-      newProject: function (projectTitle)
-      {
-        // Add a new project
-        return {
-          title: projectTitle,
-          tasks: []
+        if (window.StatusBar)
+        {
+            StatusBar.styleDefault();
+        }
+    });
+})
+.controller('VotingCtrl', [
+    '$scope',
+    '$timeout',
+    '$ionicSideMenuDelegate',
+    '$cordovaCamera',
+    'forms',
+    function ($scope, $timeout, $ionicSideMenuDelegate, $cordovaCamera, forms)
+    {
+
+        // A utility function for creating a new form
+        // with the given formTitle
+        var createForm = function (formTitle)
+        {
+            var newForm = forms.newForm(formTitle);
+            $scope.forms.push(newForm);
+            forms.save($scope.forms);
+            $scope.selectForm(newForm, $scope.forms.length - 1);
         };
-      },
-      getLastActiveIndex: function ()
-      {
-        return parseInt(window.localStorage['lastActiveProject']) || 0;
-      },
-      setLastActiveIndex: function (index)
-      {
-        window.localStorage['lastActiveProject'] = index;
-      }
-    }
-  })
-  .controller('TodoCtrl', function ($scope, $timeout, $ionicModal, Projects, $ionicSideMenuDelegate)
-  {
 
-    // A utility function for creating a new project
-    // with the given projectTitle
-    var createProject = function (projectTitle)
-    {
-      var newProject = Projects.newProject(projectTitle);
-      $scope.projects.push(newProject);
-      Projects.save($scope.projects);
-      $scope.selectProject(newProject, $scope.projects.length - 1);
-    }
-
-
-    // Load or initialize projects
-    $scope.projects = Projects.all();
-
-    // Grab the last active, or the first project
-    $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
-
-    // Called to create a new project
-    $scope.newProject = function ()
-    {
-      var projectTitle = prompt('Project name');
-      if (projectTitle)
-      {
-        createProject(projectTitle);
-      }
-    };
-
-    // Called to select the given project
-    $scope.selectProject = function (project, index)
-    {
-      $scope.activeProject = project;
-      Projects.setLastActiveIndex(index);
-      $ionicSideMenuDelegate.toggleLeft(false);
-    };
-
-    // Create our modal
-    $ionicModal.fromTemplateUrl('new-task.html', function (modal)
-    {
-      $scope.taskModal = modal;
-    }, {
-      scope: $scope
-    });
-
-    $scope.createTask = function (task)
-    {
-      if (!$scope.activeProject || !task)
-      {
-        return;
-      }
-      $scope.activeProject.tasks.push({
-        title: task.title
-      });
-      $scope.taskModal.hide();
-
-      // Inefficient, but save all the projects
-      Projects.save($scope.projects);
-
-      task.title = "";
-    };
-
-    $scope.newTask = function ()
-    {
-      $scope.taskModal.show();
-    };
-
-    $scope.closeNewTask = function ()
-    {
-      $scope.taskModal.hide();
-    }
-
-    $scope.toggleProjects = function ()
-    {
-      $ionicSideMenuDelegate.toggleLeft();
-    };
-
-
-    // Try to create the first project, make sure to defer
-    // this by using $timeout so everything is initialized
-    // properly
-    $timeout(function ()
-    {
-      if ($scope.projects.length == 0)
-      {
-        while (true)
+        var photoOptions =
         {
-          var projectTitle = prompt('Your first project title:');
-          if (projectTitle)
-          {
-            createProject(projectTitle);
-            break;
-          }
-        }
-      }
-    });
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 300,
+            targetHeight: 300,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
 
-  });
+        // Load or initialize forms
+        $scope.forms = forms.all();
+
+        // Grab the last active, or the first form
+        $scope.activeForm = $scope.forms[forms.getLastActiveIndex()];
+
+        $scope.takePhoto = function ()
+        {
+            $cordovaCamera.getPicture(photoOptions)
+                .then(function (imageData)
+                {
+                    $scope.imgURI = "data:image/jpeg;base64," + imageData;
+                },
+                function (err)
+                {
+                    // An error occured. Show a message to the user
+                });
+        };
+
+        $scope.choosePhoto = function ()
+        {
+            photoOptions.sourceType = Camera.PictureSourceType.PHOTOLIBRARY;
+
+            $cordovaCamera.getPicture(options)
+                .then(function (imageData)
+                {
+                    $scope.imgURI = "data:image/jpeg;base64," + imageData;
+                },
+                function (err)
+                {
+                    // An error occured. Show a message to the user
+                });
+        };
+
+        // Called to create a new form
+        $scope.newForm = function ()
+        {
+            var formTitle = prompt('Form name');
+            if (formTitle)
+            {
+                createForm(formTitle);
+            }
+        };
+
+        // Called to select the given form
+        $scope.selectForm = function (form, index)
+        {
+            $scope.activeForm = form;
+            forms.setLastActiveIndex(index);
+            $ionicSideMenuDelegate.toggleLeft(false);
+        };
+
+        $scope.toggleSideBar = function ()
+        {
+            $ionicSideMenuDelegate.toggleLeft();
+        };
+
+
+        // Try to create the first form, make sure to defer
+        // this by using $timeout so everything is initialized
+        // properly
+        $timeout(function ()
+        {
+            if ($scope.forms.length == 0)
+            {
+                while (true)
+                {
+                    var formTitle = prompt('Your first form title:');
+                    if (formTitle)
+                    {
+                        createForm(formTitle);
+                        break;
+                    }
+                }
+            }
+        });
+
+    }
+]);
