@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 __author__ = 'Aleksandrov Oleg, 4231'
 
+import pg8000
 
 class FormData:
     """Заглушка для данных"""
@@ -15,13 +16,20 @@ class FormData:
     """Заглушка для данных"""
 
     def get_big_qr_code_date(self):
-        return "B12321321321313,123213213"
+        return "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM123456789"
 
     """Заглушка для данных"""
 
     def get_questions(self):
+        # conn = pg8000.connect(user="postgres", password="smith620695", database="form")
+        # cursor = conn.cursor()
+        # cursor.execute("select question from answer as a, question as q where a.id_question = q.id_question AND a.id_owner = 1 AND q.id_meeting = 1")
+        # str = cursor.fetchone()
+        # cursor.close()
+        # conn.close()
+        # return str
         return [
-            "156789012345678 901234567890 123456789 012345 67891234540123 45678 901234567890 1234567890 1234 5678 9",
+            "<ul><li>Первый пункт</li><li>Второй пункт</li><li>Третий пункт</li></ul>",
             "156789012345678 901234567890 123456789 012345<br> 67891234540123 45678 901234567890 1234567890 1234 5678 9",
             "156789012345678 901234567890 123456789 012345<br> 67891234540123 45678 901234567890 1234567890 1234 5678 9",
             "156789012345678 901234567890<br><br><br> <br><br><br>123456789 012345 67891234540123 45678 901234567890 1234567890 1234 5678 9",
