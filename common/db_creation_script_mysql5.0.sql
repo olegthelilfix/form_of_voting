@@ -1,8 +1,7 @@
-/* ============================================================== */
+/*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     12.12.2015 15:37:42                          */
-/* ==============================================================*/
-
+/* Created on:     12.12.2015 20:53:29                          */
+/*==============================================================*/
 
 
 drop table if exists Answer;
@@ -247,6 +246,7 @@ create table Question
 (
    id_question          int not null,
    id_meeting           int not null,
+   sequence_no          smallint not null,
    question             varchar(512) not null,
    primary key (id_question)
 );
