@@ -57,11 +57,10 @@ docs/_build/
 target/
 
 .idea/
-*.PNG
-*.png
 *.pdf
 */htmlcode*
 .idea/
 
 *core/formgen/result/htmlcode*.html
 *.pdf
+
