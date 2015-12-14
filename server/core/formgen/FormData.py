@@ -26,11 +26,17 @@ class FormData:
 
     def get_date(self):
         return {
-            "title": "Заголовок", "fio": self.__fio, "city": "Город", "street": "Улица",
+            "fio": self.__fio,
+            "city": "Город",
+            "street": "Улица",
             "houseNumb": "42",
-            "apartment": "42", "phoneNumber": "__________________________", "formSeries": "4444",
+            "apartment": "42",
+            "phoneNumber": "__________________________",
+            "formSeries": "4444",
             "formNumber": "999999",
-            "formDateOfIssue": "10-11-1019", "propertyType": "Существует в 5 измерении", "propertyS": "1000",
+            "formDateOfIssue": "10-11-1019",
+            "propertyType": "Существует в 5 измерении",
+            "propertyS": "1000",
             "share": "1000%"
         }
 
