@@ -12,17 +12,16 @@ class PDFGenDAOPostgres:
         self.conn.close()
 
     def get_owner_fio(self, id_user):
-        cursor = self.conn.cursor()
-        cursor.execute("select o.name, o.surname, o.patronymic from \"User\" as u, Owner as o where u.id_owner = o.id_owner and id_user = " + str(id_user))
-
-        result = cursor.fetchall()
-        cursor.close()
+        result = self.__execute("select o.name, o.surname, o.patronymic from \"User\" as u, Owner as o where u.id_owner = o.id_owner and id_user = " + str(id_user))
 
         return result[0][1] + " " + result[0][1] + " " + result[0][2]
 
     def get_question(self, id_meeting):
+        return self.__execute("select sequence_no, question  from question where id_meeting = " + str(id_meeting) + " order by question asc")
+
+    def __execute(self, query):
         cursor = self.conn.cursor()
-        cursor.execute("select sequence_no, question  from question where id_meeting = " + str(id_meeting) + " order by question asc")
+        cursor.execute(query)
 
         result = cursor.fetchall()
         cursor.close()
