@@ -5,4 +5,4 @@ from core.formgen.PdfGen import PdfGen
 
 
 pg = PdfGen()
-print(pg.execute(9))
+print(pg.execute(11, 9))

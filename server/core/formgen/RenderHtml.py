@@ -11,8 +11,8 @@ class RenderHtml:
     formData = None
     resultList = []
 
-    def __init__(self, id_meeting):
-        self.formData = FormData(id_meeting)
+    def __init__(self, id_user, id_meeting):
+        self.formData = FormData(id_user, id_meeting)
 
     def create_small_qr_code_dates(self, size):
         value = []
