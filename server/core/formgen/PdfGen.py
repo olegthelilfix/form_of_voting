@@ -11,8 +11,8 @@ class PdfGen:
     __dir = os.getcwd() + "/result/htmlcode.html"
     __result_dir = os.getcwd() + "/result/result.pdf"
 
-    def execute(self):
-        render = RenderHtml()
+    def execute(self, id_meeting):
+        render = RenderHtml(id_meeting)
         value = render.split_question_on_pages()
         with codecs.open(self.__dir, 'w', 'utf8') as f2:
             f2.write(value)

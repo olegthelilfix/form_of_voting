@@ -8,8 +8,11 @@ from core.formgen.FormData import FormData
 
 class RenderHtml:
     qr = QrCodeGen()
-    formData = FormData()
+    formData = None
     resultList = []
+
+    def __init__(self, id_meeting):
+        self.formData = FormData(id_meeting)
 
     def create_small_qr_code_dates(self, size):
         value = []
@@ -53,7 +56,7 @@ class RenderHtml:
 
         title_date = self.formData.get_date()
         questions = self.formData.get_questions()
-        small_qr_code_date = self.create_small_qr_code_dates(len(questions))
+        small_qr_code_date = self.formData.get_small_qr_code_date()
 
         return self.render_html(self.get_qs_and_small_qr_code(questions, small_qr_code_date), title_date)
 

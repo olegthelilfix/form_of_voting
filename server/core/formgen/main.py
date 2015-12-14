@@ -3,5 +3,6 @@ __author__ = 'Aleksandrov Oleg, 4231'
 
 from core.formgen.PdfGen import PdfGen
 
+
 pg = PdfGen()
-print(pg.execute())
+print(pg.execute(9))
