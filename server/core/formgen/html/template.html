@@ -5,39 +5,39 @@
     <title></title>
     <style>
         .title {
-        text-align: center;
+            text-align: center;
         }
 
         .rightimg {
-        float: right; /* Выравнивание по правому краю */
+            float: right;
         }
 
         button {
-        border: 2px solid black; /* Параметры рамки */
-        background: white;
-        font-size: 12px;
-        padding: 20px 30px;
+            border: 2px solid black; /* Параметры рамки */
+            background: white;
+            font-size: 12px;
+            padding: 20px 30px;
         }
 
         .qs {
-        display: inline-block;
+            display: inline-block;
         }
 
         .qsbig {
-        padding-left: 25px;
-        padding-right: 25px;
-        display: inline-block;
-        font-size: 20px;
+            padding-left: 25px;
+            padding-right: 25px;
+            display: inline-block;
+            font-size: 20px;
         }
 
         .fio {
-        font-size: 20px;
-        font-weight: bold;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .address {
-        font-size: 16px;
-        font-weight: bold;
+            font-size: 16px;
+            font-weight: bold;
         }
 
         .td {
@@ -66,11 +66,12 @@
                 content: url(img/black.jpg);
             }
 
-
             @bottom-left {
                 content: " Страница " counter(page);
             }
-            @top-center { content: url({{ big_qr_code }}); }
+            @top-center {
+                content: url({{ big_qr_code }});
+            }
         }
 
         @page :first {
@@ -90,8 +91,6 @@
                 content: url(img/black.jpg);
             }
 
-
-
             @bottom-left {
                 content: " Страница " counter(page);
             }
@@ -103,7 +102,7 @@
             margin-top: 5cm;
             margin-left: 1cm;
             margin-right: 1cm;
-        } /* All margins set to 2cm */
+        }
 
         @page :first {
             margin-top: 1cm;
@@ -112,7 +111,7 @@
         }
 
         .pageBreaker {
-        page-break-inside: avoid;
+            page-break-inside: avoid;
         }
 
 
