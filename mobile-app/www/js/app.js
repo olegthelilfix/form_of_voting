@@ -4,10 +4,10 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('voting', [
-    'voting.AuthCtrl',
-    'voting.PhotoCtrl',
     'ionic',
-    'ngCordova'
+    'ngCordova',
+    'voting.AuthCtrl',
+    'voting.HomeCtrl'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
