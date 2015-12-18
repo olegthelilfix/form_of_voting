@@ -6,6 +6,14 @@
         <button class="button button-block" ng-click="choosePhoto()">
             Choose Photo
         </button>
-        <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
+        <button class="button button-block" ng-click="uploadPhoto()">
+            Upload Photo
+        </button>
+        <div class="card">
+            <div class="item item-text-wrap">
+                {{uploadStatus}}
+            </div>
+        </div>
+        <img ng-show="imgURI !== undefined" ng-src="{{picData}}" style="text-align: center">
     </ion-content>
 </ion-view>
