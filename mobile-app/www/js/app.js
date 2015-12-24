@@ -7,7 +7,8 @@ var app = angular.module('voting', [
     'ionic',
     'ngCordova',
     'voting.AuthCtrl',
-    'voting.HomeCtrl'
+    'voting.HomeCtrl',
+    'voting.TabsCtrl'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
@@ -23,7 +24,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $stateProvider.state('tabs', {
         url: '/tab',
         abstract: true,
-        templateUrl: 'templates/tabs.html'
+        templateUrl: 'js/tabs/index.html',
+        controller: 'TabsCtrl'
     });
 
     $stateProvider.state('tabs.home', {
