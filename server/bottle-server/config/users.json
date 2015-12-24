@@ -1,4 +1,1 @@
-{
-  "name": "application-name",
-  "version": "0.0.1"
-}
+{"": {"hash": "cFFusHJ5BZ07G3KhrkeVjB6pIyIGoMP6+BtK0JBtpU/EjhY6v3nvnOZgLqoniJQ9OXn2KFV+SJmZSyPH4Og0HiQ=", "desc": " test user", "role": "user", "email_addr": "@localhost.local", "creation_date": "2012-10-28 20:50:26.286723"}, "admin": {"hash": "cLzRnzbEwehP6ZzTREh3A4MXJyNo+TV8Hs4//EEbPbiDoo+dmNg22f2RJC282aSwgyWv/O6s3h42qrA6iHx8yfw=", "role": "admin", "email_addr": "admin@localhost.local", "creation_date": "2012-10-28 20:50:26.286723", "desc": "admin test user", "last_login": "2015-12-24 22:14:25.509885"}}
