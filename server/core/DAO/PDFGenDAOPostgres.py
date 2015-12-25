@@ -1,11 +1,5 @@
 import pg8000
 
-
-# select * from meeting, building, premise, property_rights, owner where
-# meeting.id_meeting = 9 AND owner.id_owner = 1 AND meeting.id_building = building.id_building
-# AND building.id_building = premise.id_building AND premise.id_premise = property_rights.id_premise
-# AND property_rights.id_owner = owner.id_owner
-
 class PDFGenDAOPostgres:
     _connect = None
 
