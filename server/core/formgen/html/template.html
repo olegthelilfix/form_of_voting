@@ -5,39 +5,39 @@
     <title></title>
     <style>
         .title {
-        text-align: center;
+            text-align: center;
         }
 
         .rightimg {
-        float: right; /* Выравнивание по правому краю */
+            float: right;
         }
 
         button {
-        border: 2px solid black; /* Параметры рамки */
-        background: white;
-        font-size: 12px;
-        padding: 20px 30px;
+            border: 2px solid black; /* Параметры рамки */
+            background: white;
+            font-size: 12px;
+            padding: 20px 30px;
         }
 
         .qs {
-        display: inline-block;
+            display: inline-block;
         }
 
         .qsbig {
-        padding-left: 25px;
-        padding-right: 25px;
-        display: inline-block;
-        font-size: 20px;
+            padding-left: 25px;
+            padding-right: 25px;
+            display: inline-block;
+            font-size: 20px;
         }
 
         .fio {
-        font-size: 20px;
-        font-weight: bold;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .address {
-        font-size: 16px;
-        font-weight: bold;
+            font-size: 16px;
+            font-weight: bold;
         }
 
         .td {
@@ -66,14 +66,12 @@
                 content: url(img/black.jpg);
             }
 
-            @bottom-right-corner {
-                content: url(img/black.jpg);
-            }
-
             @bottom-left {
                 content: " Страница " counter(page);
             }
-            @top-center { content: url({{ big_qr_code }}); }
+            @top-center {
+                content: url({{ big_qr_code }});
+            }
         }
 
         @page :first {
@@ -93,10 +91,6 @@
                 content: url(img/black.jpg);
             }
 
-            @bottom-right-corner {
-                content: url(img/black.jpg);
-            }
-
             @bottom-left {
                 content: " Страница " counter(page);
             }
@@ -108,7 +102,7 @@
             margin-top: 5cm;
             margin-left: 1cm;
             margin-right: 1cm;
-        } /* All margins set to 2cm */
+        }
 
         @page :first {
             margin-top: 1cm;
@@ -117,7 +111,7 @@
         }
 
         .pageBreaker {
-        page-break-inside: avoid;
+            page-break-inside: avoid;
         }
 
 
@@ -126,97 +120,99 @@
 
 <body>
 
-<table>
-    <tr>
-        <!--<td><img src='img/black.jpg'></td>-->
-        <td></td>
-        <!--<td><img src='img/black.jpg'></td>-->
-        <td></td>
-
-    </tr>
-    <tr>
-        <!--<td></td>-->
-        <td class="bgtd">
-            Ф.И.О. собственника: <span class="fio">{{ fio }}</span><br>
-            Адрес помещения: город <span class="address">{{ city }}</span>,<br>
-            Улица: <span class="address"> {{ street }} </span> Дом: <span class="address">{{ houseNumb }}</span>,<br>
-            Квартира: <span class="address">{{ apartment }}</span>,<br>
-            Телефон: {{ phoneNumber }},
-            Свидетельство о государственной регистрации права собственности: бланк серии {{ formSeries }},
-            № {{ formNumber }},
-            Дата выдачи: {{ formDateOfIssue }},<br>
-            Тип помещения: {{ propertyType }}<br>
-            Общая площадь помещения(кв.м): {{ propertyS }}<br>
-            Размер доли в праве собственности: {{ share }}<br>
-        </td>
-        <!--<td></td>-->
-        <td><img src='{{ big_qr_code }}'></td>
-    </tr>
-    <tr>
-        <!--<td><img src='img/black.jpg'></td>-->
-        <td></td>
-        <!--<td><img src='img/black.jpg'></td>-->
-        <td></td>
-
-    </tr>
-</table>
-
-<h1>
-    <div class="title">Вопросы, поставленные на голосование:</div>
-</h1>
-
-{% for item in item_list %}
-<div class="pageBreaker">
     <table>
         <tr>
-            <th colspan="3"> {{ item.qs }}{% if not loop.last %}{% endif %}</th>
+            <!--<td><img src='img/black.jpg'></td>-->
+            <td></td>
+            <!--<td><img src='img/black.jpg'></td>-->
+            <td></td>
+
         </tr>
         <tr>
-            <td>
-                <table>
-                    <tr>
-                        <td class="td">
-                            <div class="qsbig">
-                                <span style="color: white; ">__</span>За<span style="color: white; ">____</span><br>
-                                <div class="qs">
-                                    <div>
-                                        <button></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="td"></td>
-                        <td class="td">
-                            <div class="qsbig">
-                                Против<br>
-                                <div class="qs">
-                                    <div>
-                                        <button></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="td"></td>
-                        <td class="td">
-                            <div class="qsbig">
-                                Воздерж.<br>
-                                <div class="qs">
-                                    <div>
-                                        <button></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+            <!--<td></td>-->
+            <td class="bgtd">
+                Ф.И.О. собственника: <span class="fio">{{ fio }}</span><br>
+                Адрес помещения: город <span class="address">{{ city }}</span>,<br>
+                Улица: <span class="address"> {{ street }} </span> Дом: <span class="address">{{ houseNumb }}</span>,<br>
+                Квартира: <span class="address">{{ apartment }}</span>,<br>
+                Свидетельство о государственной регистрации права собственности: {{ formSeries }},
+                Дата выдачи: {{ formDateOfIssue }},<br>
+                Общая площадь помещения(кв.м): {{ propertyS }}<br>
+                Размер доли в праве собственности: {{ share }}<br>
+                Телефон: {{ phoneNumber }}
             </td>
-            <td class="td"></td>
-            <td>
-            <td><img src="{{ item.dir }}"></td>
-            </td>
+            <!--<td></td>-->
+            <td><img src='{{ big_qr_code }}'></td>
+        </tr>
+        <tr>
+            <!--<td><img src='img/black.jpg'></td>-->
+            <td></td>
+            <!--<td><img src='img/black.jpg'></td>-->
+            <td></td>
+
         </tr>
     </table>
-</div>
-{% endfor %}
+
+    <h1>
+        <div class="title">Вопросы, поставленные на голосование:</div>
+    </h1>
+
+    {% for item in item_list %}
+        <div class="pageBreaker">
+            <table>
+                <tr>
+                    <th colspan="3">
+                        {{ item.qs }}
+                            {% if not loop.last %}
+                        {% endif %}
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td class="td">
+                                    <div class="qsbig">
+                                        <span style="color: white; ">__</span>За<span style="color: white; ">____</span><br><br>
+                                        <div class="qs">
+                                            <div>
+                                                <button></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="td"></td>
+                                <td class="td">
+                                    <div class="qsbig">
+                                        Против<br><br>
+                                        <div class="qs">
+                                            <div>
+                                                <button></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="td"></td>
+                                <td class="td">
+                                    <div class="qsbig">
+                                        Воздержался<br><br>
+                                        <div class="qs">
+                                            <div>
+                                                <button></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="td"></td>
+                    <td>
+                    <td><img src="{{ item.dir }}"></td>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    {% endfor %}
 </body>
 </html>
