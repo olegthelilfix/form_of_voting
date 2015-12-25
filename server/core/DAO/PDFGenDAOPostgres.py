@@ -1,6 +1,11 @@
 import pg8000
 
 
+# select * from meeting, building, premise, property_rights, owner where
+# meeting.id_meeting = 9 AND owner.id_owner = 1 AND meeting.id_building = building.id_building
+# AND building.id_building = premise.id_building AND premise.id_premise = property_rights.id_premise
+# AND property_rights.id_owner = owner.id_owner
+
 class PDFGenDAOPostgres:
     _connect = None
 
@@ -11,13 +16,45 @@ class PDFGenDAOPostgres:
     def __del__(self):
         self.conn.close()
 
-    def get_owner_fio(self, id_user):
-        result = self.__execute("select o.name, o.surname, o.patronymic from \"User\" as u, Owner as o where u.id_owner = o.id_owner and id_user = " + str(id_user))
-
-        return result[0][1] + " " + result[0][1] + " " + result[0][2]
+    def check_premise(self, id_user):
+        return self.__execute("select id_premise from \"User\" where id_user = " + str(id_user))
 
     def get_question(self, id_meeting):
-        return self.__execute("select sequence_no, question  from question where id_meeting = " + str(id_meeting) + " order by question asc")
+        return self.__execute("select sequence_no, question  from question where id_meeting = " + str(
+            id_meeting) + " order by question asc")
+
+    def get_title(self, id_meeting, id_user):
+        return self.__execute("select "
+                                  "owner.name, "
+                                  "owner.patronymic,"
+                                  "owner.surname,"
+                                  "building.address,"
+                                  "building.street,"
+                                  "building.street_number,"
+                                  "building.block,"
+                                  "building.block_type, "
+                                  "property_rights.regnumber,"
+                                  "property_rights.share_numerator,"
+                                  "property_rights.share_denominator,"
+                                  "property_rights.regdate,"
+                                  "premise.area_rosreestr "
+
+                              "from "
+                                  "meeting,"
+                                  "building,"
+                                  "premise,"
+                                  "property_rights,"
+                                  "owner,"
+                                  "\"User\""
+                              "where "
+                                  "meeting.id_meeting = " + str(id_meeting) + " AND "
+                                  "\"User\".id_user = " + str(id_user) +" AND "
+                                  "\"User\".id_owner = owner.id_owner AND "
+                                  "meeting.id_building = building.id_building AND "
+                                  "building.id_building = premise.id_building AND "
+                                  "premise.id_premise = property_rights.id_premise AND "
+                                  "property_rights.id_owner = owner.id_owner")
+
 
     def __execute(self, query):
         cursor = self.conn.cursor()

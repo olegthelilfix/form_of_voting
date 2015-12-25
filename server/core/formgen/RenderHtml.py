@@ -31,9 +31,7 @@ class RenderHtml:
                                                          apartment=date["apartment"],
                                                          phoneNumber=date["phoneNumber"],
                                                          formSeries=date["formSeries"],
-                                                         formNumber=date["formNumber"],
                                                          formDateOfIssue=date["formDateOfIssue"],
-                                                         propertyType=date["propertyType"],
                                                          propertyS=date["propertyS"],
                                                          share=date["share"],
                                                          big_qr_code=self.qr.create_big_qr_code(
