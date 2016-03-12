@@ -2,8 +2,8 @@
 __author__ = 'Aleksandrov Oleg, 4231'
 
 from jinja2 import Environment, FileSystemLoader
-from core.formgen.QrCodeGen import QrCodeGen
-from core.formgen.FormData import FormData
+from server.core.formgen.QrCodeGen import QrCodeGen
+from server.core.formgen.FormData import FormData
 
 class RenderHtml:
     qr = QrCodeGen()
