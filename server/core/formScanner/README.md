@@ -13,6 +13,7 @@ http://www.pyimagesearch.com/2015/07/20/install-opencv-3-0-and-python-3-4-on-ubu
 *ImagePIL*
 
 sudo apt-get install python-imaging
+
 http://pillow.readthedocs.org/en/3.1.x/installation.html
 
 *libzbar*
