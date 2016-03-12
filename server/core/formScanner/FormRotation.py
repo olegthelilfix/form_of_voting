@@ -1,6 +1,7 @@
 from BaseEnums import *
-from scipy import ndimage
+
 import math
+from PIL import Image
 from numpy import arccos
 import numpy as np
 import cv2
@@ -16,20 +17,9 @@ class FormRotation:
         self.imageFileName = imageFileName
         self.coordinatesOfQRCode = coordinatesOfQRCode
 
-    def extend(self, image):
-        
-        nrow, ncol, ncolor = image.shape
-        n = int((nrow**2 + ncol**2)**.5//2 + 1)
-        new = np.zeros((2*n, 2*n, ncolor))
-        a = nrow//2
-        b = ncol//2
-        new[n-a:n-a+nrow, n-b:n-b+ncol, :] = image
-        return new
-
     def rotateImage( self, fname, angle ):
 
         image = cv2.imread(fname, -1)
-        #image = self.extend(image)
 
         center = tuple(np.array(image.shape[0:2])/2)
         matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
@@ -89,11 +79,12 @@ class FormRotation:
         result = 0
         image = self.imagePIL
         topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners = self.coordinatesOfQRCode
-        rotationValue = self.getRotateValue( topLeftCorners, bottomLeftCorners, topRightCorners )
-        if ( rotationValue > 1 ):
+        
+        if ( bottomLeftCorners[ X ] != topLeftCorners[ X ] ):
+            rotationValue = self.getRotateValue( topLeftCorners, bottomLeftCorners, topRightCorners )
             #self.rotateImage( self.imageFileName, rotationValue )
-            image = self.imagePIL.rotate( rotationValue )
-            image.save( "rotation.png" )
+            image = self.imagePIL.rotate( rotationValue, resample=Image.BICUBIC, expand=True )
+            #image.save( "rotation.png" )
             result = 1
             #self.imagePIL.save( "rotatiom.png" )
             

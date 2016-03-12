@@ -1,3 +1,26 @@
+# Имена папок, от которых зависит работа исходного кода.
+#---------------------------------------------------
+FOLDER_POSSIBLE_BIG_QR_CODE = "possible big qr codes/"
+FOLDER_POSSIBLE_QR_CODE = "possible qr codes/"
+FOLDER_IMAGE_WITH_CELLS = "image with cells/"
+FOLDER_CELLS = "cells/"
+FOLDER_QR_CODES = "qr codes/"
+#---------------------------------------------------
+# Имена файлов, от которых НЕ зависит работа исходного кода.
+#---------------------------------------------------
+IMAGE_FILENAME_BIG_QR_CODE = "big_code.png"
+IMAGE_FILENAME_THRESH_BIG_QR_CODE = "thresh_big_code.png"
+IMAGE_FILENAME_WITH_POSSIBLE_QR_CODE = "img_with_possible_qr.png"
+IMAGE_FILENAME_ONLY_FORM = "onlyForm.png"
+IMAGE_FILENAME_IMAGE_WITH_CELLS = "image_with_cells.png"
+PREFIX_FOR_SMALL_QR_CODE_IMAGE_FILENAME = "small_qr_code_"
+PREFIX_FOR_CELL_IMAGE_FILENAME = "cell_"
+#---------------------------------------------------
+# Имя файла с изображением бланка.
+#---------------------------------------------------
+SOURCE_IMAGE = "003.jpg"
+#---------------------------------------------------
+
 import cv2
 import PIL
 from FormRotation import *
@@ -6,11 +29,9 @@ from PIL import Image
 from PIL.ExifTags import TAGS
 import libzbar as zbar
 from numpy import arccos
-from scipy import ndimage
-from scipy import misc
 import math
 import sys
-
+from CellsDetector import *
 counter = 0
 
 COUNT_OF_QR_CODES_ON_PAGE = 3
@@ -81,7 +102,7 @@ def findAllQRCodeOnColumn( source_image, start_x, start_y ):
 #УЧИТЫВАЕМ ЧТО ЛИСТ ПОД НАКЛОНОМ
     height = int( height_big_qr_code )
     width = width_big_qr_code
-    fileNameImgWithPossibleQr = "img_with_possible_qr.png"
+    fileNameImgWithPossibleQr = IMAGE_FILENAME_WITH_POSSIBLE_QR_CODE
     
     step_y = int ( height / 10 )
     heghtOfImage = source_image.height
@@ -100,8 +121,10 @@ def findAllQRCodeOnColumn( source_image, start_x, start_y ):
         img_with_possible_qr = crop_image( source_image, 0, start_x, start_y, width, height )
         
         c = c + 1
-        img_with_possible_qr.save( "possible qr codes/" + str(c) + fileNameImgWithPossibleQr)
-        imgFileName = "image_with_possible_qr.png"
+        img_with_possible_qr.save( FOLDER_POSSIBLE_QR_CODE + \
+                                   str(c) + \
+                                   fileNameImgWithPossibleQr)
+        imgFileName = IMAGE_FILENAME_WITH_POSSIBLE_QR_CODE
         imgFileNameWithThreshold = "threshold_" + imgFileName
         img_with_possible_qr.save( imgFileName )
         symbols = []
@@ -119,7 +142,10 @@ def findAllQRCodeOnColumn( source_image, start_x, start_y ):
                 coordinateOfQRCode = correctCoordinateOfQRCode( coordinateOfQRCode, start_x, start_y )
                 topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners = coordinateOfQRCode
                 img_with_crop = crop_image( source_image, 0, bottomLeftCorners[x], topLeftCorners[y], bottomRightCorners[x] - bottomLeftCorners[x], bottomLeftCorners[y] - topLeftCorners[y] )
-                img_with_crop.save("qr codes/small_qr_code_" + str( c ) + ".png")
+                img_with_crop.save( FOLDER_QR_CODES +
+                                    PREFIX_FOR_SMALL_QR_CODE_IMAGE_FILENAME +
+                                    str( c ) +
+                                    ".png")
                 start_y = bottomLeftCorners[ y ]
                 listOfQRCodes.append( sym )
                 listOfQRCodes.append( coordinateOfQRCode )
@@ -181,7 +207,9 @@ def getPILImageFromOpenCV( imageOpenCV ):
 
 
 #ВОЗВРАЩАЕТ ЛИСТ
-def thirdVariantOfAlgorithm( sourceImage ):
+# rotatedStatus - был ли повернут лист
+def thirdVariantOfAlgorithm( sourceImage, \
+                             rotatedStatus = IS_NOT_ROTATED ):
 
         global height_big_qr_code 
         global width_big_qr_code
@@ -205,9 +233,11 @@ def thirdVariantOfAlgorithm( sourceImage ):
         while( 1 ):
                 #threshold!!!!
                 #исходный файл
-                possibleQRCodeFileName = "possible big qr codes/big_code.png"
+                possibleQRCodeFileName = FOLDER_POSSIBLE_BIG_QR_CODE + \
+                                         IMAGE_FILENAME_BIG_QR_CODE
                 #изображение
-                threshPossibleQRCodeFileName = "possible big qr codes/thresh_big_code.png"
+                threshPossibleQRCodeFileName = FOLDER_POSSIBLE_BIG_QR_CODE + \
+                                               IMAGE_FILENAME_THRESH_BIG_QR_CODE
                 crop_img = crop_image( sourceImage, 0, start_x, start_y, width_big_qr_code, height_big_qr_code )
                 crop_img.save( possibleQRCodeFileName )
                 for i in range( 1, 10 ):
@@ -225,15 +255,22 @@ def thirdVariantOfAlgorithm( sourceImage ):
                             coordinateOfQRCode = correctCoordinateOfQRCode( coordinateOfQRCode, start_x, start_y )
                             topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners = coordinateOfQRCode
                             img_with_crop = crop_image( sourceImage, 0, bottomLeftCorners[x], topLeftCorners[y], bottomRightCorners[x] - bottomLeftCorners[x], bottomLeftCorners[y] - topLeftCorners[y] )
-                            img_with_crop.save( "qr codes/big qr code.png" )
+                            img_with_crop.save( FOLDER_QR_CODES +
+                                                IMAGE_FILENAME_BIG_QR_CODE )
                             formRotation = FormRotation( sourceImage, \
                                                          coordinateOfQRCode )
-                            result, image = formRotation.start()
-                            #Если был поворот - снова ищем код, т.к. координаты сменились
-                            if ( result == 1 ):
-                                    coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( image )
+                            result, imageRotated = formRotation.start()
+
+                            #сохранение попытки поворота
+                            #imageRotated.save("tryToRotate.png")
+                            #print( result )
+                            #Если был поворот и мы еще не поворачивали - снова ищем код, т.к. координаты сменились
+                            if ( result == 1 and rotatedStatus == IS_NOT_ROTATED ):
+                                    image = imageRotated
+                                    coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( image)
                                     break
-                            sourceImage = detectFormByBigQRCode( image, coordinateOfQRCode )
+
+                            sourceImage = detectFormByBigQRCode( sourceImage, coordinateOfQRCode )
                             #print( coordinateOfQRCode )
                             #crop_img.save("big_qr_code.jpg")
                             break
@@ -248,12 +285,12 @@ def thirdVariantOfAlgorithm( sourceImage ):
         return coordinateOfQRCode, sourceImage, symData
 
 
-#ДЛЯ ЛИСТА
+#НА ОСНОВАНИИ ЛИСТА (в изображении только лист)
 def getX_PixelsByMillimeters( imagePIL, value,  ):
 
         return round( ( value ) * ( imagePIL.width / WIDTH_FORM ) ) + RESERVE_PIXELS_VALUE
 
-#ДЛЯ ЛИСТА
+#НА ОСНОВАНИИ ЛИСТА (в изображении только лист)
 def getY_PixelsByMillimeters( imagePIL, value ):
 
         return round( ( value  ) * ( imagePIL.height / HEIGHT_FORM ) ) + RESERVE_PIXELS_VALUE
@@ -283,8 +320,8 @@ def getImageWithCells( imagePIL, QRCode, fileNameImageWithCells ):
         
         start_y = topLeftCorners[y]
         width = bottomLeftCorners[ x ]
-        height = bottomLeftCorners[y] - topLeftCorners[y] #ЗАПАС
-        height = height + ( height / 2 )
+        height = bottomLeftCorners[y] - topLeftCorners[y] + \
+                 (int) ( ( bottomLeftCorners[y] - topLeftCorners[y] ) / 2 )#ЗАПАС
         #print( start_x, start_y, width, getPixelValueBySizeInInch(HEIGHT_OF_CELL_INCH) )
         img_with_crop = crop_image( imagePIL, 0, start_x, start_y, width, height )
         img_with_crop.save( fileNameImageWithCells )
@@ -323,6 +360,7 @@ def getIndexOfMax( value, squares ):
 def sortSquares( squares ):
 
         squaresRes = []
+        #print( squares[0][0][0][0], squares[1][0][0][0], squares[2][0][0][0] )
         listSquares = [ squares[0][0][0][0], squares[1][0][0][0], squares[2][0][0][0] ]
         value = min(listSquares)
         squaresRes.append( squares[ getIndexOfMax( value, squares ) ] )
@@ -344,12 +382,13 @@ def removeNoisy( sourceImageFileName, destinationImageFileName ):
     ret3,th = cv2.threshold( blur, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU )
     cv2.imwrite( destinationImageFileName, th )
 
-def find_squares(imageWithCellsFileName, thresholdValue ):
+def find_squares(imageWithCellsFileName, thresholdValue, \
+                 thresholdMod = ADAPTIVE_MOD):
 #возвращает контуры найденных МЕТОК
 
     #gray = cv2.cvtColor( img, cv2.COLOR_BGR2GRAY )
     threshImg = "thresh_" + imageWithCellsFileName
-    doAdaptiveThreshold( imageWithCellsFileName, imageWithCellsFileName)
+    doAdaptiveThreshold( imageWithCellsFileName, imageWithCellsFileName )
     #image = cv2.imread( threshImg, cv2.CV_8UC1 )
     #cv2.imshow('squares', image )
     #cv2.waitKey(0)
@@ -365,7 +404,7 @@ def find_squares(imageWithCellsFileName, thresholdValue ):
         #print (rect)
         #print ( rect )
         k = ( rect[2] + 0.0) / rect[3]
-        #rint ( cv2.contourArea(cnt) )
+        #print ( cv2.contourArea(cnt) )
         if ( 0.7 < k and k < 1.8  and cv2.contourArea(cnt) > 2500 ):
             count = count + 1
             #print("k = ", k)
@@ -375,7 +414,7 @@ def find_squares(imageWithCellsFileName, thresholdValue ):
             squares.append( cnt )
     #print( len( contours ) )
     #print ( len( squares )  )
-    if ( len( contours ) == 3 ):
+    if ( len( squares ) == 3 ):
         #imageForContoursDraw = cv2.imread( imageWithCellsFileName )
         #cv2.drawContours( imageForContoursDraw, contours, -1, (0, 255, 0), 3 )
         #cv2.imshow('squares', imageForContoursDraw )
@@ -391,7 +430,7 @@ def getImageByContour( contour, imageWithCells, outputImageFileName ):
         cv2.imwrite( outputImageFileName, crop)       
 
 #проверка заполненности ячейки
-def checkImageOnMark( input_image ):
+def checkImageOnMark( input_image, mod = 0 ):
 
     result = 0
     #print( input_image)
@@ -400,11 +439,17 @@ def checkImageOnMark( input_image ):
     black = 0
     white = 0
     for pixel in pixels:
-        for i in pixel:
-                if i == 255:
+        if  mod == 0 :
+                for i in pixel:
+                        if i == 255:
+                                white = white + 1
+                        else:
+                                black = black + 1
+        else:
+                if pixel == 255:
                         white = white + 1
                 else:
-                        black = black + 1
+                        black = black + 1  
     #print( white / ( black + white ) * 100 )
     if ( ( white / ( black + white ) * 100 ) >= 3):
         result = 1
@@ -420,41 +465,52 @@ def getImageByContour( contour, imageWithCells, outputImageFileName ):
 #возврат 1 - если успешно оберезали ячейку
 # вовзврат 0 - если неуспешно
 def prepareCell( imagePIL, sourceImage ):
-        start_x = getX_PixelsByMillimeters( sourceImage, WIDTH_OF_BOX )
-        start_y = getY_PixelsByMillimeters( sourceImage, WIDTH_OF_BOX)
-        width = imagePIL.width - start_x - RESERVE_PIXELS_VALUE
-        height = imagePIL.height - start_y - RESERVE_PIXELS_VALUE
+        start_x = getX_PixelsByMillimeters( sourceImage, WIDTH_OF_BOX ) * 2
+        start_y = getY_PixelsByMillimeters( sourceImage, WIDTH_OF_BOX ) * 2
+        width = imagePIL.width - start_x * 2 - RESERVE_PIXELS_VALUE
+        height = imagePIL.height - start_y * 2 - RESERVE_PIXELS_VALUE
         cell = crop_image( imagePIL, 0, start_x, start_y, width, height )
         return cell
 
 
+
+#если большой код не нашелся
 if __name__ == "__main__":
 
         if ( len( sys.argv ) == 1 ):
-                fileName = "forms/test_5.png"
+                fileName = SOURCE_IMAGE
         else:
                 fileName = sys.argv[ 1 ]
         sourceImage = Image.open( fileName )
         #ВАРИАНТ ГРУБОЙ СИЛЫ
         coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( sourceImage )
         #sourceImage.save( "check1.png" )
-        coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( sourceImage )
-        print( symData )
+        coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( sourceImage, \
+                                                                            WAS_ROTATED )
+        sourceImage.save( IMAGE_FILENAME_ONLY_FORM )
+        
         #sourceImage.save( "check.png" )
         if ( len( coordinateOfQRCode ) > 0 ):
-                
+               
                 bootomLeftCorners = coordinateOfQRCode[ 1 ]
                 bottomRightCorners = coordinateOfQRCode[ 2 ]
                 start_x = bottomRightCorners[ x ] - int ( ( bottomRightCorners[ x ] - bootomLeftCorners[ x ]  ) / 2 )
                 start_y = bottomRightCorners[ y ]
                 listOfQRCodes, dataList = findAllQRCodeOnColumn( sourceImage, start_x, start_y )
                 if ( len ( listOfQRCodes ) > 0 ):
+                        #выводим большой QR
+                        sys.stdout.write( str( symData ) + "\n" )
+                        #print( symData )
                         #начинаем вырезать ячейки по каждому коду
 
                         for i in range( 0, int( len( listOfQRCodes) / 2 ) ):
-                                print( dataList[ i ] )
+                                
+                                #print( dataList[ i ] )
+                                sys.stdout.write( str( dataList[ i ] ) + "\n" ) 
                                 listOfResult = []
-                                fileNameImageWithCells = "image with cells/" + str( i ) + "image_with_cells.png"
+                                fileNameImageWithCells = FOLDER_IMAGE_WITH_CELLS + \
+                                                         str( i ) + \
+                                                         IMAGE_FILENAME_IMAGE_WITH_CELLS
                                 img = sourceImage.copy()
                                 getImageWithCells( img, listOfQRCodes[ i * 2 + 1 ], fileNameImageWithCells )
                                 thresholdValue = 200
@@ -462,13 +518,17 @@ if __name__ == "__main__":
                                 
                                 countOfCells = len ( squares)
                                 #3 ячейки!
+                                cells = []
+                                listOfResult = []
                                 if ( countOfCells == 3 ):
                                         #изображения с ячейками
-                                        cells = []
-                                        listOfResult = []
                                         for k in range ( 0, countOfCells):
-                                                cellFileName = "cells/cell_" + str( i ) + \
-                                                               " _ " + str( k ) + ".png"
+                                                cellFileName = FOLDER_CELLS + \
+                                                               PREFIX_FOR_CELL_IMAGE_FILENAME + \
+                                                               str( i ) + \
+                                                               " _ " + \
+                                                               str( k ) + \
+                                                               ".png"
                                                 getImageByContour( squares[ k ],\
                                                                    fileNameImageWithCells, \
                                                                    cellFileName )
@@ -477,11 +537,33 @@ if __name__ == "__main__":
                                                 cells.append( image )
                                                 image.save( cellFileName )
                                                 listOfResult.append( checkImageOnMark( cellFileName ) )
-                                        print( listOfResult )
+                                        sys.stdout.write( str( listOfResult ) + "\n" )
+                                        #print( listOfResult )
                                 else:
-                                       print( "не найдены ячейки :(") 
+                                        imageWithCells = Image.open( fileNameImageWithCells )
+                                        cellsDetector = CellsDetector( sourceImage, imageWithCells )
+                                        firstCellFileName = FOLDER_CELLS +\
+                                                            PREFIX_FOR_CELL_IMAGE_FILENAME + \
+                                                            str( i ) + \
+                                                            " _0.png"
+                                        secondCellFileName = FOLDER_CELLS +\
+                                                            PREFIX_FOR_CELL_IMAGE_FILENAME + \
+                                                            + str( i ) + \
+                                                            " _1.png"
+                                        thirdCellFileName = FOLDER_CELLS + \
+                                                            PREFIX_FOR_CELL_IMAGE_FILENAME + \
+                                                            + str( i ) + \
+                                                            " _2.png"
+                                        cellsDetector.start( firstCellFileName,\
+                                                             secondCellFileName,\
+                                                             thirdCellFileName )
+                                        listOfResult.append( checkImageOnMark( firstCellFileName, 1 ) )
+                                        listOfResult.append( checkImageOnMark( secondCellFileName, 1 ) )
+                                        listOfResult.append( checkImageOnMark( thirdCellFileName, 1 ) )
+                                        sys.stdout.write( str( listOfResult ) + "\n" )
                                 
                 else:
-                        print( "there is no something about small QR codes :(");
+                        #print( "there is no something about small QR codes :(");
+                        sys.stderr.write( str( SMALL_QR_CODES_ARE_NOT_HERE ) )
         else:
-                print( "there is no BIG QR code :(")
+                sys.stderr.write( str( FORM_NOT_FOUNDED ) )
