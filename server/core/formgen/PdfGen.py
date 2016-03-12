@@ -1,14 +1,15 @@
 # -*- coding: utf8 -*-
 __author__ = 'Aleksandrov Oleg, 4231'
 
-from server.core.formgen.RenderHtml import RenderHtml
+from RenderHtml import RenderHtml
 from weasyprint import HTML
 import codecs
 import os
 
 class PdfGen:
-    __dir = os.getcwd() + "/result/htmlcode.html"
-    __result_dir = os.getcwd() + "/result/result.pdf"
+    __dir = "/home/legionem/pychar/form_of_voting_gen/server/core/formgen/result/htmlcode.html"
+    __file_name = 'result.pdf'
+    __result_dir = "/home/legionem/pychar/form_of_voting_gen/server/core/formgen/result/"
 
     def execute(self, id_user, id_meeting):
         render = RenderHtml(id_user, id_meeting)
@@ -17,6 +18,11 @@ class PdfGen:
             f2.write(value)
 
         pdf = HTML(self.__dir)
-        pdf.write_pdf(self.__result_dir)
+        newName = str(id_user) + str(id_meeting) + self.__file_name
+        pdf.write_pdf(self.__result_dir + newName)
 
-        return self.__result_dir
+        res = []
+        res.append(newName)
+        res.append(self.__result_dir)
+
+        return res

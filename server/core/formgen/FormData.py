@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 __author__ = 'Aleksandrov Oleg, 4231'
 
-from server.core.DAO.PDFGenDAOPostgres import PDFGenDAOPostgres
+from PDFGenDAOPostgres import PDFGenDAOPostgres
 
 
 class FormData:

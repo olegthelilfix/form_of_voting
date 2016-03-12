@@ -7,6 +7,8 @@ from beaker.middleware import SessionMiddleware
 
 from cork import Cork
 
+from server.core.formgen.PdfGen import PdfGen
+
 bottle.debug(True)
 
 # Use users.json and roles.json in the local example_conf directory
@@ -66,6 +68,12 @@ def logout():
     aaa.logout()
 
 
+@route('/')
+def static():
+    pg = PdfGen()
+    res = pg.execute(11, 9)
+    return bottle.static_file(res[0], res[1])
+
 @route('/upload', method='POST')
 @authorize()
 def do_upload():
@@ -93,6 +101,7 @@ def main():
 
     # Start the Bottle webapp
     bottle.debug(True)
+    bottle.default_app()
     bottle.run(host='localhost', port=8085, app=app, quiet=False, reloader=True)
 
 if __name__ == "__main__":

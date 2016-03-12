@@ -2,8 +2,8 @@
 __author__ = 'Aleksandrov Oleg, 4231'
 
 from jinja2 import Environment, FileSystemLoader
-from server.core.formgen.QrCodeGen import QrCodeGen
-from server.core.formgen.FormData import FormData
+from QrCodeGen import QrCodeGen
+from FormData import FormData
 
 class RenderHtml:
     qr = QrCodeGen()
@@ -23,7 +23,7 @@ class RenderHtml:
         return item_list
 
     def render_html(self, qs, date):
-        tmpl = Environment(loader=FileSystemLoader("html/"), trim_blocks=True)
+        tmpl = Environment(loader=FileSystemLoader("/home/legionem/pychar/form_of_voting_gen/server/core/formgen/html/"), trim_blocks=True)
         return tmpl.get_template('template.html').render(fio=date["fio"],
                                                          city=date["city"],
                                                          street=date["street"],
@@ -39,7 +39,7 @@ class RenderHtml:
                                                          item_list=qs)
 
     def render_html_until_title(self, qs):
-        tmpl = Environment(loader=FileSystemLoader("html/"), trim_blocks=True)
+        tmpl = Environment(loader=FileSystemLoader("/home/legionem/pychar/form_of_voting_gen/server/core/formgen/html/"), trim_blocks=True)
         return tmpl.get_template('template.html').render(
             big_qr_code=self.qr.create_big_qr_code(self.formData.get_big_qr_code_date()),
             item_list=qs)

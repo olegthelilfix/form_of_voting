@@ -7,7 +7,7 @@ class QrCodeGen:
     __qr_code_form = "PNG"
     __qr_code_dir_to_big = "img/big"
     __qr_code_dir_to_small = "img/small"
-    __qr_code_save_dir = "result/"
+    __qr_code_save_dir = "/home/legionem/pychar/form_of_voting_gen/server/core/formgen/result/"
     __qr_code_fit = True
 
     """Функция создает qr code с задаными параметрами"""
