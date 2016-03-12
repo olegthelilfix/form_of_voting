@@ -16,7 +16,7 @@ class PDFGenDAOPostgres:
 
     def get_question(self, id_meeting):
         return self.__execute("select sequence_no, question  from question where id_meeting = " + str(
-            id_meeting) + " order by question asc")
+            id_meeting) + " order by sequence_no asc")
 
     def get_title(self, id_meeting, id_user):
         return self.__execute("select "

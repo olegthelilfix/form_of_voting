@@ -1,11 +1,10 @@
 # -*- coding: utf8 -*-
 __author__ = 'Aleksandrov Oleg, 4231'
 
-from core.formgen.RenderHtml import RenderHtml
+from server.core.formgen.RenderHtml import RenderHtml
 from weasyprint import HTML
 import codecs
 import os
-
 
 class PdfGen:
     __dir = os.getcwd() + "/result/htmlcode.html"

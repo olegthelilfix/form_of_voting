@@ -63,4 +63,5 @@ target/
 
 *core/formgen/result/htmlcode*.html
 *.pdf
-
+result/small*
+result/big*
