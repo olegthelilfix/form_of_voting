@@ -7,7 +7,7 @@ from beaker.middleware import SessionMiddleware
 
 from cork import Cork
 
-from server.core.formgen.PdfGen import PdfGen
+from PdfGen import PdfGen
 
 bottle.debug(True)
 
