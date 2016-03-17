@@ -6,12 +6,15 @@ from QrCodeGen import QrCodeGen
 from FormData import FormData
 
 class RenderHtml:
-    qr = QrCodeGen()
+    qr = None
     formData = None
     resultList = []
+    __dirToProject = ""
 
-    def __init__(self, id_user, id_meeting):
+    def __init__(self, id_user, id_meeting, dirToProject):
         self.formData = FormData(id_user, id_meeting)
+        self.__dirToProject = dirToProject
+        self.qr = QrCodeGen(dirToProject)
 
     def get_qs_and_small_qr_code(self, qs, date):
         i = 0
@@ -23,7 +26,7 @@ class RenderHtml:
         return item_list
 
     def render_html(self, qs, date):
-        tmpl = Environment(loader=FileSystemLoader("/home/legionem/pychar/form_of_voting_gen/server/core/formgen/html/"), trim_blocks=True)
+        tmpl = Environment(loader=FileSystemLoader(self.__dirToProject + "html/"), trim_blocks=True)
         return tmpl.get_template('template.html').render(fio=date["fio"],
                                                          city=date["city"],
                                                          street=date["street"],
@@ -39,7 +42,7 @@ class RenderHtml:
                                                          item_list=qs)
 
     def render_html_until_title(self, qs):
-        tmpl = Environment(loader=FileSystemLoader("/home/legionem/pychar/form_of_voting_gen/server/core/formgen/html/"), trim_blocks=True)
+        tmpl = Environment(loader=FileSystemLoader(self.__dirToProject + "html/"), trim_blocks=True)
         return tmpl.get_template('template.html').render(
             big_qr_code=self.qr.create_big_qr_code(self.formData.get_big_qr_code_date()),
             item_list=qs)

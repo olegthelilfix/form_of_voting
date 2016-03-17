@@ -10,6 +10,9 @@ class QrCodeGen:
     __qr_code_save_dir = "/home/legionem/pychar/form_of_voting_gen/server/core/formgen/result/"
     __qr_code_fit = True
 
+    def __init__(self, dirToProject):
+        self.__qr_code_save_dir = dirToProject + "result/"
+
     """Функция создает qr code с задаными параметрами"""
 
     def create_qr_code(self, text, version=1, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=3, border=2):

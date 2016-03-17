@@ -4,15 +4,15 @@ __author__ = 'Aleksandrov Oleg, 4231'
 from RenderHtml import RenderHtml
 from weasyprint import HTML
 import codecs
-import os
 
 class PdfGen:
-    __dir = "/home/legionem/pychar/form_of_voting_gen/server/core/formgen/result/htmlcode.html"
+    __dirToProject = "/home/legionem/pychar/form_of_voting_gen/server/core/formgen/"
+    __dir = __dirToProject + "result/htmlcode.html"
     __file_name = 'result.pdf'
-    __result_dir = "/home/legionem/pychar/form_of_voting_gen/server/core/formgen/result/"
+    __result_dir = __dirToProject + "result/"
 
     def execute(self, id_user, id_meeting):
-        render = RenderHtml(id_user, id_meeting)
+        render = RenderHtml(id_user, id_meeting, self.__dirToProject)
         value = render.split_question_on_pages()
         with codecs.open(self.__dir, 'w', 'utf8') as f2:
             f2.write(value)
