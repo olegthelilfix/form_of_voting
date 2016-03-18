@@ -31,7 +31,12 @@ import libzbar as zbar
 from numpy import arccos
 import math
 import sys
+from BigQRCodeData import *
 from CellsDetector import *
+from SmallQRCodeData import *
+from ScanResult import *
+from ScanResultEnums import *
+
 counter = 0
 
 COUNT_OF_QR_CODES_ON_PAGE = 3
@@ -475,19 +480,18 @@ def prepareCell( imagePIL, sourceImage ):
 
 
 #если большой код не нашелся
-if __name__ == "__main__":
+def startScan( sourceImage,\
+               idToken ):
 
-        if ( len( sys.argv ) == 1 ):
-                fileName = SOURCE_IMAGE
-        else:
-                fileName = sys.argv[ 1 ]
-        sourceImage = Image.open( fileName )
         #ВАРИАНТ ГРУБОЙ СИЛЫ
         coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( sourceImage )
         #sourceImage.save( "check1.png" )
         coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( sourceImage, \
                                                                             WAS_ROTATED )
         sourceImage.save( IMAGE_FILENAME_ONLY_FORM )
+
+        scanResult = ScanResult()
+        scanResult.setIdToken( idToken )
         
         #sourceImage.save( "check.png" )
         if ( len( coordinateOfQRCode ) > 0 ):
@@ -498,7 +502,10 @@ if __name__ == "__main__":
                 start_y = bottomRightCorners[ y ]
                 listOfQRCodes, dataList = findAllQRCodeOnColumn( sourceImage, start_x, start_y )
                 if ( len ( listOfQRCodes ) > 0 ):
-                        #выводим большой QR
+                        #выводим и записываем большой QR
+                        bigQRCodeData = BigQRCodeData()
+                        bigQRCodeData.setData( str( symData ) )
+                        scanResult.setBigQRCodeData( bigQRCodeData )
                         sys.stdout.write( str( symData ) + "\n" )
                         #print( symData )
                         #начинаем вырезать ячейки по каждому коду
@@ -506,6 +513,8 @@ if __name__ == "__main__":
                         for i in range( 0, int( len( listOfQRCodes) / 2 ) ):
                                 
                                 #print( dataList[ i ] )
+                                smallQRCodeData = SmallQRCodeData()
+                                smallQRCodeData.setData( str( dataList[ i ] ) )
                                 sys.stdout.write( str( dataList[ i ] ) + "\n" ) 
                                 listOfResult = []
                                 fileNameImageWithCells = FOLDER_IMAGE_WITH_CELLS + \
@@ -516,7 +525,7 @@ if __name__ == "__main__":
                                 thresholdValue = 200
                                 squares = find_squares( fileNameImageWithCells, thresholdValue )
                                 
-                                countOfCells = len ( squares)
+                                countOfCells = len ( squares )
                                 #3 ячейки!
                                 cells = []
                                 listOfResult = []
@@ -561,9 +570,18 @@ if __name__ == "__main__":
                                         listOfResult.append( checkImageOnMark( secondCellFileName, 1 ) )
                                         listOfResult.append( checkImageOnMark( thirdCellFileName, 1 ) )
                                         sys.stdout.write( str( listOfResult ) + "\n" )
+                                smallQRCodeData.setResultList( listOfResult )
+                                scanResult.addSmallQRCodeData( smallQRCodeData )
+                                
+                        scanResult.setStatus( SUCCESS )
+                                
                                 
                 else:
                         #print( "there is no something about small QR codes :(");
                         sys.stderr.write( str( SMALL_QR_CODES_ARE_NOT_HERE ) )
+                        scanResult.setStatus( FAILED )
         else:
                 sys.stderr.write( str( FORM_NOT_FOUNDED ) )
+                scanResult.setStatus( FAILED )
+
+        return scanResult

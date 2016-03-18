@@ -1,0 +1,79 @@
+{
+    "m_ScanResultList": [
+        {
+            "m_BigQRCodeData": {
+                "m_Data": "b'b0.1       |11        |nullnullnull|nullnullnull|9         '"
+            },
+            "m_IdToken": 0,
+            "m_SmallQRCodeDataList": [
+                {
+                    "m_ResultList": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "m_Title": "b's1'"
+                },
+                {
+                    "m_ResultList": [
+                        1,
+                        0,
+                        1
+                    ],
+                    "m_Title": "b's2'"
+                }
+            ],
+            "m_Status": "SUCCESS"
+        },
+        {
+            "m_BigQRCodeData": {
+                "m_Data": "b'b0.1       |11        |nullnullnull|nullnullnull|9         '"
+            },
+            "m_IdToken": 1,
+            "m_SmallQRCodeDataList": [
+                {
+                    "m_ResultList": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "m_Title": "b's1'"
+                },
+                {
+                    "m_ResultList": [
+                        1,
+                        0,
+                        1
+                    ],
+                    "m_Title": "b's2'"
+                }
+            ],
+            "m_Status": "SUCCESS"
+        },
+        {
+            "m_BigQRCodeData": {
+                "m_Data": "b'b0.1       |11        |nullnullnull|nullnullnull|9         '"
+            },
+            "m_IdToken": 2,
+            "m_SmallQRCodeDataList": [
+                {
+                    "m_ResultList": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "m_Title": "b's1'"
+                },
+                {
+                    "m_ResultList": [
+                        1,
+                        0,
+                        1
+                    ],
+                    "m_Title": "b's2'"
+                }
+            ],
+            "m_Status": "SUCCESS"
+        }
+    ]
+}
