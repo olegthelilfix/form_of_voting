@@ -4,6 +4,7 @@ import bottle
 
 from bottle import *
 from beaker.middleware import SessionMiddleware
+from server.bottle-server.
 
 from cork import Cork
 
@@ -65,6 +66,10 @@ def user_is_anonymous():
 def logout():
     aaa.logout()
 
+@route('/status_check')
+@authorize()
+def check_status():
+    return "Image successfully uploaded"
 
 @route('/upload', method='POST')
 @authorize()
