@@ -23,6 +23,7 @@ SOURCE_IMAGE = "003.jpg"
 
 import cv2
 import PIL
+from TokenFileWorker import *
 from FormRotation import *
 from BaseEnums import *
 from PIL import Image
@@ -483,15 +484,20 @@ def prepareCell( imagePIL, sourceImage ):
 def startScan( sourceImage,\
                idToken ):
 
+
+        # Заносим информацию о том, что распознавание НАЧАЛОСЬ
+        tokenFileWorker = TokenFileWorker()
+        scanResult = ScanResult()
+        scanResult.setIdToken( idToken )
+        scanResult.setStatus( IN_PROGRESS )
+        tokenFileWorker.setScanResult( scanResult )
+
         #ВАРИАНТ ГРУБОЙ СИЛЫ
         coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( sourceImage )
         #sourceImage.save( "check1.png" )
         coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( sourceImage, \
                                                                             WAS_ROTATED )
         sourceImage.save( IMAGE_FILENAME_ONLY_FORM )
-
-        scanResult = ScanResult()
-        scanResult.setIdToken( idToken )
         
         #sourceImage.save( "check.png" )
         if ( len( coordinateOfQRCode ) > 0 ):

@@ -18,6 +18,7 @@ class ListScanResult:
 
         return idToken
 
+    
 
     #Меняем инофрмацию о распознавании по токену
     def setScanResultByIdToken( self,\
@@ -36,6 +37,16 @@ class ListScanResult:
         #addScanResult( scanResult )
                 
 
+    def getScanResultByIdToken( self,\
+                                idToken ):
+
+        scanResult = ScanResult()
+        for item in self.m_ScanResultList:
+            if ( item.getIdToken() == idToken ):
+                return item
+
+        return scanResult
+        
     def toJSON( self ):
         return json.dumps( self,\
                            default = lambda o: o.__dict__,\
