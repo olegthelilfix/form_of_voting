@@ -7,7 +7,7 @@ class ScanResult:
     def __init__( self ):
 
         self.m_IdToken = 0
-        self.m_Status = IN_PROGRESS
+        self.m_Status = UNAVAILABLE_SCAN_RESULT_RECORD
         self.m_BigQRCodeData = BigQRCodeData()
         self.m_SmallQRCodeDataList = []
 
@@ -27,8 +27,13 @@ class ScanResult:
     def getIdToken( self ):
         
         return self.m_IdToken
+    
+    def getStatus( self ):
+
+        return self.m_Status
 
     def setBigQRCodeData( self,\
                           bigQRCodeData ):
         
         self.m_BigQRCodeData = bigQRCodeData
+

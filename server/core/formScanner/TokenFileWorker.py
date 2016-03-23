@@ -25,6 +25,21 @@ class TokenFileWorker:
                                     TO_EXIST_SCAN_RESULT )
                 
 
+        def loadScanResults( self,\
+                             fileHandler ):
+
+                fileHandler.seek(0)
+                listScanResult = ListScanResult()
+                text = fileHandler.read()
+  
+                if ( len(text) > 0 ):
+                        strParse = json.loads(text)
+                        if ( len(strParse) > 0 ):
+                                parse = strParse["m_ScanResultList"]
+                                listScanResult.fromJSON(parse)
+
+                return listScanResult
+                                
         # Добавляет НОВЫЙ scanResult и возвращает idToken для него
         def addScanResult( self,\
                            scanResult,\
@@ -37,17 +52,10 @@ class TokenFileWorker:
 
                 f = open(self.m_TokenFileName,\
                          'r+')
-                f.seek(0)
-                listScanResult = ListScanResult()
-                text = f.read()
+                listScanResult = self.loadScanResults( f )
+
                 idToken = 0
                 
-                if ( len(text) > 0 ):
-                        strParse = json.loads(text)
-                        if ( len(strParse) > 0 ):
-                                parse = strParse["m_ScanResultList"]
-                                listScanResult.fromJSON(parse)
-
                 if ( ADD_MODE == TO_EXIST_SCAN_RESULT ):
                         listScanResult.setScanResultByIdToken( scanResult )
                 else:
@@ -56,10 +64,27 @@ class TokenFileWorker:
                 f.seek(0)
                 f.write( listScanResult.toJSON() )
                 f.close()
-
                 lock.release()
-		
+
                 return idToken
+
+        
+        def getScanResult( self,\
+                           idToken ):
+                
+                lock = LockFile(self.m_TokenFileName)
+                # пока что так...
+                lock.acquire( SECONDS_WAIT_FOR_UNLOCK )
+                f = open(self.m_TokenFileName,\
+                         'r+')
+                listScanResult = self.loadScanResults( f )
+                f.close()
+                lock.release()
+                
+                scanResult = listScanResult.getScanResultByIdToken( idToken )
+
+                return scanResult
+                
                 
 
                 

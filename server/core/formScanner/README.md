@@ -25,4 +25,11 @@ http://pillow.readthedocs.org/en/3.1.x/installation.html
 
 https://pypi.python.org/pypi/libzbar-cffi
 
+*lockfile*
+
+git clone https://git.openstack.org/openstack/pylockfile
+
+sudo pip3 install lockfile
+
+
 *numpy*

@@ -15,6 +15,8 @@ tokenFileWorker = TokenFileWorker()
 def generateIdToken():
     
     scanResult = ScanResult()
+    scanResult.setStatus( BEFORE_SCAN )
+    
     return tokenFileWorker.addScanResult( scanResult )
 
 
@@ -32,13 +34,19 @@ def startScanForm( image,\
     #заносим результат в TokeData( файл с результатами распознавания ).
     tokenFileWorker.setScanResult( scanResult )
 
+# получаем статус распознавания по маркеру.
+def getStatus( idToken ):
 
-# пример использования
+    scanResult = tokenFileWorker.getScanResult( idToken )
+    return scanResult.getStatus()
+    
+
+#ПРИМЕР ИСПОЛЬЗОВАНИЯ
 image = Image.open( SOURCE_IMAGE )
 idToken = generateIdToken()
 startScanForm( image,\
-               idToken )
-
+              idToken )
+print( getStatus( idToken ) )
 
     
 
