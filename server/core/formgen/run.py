@@ -2,42 +2,39 @@
 import bottle
 
 from bottle import *
-from beaker.middleware import SessionMiddleware
-
-from cork import Cork
-
 from PdfGen import PdfGen
 
 bottle.debug(True)
 
 app = bottle.app()
 
-session_opts = {
-    'session.cookie_expires': True,
-    'session.encrypt_key': 'voting',
-    'session.httponly': True,
-    'session.timeout': 3600 * 24,  # 1 day
-    'session.type': 'cookie',
-    'session.validate_key': True,
-}
+@get('/') # or @route('/login')
+def login():
+    return '''
+        <form action="/" method="post">
+            <p>UserID: <input name="p1" type="text" /></p>
+            <p>MeetingID: <input name="p2" type="text" /></p>
+            <input value="Send" type="submit" />
+        </form>
+    '''
 
-app = SessionMiddleware(app, session_opts)
-
-@route('/')
-def static():
+@post('/') # or @route('/login', method='POST')
+def do_login():
     pg = PdfGen()
-    res = pg.execute(11, 9)
+    p1 = request.forms.get('p1')
+    p2 = request.forms.get('p2')
+    res = pg.execute(int(p1), int(p2))
     return bottle.static_file(res[0], res[1])
+
 
 
 # #  Web application main  # #
 
 def main():
-
     # Start the Bottle webapp
     bottle.debug(True)
     bottle.default_app()
-    bottle.run(host='localhost', port=8085, app=app, quiet=False, reloader=True)
+    bottle.run(host='localhost', port=8080, app=app, quiet=False, reloader=True)
 
 if __name__ == "__main__":
     main()

@@ -1,12 +1,14 @@
 import pg8000
-
+import settings
 
 class PDFGenDAOPostgres:
     _connect = None
 
-    def __init__(self, user, password, database):
+    def __init__(self):
         # conn = pg8000.connect(user="postgres", password="smith620695", database="form")
-        self.conn = pg8000.connect(user=user, password=password, database=database)
+        self.conn = pg8000.connect(user=settings.DB_USER, password=settings.DB_PASSWORD,
+                                   database=settings.DB_NAME, host=settings.DB_HOST,
+                                   port=settings.DB_PORT)
 
     def __del__(self):
         self.conn.close()

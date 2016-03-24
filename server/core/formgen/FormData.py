@@ -5,7 +5,7 @@ from PDFGenDAOPostgres import PDFGenDAOPostgres
 
 
 class FormData:
-    __dao = PDFGenDAOPostgres(user="postgres", password="smith620695", database="form")
+    __dao = PDFGenDAOPostgres()
     __qs = []
     __small_qr = []
     __version = "0.1"

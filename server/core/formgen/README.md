@@ -15,3 +15,8 @@ pip install qrcode
 
 pip install jinjia2
 
+apt-get install libxml2-dev libxslt1-dev python-dev
+
+pip install weasyprint
+pip install pg8000
+

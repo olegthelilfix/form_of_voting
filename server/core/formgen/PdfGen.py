@@ -4,9 +4,10 @@ __author__ = 'Aleksandrov Oleg, 4231'
 from RenderHtml import RenderHtml
 from weasyprint import HTML
 import codecs
+import settings
 
 class PdfGen:
-    __dirToProject = "/home/legionem/pychar/form_of_voting_gen/server/core/formgen/"
+    __dirToProject = settings.DIR_TO_PROJECT
     __dir = __dirToProject + "result/htmlcode.html"
     __file_name = 'result.pdf'
     __result_dir = __dirToProject + "result/"
