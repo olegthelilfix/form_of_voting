@@ -1,12 +1,16 @@
-__author__ = 'vladthelittleone'
+import io
+
+from PIL import Image
+from beaker.middleware import SessionMiddleware
+from cork import Cork
 
 import bottle
-
+from ScanFormAPI import *
 from bottle import *
-from beaker.middleware import SessionMiddleware
-from server.bottle-server.
+from uploadManager import UploadManager
+from tokenContainer import TokenContainer
 
-from cork import Cork
+__author__ = 'vladthelittleone'
 
 bottle.debug(True)
 
@@ -42,7 +46,6 @@ def post_get(name, default=''):
 
 @post('/auth')
 def auth():
-
     """Authenticate users"""
     username = request.json["username"].strip()
     password = request.json["password"].strip()
@@ -54,7 +57,8 @@ def auth():
         print("Auth failed: " + username + ":" + password)
         return 'FAILED'
 
-    # , success_redirect='/home', fail_redirect='/auth'
+        # , success_redirect='/home', fail_redirect='/auth'
+
 
 @route('/user_is_anonymous')
 def user_is_anonymous():
@@ -62,43 +66,43 @@ def user_is_anonymous():
         return 'True'
     return 'False'
 
+
 @route('/logout')
 def logout():
     aaa.logout()
 
-@route('/status_check')
+
+@route('/check_status')
 @authorize()
 def check_status():
-    return "Image successfully uploaded"
+    session = bottle.request.environ.get('beaker.session')
+    return TokenContainer.get(session.get('username'))
+
 
 @route('/upload', method='POST')
 @authorize()
 def do_upload():
     session = bottle.request.environ.get('beaker.session')
     print("Session from simple_webapp", repr(session))
-    # print(aaa.current_user.role)
 
-    image = request.files.get('file')
-    destination = '/Users/vladthelittleone/IdeaProjects/form_of_voting_gen/server/bottle-server'
+    req_img = request.files.get('file')
 
-    if os.path.isdir(destination):
-        destination = os.path.join(destination, image.filename)
+    pil_image = Image.open(io.BytesIO(req_img.file))
+    id_token = generateIdToken()
 
-    if not os.path.exists(destination):
-        image.save(destination)
-    else:
-        print("Error: Image already upload")
+    UploadManager.submit(startScanForm, pil_image, id_token)
+    TokenContainer.add(session.get('username'), id_token)
 
-    return "Image successfully uploaded"
+    return id_token
 
 
 # #  Web application main  # #
 
 def main():
-
     # Start the Bottle webapp
     bottle.debug(True)
     bottle.run(host='localhost', port=8085, app=app, quiet=False, reloader=True)
+
 
 if __name__ == "__main__":
     main()
