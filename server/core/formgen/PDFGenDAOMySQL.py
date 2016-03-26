@@ -14,43 +14,15 @@ class PDFGenDAOMySQL:
         self.conn.close()
 
     def check_premise(self, id_user):
-        return self.__execute("select id_premise from \"User\" where id_user = " + str(id_user))
+        return self.__execute("select id_premise from User where id_user = " + str(id_user))
 
     def get_question(self, id_meeting):
-        return self.__execute("select sequence_no, question  from question where id_meeting = " + str(
-            id_meeting) + " order by sequence_no asc")
+        return self.__execute("select sequence_no, question  from Question where id_meeting = " + str(id_meeting) + " order by sequence_no asc")
 
     def get_title(self, id_meeting, id_user):
-        return self.__execute("select "
-                              "owner.name, "
-                              "owner.patronymic,"
-                              "owner.surname,"
-                              "building.address,"
-                              "building.street,"
-                              "building.street_number,"
-                              "building.block,"
-                              "building.block_type, "
-                              "property_rights.regnumber,"
-                              "property_rights.share_numerator,"
-                              "property_rights.share_denominator,"
-                              "property_rights.regdate,"
-                              "premise.area_rosreestr "
-
-                              "from "
-                              "meeting,"
-                              "building,"
-                              "premise,"
-                              "property_rights,"
-                              "owner,"
-                              "\"User\""
-                              "where "
-                              "meeting.id_meeting = " + str(id_meeting) + " AND "
-                                                                          "\"User\".id_user = " + str(id_user) + " AND "
-                                                                                                                 "\"User\".id_owner = owner.id_owner AND "
-                                                                                                                 "meeting.id_building = building.id_building AND "
-                                                                                                                 "building.id_building = premise.id_building AND "
-                                                                                                                 "premise.id_premise = property_rights.id_premise AND "
-                                                                                                                 "property_rights.id_owner = owner.id_owner")
+        SQL='select Owner.name, Owner.patronymic, Owner.surname, Building.address, Building.street,Building.street_number,Building.block,Building.block_type, Property_rights.regnumber, Property_rights.share_numerator, Property_rights.share_denominator,Property_rights.regdate,Premise.area_rosreestr from Meeting,Building, Premise, Property_rights, Owner, User where Meeting.id_meeting = ' + str(id_meeting) + ' AND User.id_user = ' + str(id_user) + ' AND User.id_owner = Owner.id_owner AND Meeting.id_building = Building.id_building AND Building.id_building = Premise.id_building AND Premise.id_premise = Property_rights.id_premise AND Property_rights.id_owner = Owner.id_owner'
+        print(SQL)
+        return self.__execute(SQL)
 
     def __execute(self, query):
         cursor = self.conn.cursor()

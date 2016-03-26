@@ -2,12 +2,13 @@
 __author__ = 'Aleksandrov Oleg, 4231'
 
 import qrcode
+import settings
 
 class QrCodeGen:
     __qr_code_form = "PNG"
     __qr_code_dir_to_big = "img/big"
     __qr_code_dir_to_small = "img/small"
-    __qr_code_save_dir = "/home/legionem/pychar/form_of_voting_gen/server/core/formgen/result/"
+    __qr_code_save_dir = settings.DIR_TO_PROJECT + "result/"
     __qr_code_fit = True
 
     def __init__(self, dirToProject):
