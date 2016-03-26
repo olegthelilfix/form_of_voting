@@ -2,10 +2,11 @@
 __author__ = 'Aleksandrov Oleg, 4231'
 
 from PDFGenDAOPostgres import PDFGenDAOPostgres
-
+from PDFGenDAOMySQL import PDFGenDAOMySQL
+import settings
 
 class FormData:
-    __dao = PDFGenDAOPostgres()
+    __dao = None
     __qs = []
     __small_qr = []
     __version = "0.1"
@@ -25,6 +26,10 @@ class FormData:
     __propertyS = '___________'
 
     def __init__(self, id_user, id_meeting):
+        if settings.DB == "mysql":
+            self.__dao = PDFGenDAOMySQL()
+        else:
+            self.__dao = PDFGenDAOPostgres()
         self.__id_meeting = str(id_meeting)
         self.__id_user = str(id_user)
         qs_small_qr = self.__dao.get_question(id_meeting)
