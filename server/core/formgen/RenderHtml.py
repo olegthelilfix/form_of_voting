@@ -27,7 +27,7 @@ class RenderHtml:
 
     def render_html(self, qs, date):
         tmpl = Environment(loader=FileSystemLoader(self.__dirToProject + "html/"), trim_blocks=True)
-        return tmpl.get_template('template.html').render(fio=date["fio"],
+        result = tmpl.get_template('template.html').render(fio=date["fio"],
                                                          city=date["city"],
                                                          street=date["street"],
                                                          houseNumb=date["houseNumb"],
@@ -40,6 +40,8 @@ class RenderHtml:
                                                          big_qr_code=self.qr.create_big_qr_code(
                                                              self.formData.get_big_qr_code_date()),
                                                          item_list=qs)
+        self.formData.end()
+        return result
 
     def render_html_until_title(self, qs):
         tmpl = Environment(loader=FileSystemLoader(self.__dirToProject + "html/"), trim_blocks=True)

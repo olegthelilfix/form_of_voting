@@ -3,6 +3,8 @@ import bottle
 
 from bottle import *
 from PdfGen import PdfGen
+import os
+import settings
 
 bottle.debug(True)
 
@@ -25,6 +27,9 @@ def do_login():
     global mutex
     while mutex :
         print ("wait")
+    os.system("rm -R " + settings.DIR_TO_PROJECT + "result")
+    os.mkdir(settings.DIR_TO_PROJECT + "result")
+    os.mkdir(settings.DIR_TO_PROJECT + "result/img")
     mutex = True
     pg = PdfGen()
     p1 = request.forms.get('p1')

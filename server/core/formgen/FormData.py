@@ -34,9 +34,13 @@ class FormData:
         self.__id_user = str(id_user)
         qs_small_qr = self.__dao.get_question(id_meeting)
 
+        self.__small_qr = []
+        self.__qs = []
         for value in qs_small_qr:
             self.__small_qr.append('s' + str(value[0]))
             self.__qs.append(value[1])
+
+        print("SIZE = "  + str(len(self.__small_qr)))
 
         if str(self.__dao.check_premise(self.__id_user)[0][0]) != 'None':
             result = self.__dao.get_title(id_meeting, id_user)
@@ -77,3 +81,22 @@ class FormData:
 
     def get_small_qr_code_date(self):
         return self.__small_qr
+
+    def end(self):
+        self.__qs = []
+        self.__small_qr = []
+        self.__version = "0.1"
+        self.__id_user = "null"
+        self.__id_owner = "null"
+        self.__id_premise = "null"
+        self.__id_meeting = "null"
+        self.__fio = "______________________"
+        self.__phoneNumber = "______________________"
+        self.__city = '__________'
+        self.__street = '___________'
+        self.__houseNumb = '_____'
+        self.__apartment = '_______'
+        self.__form = '_____________'
+        self.__share = '____________'
+        self.__formDate = '_________'
+        self.__propertyS = '___________'
