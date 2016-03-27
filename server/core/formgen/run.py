@@ -8,6 +8,8 @@ bottle.debug(True)
 
 app = bottle.app()
 
+mutex = False
+
 @get('/') # or @route('/login')
 def login():
     return '''
@@ -20,10 +22,15 @@ def login():
 
 @post('/') # or @route('/login', method='POST')
 def do_login():
+    global mutex
+    while mutex :
+        print ("wait")
+    mutex = True
     pg = PdfGen()
     p1 = request.forms.get('p1')
     p2 = request.forms.get('p2')
     res = pg.execute(int(p1), int(p2))
+    mutex = False
     return bottle.static_file(res[0], res[1])
 
 
