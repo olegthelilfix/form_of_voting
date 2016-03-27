@@ -5,3 +5,5 @@ DB_NAME = "form"
 DB_HOST = "localhost"
 DB_PORT = 5432
 DB = "postgresql" #postgresql or mysql
+RUN_PORT = 8080
+RUN_HOST = "localhost"

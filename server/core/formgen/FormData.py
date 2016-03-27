@@ -40,8 +40,6 @@ class FormData:
             self.__small_qr.append('s' + str(value[0]))
             self.__qs.append(value[1])
 
-        print("SIZE = "  + str(len(self.__small_qr)))
-
         if str(self.__dao.check_premise(self.__id_user)[0][0]) != 'None':
             result = self.__dao.get_title(id_meeting, id_user)
             self.__fio = result[0][2] + " " + result[0][0] + " " + result[0][1]

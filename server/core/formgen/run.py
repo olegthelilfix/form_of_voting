@@ -44,7 +44,7 @@ def main():
     # Start the Bottle webapp
     bottle.debug(True)
     bottle.default_app()
-    bottle.run(host='localhost', port=8080, app=app, quiet=False, reloader=True)
+    bottle.run(host=settings.RUN_HOST, port=settings.RUN_PORT, app=app, quiet=False, reloader=True)
 
 if __name__ == "__main__":
     main()
