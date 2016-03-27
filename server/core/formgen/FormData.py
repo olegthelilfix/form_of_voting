@@ -46,9 +46,9 @@ class FormData:
             self.__houseNumb = result[0][5]
             self.__apartment = str(result[0][6])
             self.__form = str(result[0][8])
-            self.__share = str(result[0][9] * 100 / result[0][10]) + '%'
+            self.__share = str(round(result[0][9] * 100 / result[0][10], 2)) + '%'
             self.__formDate = str(result[0][11])
-            self.__propertyS = round(int(result[0][12]), 0)
+            self.__propertyS = str(result[0][12])
 
     def get_date(self):
         return {

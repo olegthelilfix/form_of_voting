@@ -32,6 +32,5 @@ class PDFGenDAOMySQL:
                 result = cursor.fetchall()
         finally:
             cursor.close()
-            self.conn.close()
 
         return result
