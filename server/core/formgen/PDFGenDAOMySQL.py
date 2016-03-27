@@ -1,5 +1,6 @@
 import settings
 import pymysql
+import pymysql.cursors
 
 class PDFGenDAOMySQL:
     _connect = None
@@ -20,15 +21,17 @@ class PDFGenDAOMySQL:
         return self.__execute("select sequence_no, question  from Question where id_meeting = " + str(id_meeting) + " order by sequence_no asc")
 
     def get_title(self, id_meeting, id_user):
-        SQL='select Owner.name, Owner.patronymic, Owner.surname, Building.address, Building.street,Building.street_number,Building.block,Building.block_type, Property_rights.regnumber, Property_rights.share_numerator, Property_rights.share_denominator,Property_rights.regdate,Premise.area_rosreestr from Meeting,Building, Premise, Property_rights, Owner, User where Meeting.id_meeting = ' + str(id_meeting) + ' AND User.id_user = ' + str(id_user) + ' AND User.id_owner = Owner.id_owner AND Meeting.id_building = Building.id_building AND Building.id_building = Premise.id_building AND Premise.id_premise = Property_rights.id_premise AND Property_rights.id_owner = Owner.id_owner'
+        SQL='select Owner.name, Owner.patronymic, Owner.surname, Building.address, Building.street,Building.street_number,Premise.number,Building.block_type, Property_rights.regnumber, Property_rights.share_numerator, Property_rights.share_denominator,Property_rights.regdate,Premise.area_rosreestr from Meeting,Building, Premise, Property_rights, Owner, User where Meeting.id_meeting = ' + str(id_meeting) + ' AND User.id_user = ' + str(id_user) + ' AND User.id_owner = Owner.id_owner AND Meeting.id_building = Building.id_building AND Building.id_building = Premise.id_building AND Premise.id_premise = Property_rights.id_premise AND Property_rights.id_owner = Owner.id_owner'
         print(SQL)
         return self.__execute(SQL)
 
     def __execute(self, query):
-        cursor = self.conn.cursor()
-        cursor.execute(query)
-
-        result = cursor.fetchall()
-        cursor.close()
+        try:
+            with self.conn.cursor() as cursor:
+                cursor.execute(query)
+                result = cursor.fetchall()
+        finally:
+            cursor.close()
+            self.conn.close()
 
         return result

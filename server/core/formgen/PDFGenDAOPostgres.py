@@ -28,7 +28,7 @@ class PDFGenDAOPostgres:
                               "building.address,"
                               "building.street,"
                               "building.street_number,"
-                              "building.block,"
+                              "premise.number,"
                               "building.block_type, "
                               "property_rights.regnumber,"
                               "property_rights.share_numerator,"
