@@ -33,8 +33,6 @@ def do_login():
     mutex = False
     return bottle.static_file(res[0], res[1])
 
-
-
 # #  Web application main  # #
 
 def main():
