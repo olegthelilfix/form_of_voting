@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+__author__ = 'Aleksandrov Oleg, 4231'
 
 import bottle
 
@@ -11,6 +13,7 @@ bottle.debug(True)
 app = bottle.app()
 
 mutex = False
+pg = PdfGen()
 
 @get('/') # or @route('/login')
 def login():
@@ -25,18 +28,26 @@ def login():
 @post('/') # or @route('/login', method='POST')
 def do_login():
     global mutex
-    while mutex :
-        print ("wait")
-    os.system("rm -R " + settings.DIR_TO_PROJECT + "result")
-    os.mkdir(settings.DIR_TO_PROJECT + "result")
-    os.mkdir(settings.DIR_TO_PROJECT + "result/img")
+    global pg
+
+    def getForm(name):
+        return int(request.forms.get(name))
+
+    while mutex:
+        pass
+
     mutex = True
-    pg = PdfGen()
-    p1 = request.forms.get('p1')
-    p2 = request.forms.get('p2')
-    res = pg.execute(int(p1), int(p2))
+
+    os.system("rm -R " + settings.DIR_TO_PROJECT + "result/img")
+    #os.mkdir(settings.DIR_TO_PROJECT + "result")
+    os.mkdir(settings.DIR_TO_PROJECT + "result/img")
+
+    res = pg.execute(getForm('p1'), getForm('p2'))
+    result = bottle.static_file(res[0], res[1])
+
     mutex = False
-    return bottle.static_file(res[0], res[1])
+
+    return result
 
 # #  Web application main  # #
 

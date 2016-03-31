@@ -19,14 +19,19 @@ class RenderHtml:
     def get_qs_and_small_qr_code(self, qs, date):
         i = 0
         item_list = []
+
         while i < len(qs):
-            item_list.append({"qs": qs[i],
-                              "dir": self.qr.create_small_qr_code(date[i], i)})
+            item_list.append({
+                              "qs": qs[i],
+                              "dir": self.qr.create_small_qr_code(date[i], i)
+                             })
             i += 1
+
         return item_list
 
     def render_html(self, qs, date):
         tmpl = Environment(loader=FileSystemLoader(self.__dirToProject + "html/"), trim_blocks=True)
+
         result = tmpl.get_template('template.html').render(fio=date["fio"],
                                                          city=date["city"],
                                                          street=date["street"],
@@ -38,18 +43,22 @@ class RenderHtml:
                                                          propertyS=date["propertyS"],
                                                          share=date["share"],
                                                          big_qr_code=self.qr.create_big_qr_code(
-                                                             self.formData.get_big_qr_code_date()),
-                                                         item_list=qs)
+                                                             self.formData.get_big_qr_code_date(), "img/big"),
+                                                         item_list=qs,
+                                                         big_qr_code2=self.qr.create_big_qr_code(
+                                                             self.formData.get_big_qr_code_date2(),"img/big2"))
         self.formData.end()
+
         return result
 
     def render_html_until_title(self, qs):
         tmpl = Environment(loader=FileSystemLoader(self.__dirToProject + "html/"), trim_blocks=True)
+
         return tmpl.get_template('template.html').render(
             big_qr_code=self.qr.create_big_qr_code(self.formData.get_big_qr_code_date()),
             item_list=qs)
 
-    def split_question_on_pages(self):
+    def render_doc(self):
         self.resultList = []
 
         title_date = self.formData.get_date()

@@ -6,7 +6,6 @@ import settings
 
 class QrCodeGen:
     __qr_code_form = "PNG"
-    __qr_code_dir_to_big = "img/big"
     __qr_code_dir_to_small = "img/small"
     __qr_code_save_dir = settings.DIR_TO_PROJECT + "result/"
     __qr_code_fit = True
@@ -29,9 +28,9 @@ class QrCodeGen:
 
     """ Функция создания qr code, который размещен в заголовке бланка, функция возвращает путь до qr кода"""
 
-    def create_big_qr_code(self, text):
+    def create_big_qr_code(self, text, name):
         code = self.create_qr_code(text)
-        new_dir = self.__qr_code_dir_to_big + "." + self.__qr_code_form
+        new_dir = name + "." + self.__qr_code_form
         self.save_qr_code_in_file(code, new_dir)
         return new_dir
 

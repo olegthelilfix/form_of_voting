@@ -1,3 +1,6 @@
+# -*- coding: utf8 -*-
+__author__ = 'Aleksandrov Oleg, 4231'
+
 import settings
 import pymysql
 import pymysql.cursors
@@ -6,10 +9,9 @@ class PDFGenDAOMySQL:
     _connect = None
 
     def __init__(self):
-        # conn = pg8000.connect(user="postgres", password="smith620695", database="form")
         self.conn = pymysql.connect(user=settings.DB_USER, passwd=settings.DB_PASSWORD,
-                                   db=settings.DB_NAME, host=settings.DB_HOST,
-                                   port=settings.DB_PORT)
+                                    db=settings.DB_NAME, host=settings.DB_HOST,
+                                    port=settings.DB_PORT)
 
     def __del__(self):
         self.conn.close()
@@ -22,7 +24,7 @@ class PDFGenDAOMySQL:
 
     def get_title(self, id_meeting, id_user):
         SQL='select Owner.name, Owner.patronymic, Owner.surname, Building.address, Building.street,Building.street_number,Premise.number,Building.block_type, Property_rights.regnumber, Property_rights.share_numerator, Property_rights.share_denominator,Property_rights.regdate,Premise.area_rosreestr from Meeting,Building, Premise, Property_rights, Owner, User where Meeting.id_meeting = ' + str(id_meeting) + ' AND User.id_user = ' + str(id_user) + ' AND User.id_owner = Owner.id_owner AND Meeting.id_building = Building.id_building AND Building.id_building = Premise.id_building AND Premise.id_premise = Property_rights.id_premise AND Property_rights.id_owner = Owner.id_owner'
-        print(SQL)
+
         return self.__execute(SQL)
 
     def __execute(self, query):

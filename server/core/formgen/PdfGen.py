@@ -14,9 +14,10 @@ class PdfGen:
 
     def execute(self, id_user, id_meeting):
         render = RenderHtml(id_user, id_meeting, self.__dirToProject)
-        value = render.split_question_on_pages()
-        with codecs.open(self.__dir, 'w', 'utf8') as f2:
-            f2.write(value)
+        value = render.render_doc()
+
+        with codecs.open(self.__dir, 'w', 'utf8') as file:
+            file.write(value)
 
         pdf = HTML(self.__dir)
         newName = str(id_user) + str(id_meeting) + self.__file_name

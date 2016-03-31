@@ -1,3 +1,6 @@
+# -*- coding: utf8 -*-
+__author__ = 'Aleksandrov Oleg, 4231'
+
 import pg8000
 import settings
 

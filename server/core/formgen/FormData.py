@@ -26,16 +26,21 @@ class FormData:
     __propertyS = '___________'
 
     def __init__(self, id_user, id_meeting):
+        # init db type
         if settings.DB == "mysql":
             self.__dao = PDFGenDAOMySQL()
         else:
             self.__dao = PDFGenDAOPostgres()
+
+        # clear date
+        self.__small_qr = []
+        self.__qs = []
+
+        # get date
         self.__id_meeting = str(id_meeting)
         self.__id_user = str(id_user)
         qs_small_qr = self.__dao.get_question(id_meeting)
 
-        self.__small_qr = []
-        self.__qs = []
         for value in qs_small_qr:
             self.__small_qr.append('s' + str(value[0]))
             self.__qs.append(value[1])
@@ -66,13 +71,20 @@ class FormData:
             "share": self.__share
         }
 
-    # версия| id_user | id_owner| id_premise | id meeting | количество страниц| и номер текущей|
+    # версия | 0 или 1| id_user | id_owner| id_premise | id meeting | количество страниц| и номер текущей|
     def get_big_qr_code_date(self):
-        return 'b' + self.__version.ljust(10, ' ') + '|' \
+        return 'b0|' + self.__get_big_qr_code_date()
+
+    def get_big_qr_code_date2(self):
+        return 'b1|' + self.__get_big_qr_code_date()
+
+    def __get_big_qr_code_date(self):
+        return self.__version.ljust(10, ' ') + '|' \
                + self.__id_user.ljust(10, ' ') + '|' \
                + self.__id_owner.ljust(10, ' ') + '|' \
                + self.__id_premise.ljust(10, ' ') + '|' \
                + self.__id_meeting.ljust(10, ' ')
+
 
     def get_questions(self):
         return self.__qs
