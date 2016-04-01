@@ -9,6 +9,8 @@ ctrl.controller('AuthCtrl', ['$scope', '$state', '$http', function ($scope, $sta
 {
     $scope.signIn = function(user)
     {
+        $state.go('tabs.home');
+
         $http({
             method: 'POST',
             url: "http://localhost:8085/auth",
@@ -20,10 +22,10 @@ ctrl.controller('AuthCtrl', ['$scope', '$state', '$http', function ($scope, $sta
         }).
         success(function(status)
         {
-            if (status == "OK")
-            {
+            //if (status == "OK")
+            //{
                 $state.go('tabs.home');
-            }
+            //}
         }).
         error(function(error)
         {
