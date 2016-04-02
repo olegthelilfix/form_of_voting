@@ -42,7 +42,7 @@ class FormData:
         qs_small_qr = self.__dao.get_question(id_meeting)
 
         for value in qs_small_qr:
-            self.__small_qr.append('s' + str(value[0]))
+            self.__small_qr.append('s' + str(value[2]))
             self.__qs.append(value[1])
 
         if str(self.__dao.check_premise(self.__id_user)[0][0]) != 'None':
@@ -56,6 +56,8 @@ class FormData:
             self.__share = str(round(result[0][9] * 100 / result[0][10], 2)) + '%'
             self.__formDate = str(result[0][11])
             self.__propertyS = str(result[0][12])
+            self.__id_premise = str(result[0][13])
+            self.__id_owner = str(result[0][14])
 
     def get_date(self):
         return {
