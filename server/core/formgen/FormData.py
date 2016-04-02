@@ -43,7 +43,7 @@ class FormData:
 
         for value in qs_small_qr:
             self.__small_qr.append('s' + str(value[2]))
-            self.__qs.append(value[1])
+            self.__qs.append(str(value[0]) + " " +value[1])
 
         if str(self.__dao.check_premise(self.__id_user)[0][0]) != 'None':
             result = self.__dao.get_title(id_meeting, id_user)
