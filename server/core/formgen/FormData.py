@@ -98,7 +98,7 @@ class FormData:
         return self.__small_qr
 
     def get_css(self):
-        return self.__css
+        return self.__css[0]
 
     def end(self):
         self.__qs = []
