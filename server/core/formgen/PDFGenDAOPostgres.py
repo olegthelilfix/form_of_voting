@@ -58,8 +58,8 @@ class PDFGenDAOPostgres:
                                                                                                                  "property_rights.id_owner = owner.id_owner")
 
     def get_css(self, id_meeting):
-        return '''
-.fio {
+        return ['''
+        .fio {
     font-size: 20px;
     font-weight: bold;
 }
@@ -68,47 +68,49 @@ class PDFGenDAOPostgres:
     font-size: 16px;
     font-weight: bold;
 }
-.title {
-    text-align: center;
-}
 
 .street {
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .houseNumb {
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .apartment {
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .formSeries {
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .formDateOfIssue{
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .propertyS {
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .share {
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .phoneNumber {
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .head {
+    font-size: 10px;
+}
+
+.title {
+    text-align: center;
     font-size: 20px;
 }
 
-        '''
+        ''']
 
     def __execute(self, query):
         cursor = self.conn.cursor()

@@ -20,6 +20,7 @@ class PDFGenDAOMySQL:
         return self.__execute("select id_premise from Users where id = " + str(id_user))
 
     def get_question(self, id_meeting):
+
         return self.__execute("select sequence_no, question, id_question  from Question where id_meeting = " + str(id_meeting) + " order by sequence_no asc")
 
     def get_title(self, id_meeting, id_user):
