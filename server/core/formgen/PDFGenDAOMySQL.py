@@ -17,21 +17,41 @@ class PDFGenDAOMySQL:
         self.conn.close()
 
     def check_premise(self, id_user):
-        return self.__execute("select id_premise from Users where id = " + str(id_user))
+        SQL = "select id_premise from Users where id = " + str(id_user)
+        result = self.__execute(SQL)
+
+        self.__debug(SQL, result)
+
+        return result
 
     def get_question(self, id_meeting):
+        SQL = "select sequence_no, question, id_question  from Question where id_meeting = " + str(id_meeting) + " order by sequence_no asc"
+        result = self.__execute(SQL)
 
-        return self.__execute("select sequence_no, question, id_question  from Question where id_meeting = " + str(id_meeting) + " order by sequence_no asc")
+        self.__debug(SQL, result)
+
+        return result
 
     def get_title(self, id_meeting, id_user):
         SQL='select Owner.name, Owner.patronymic, Owner.surname, Building.address, Building.street,Building.street_number,Premise.number,Building.block_type, Property_rights.regnumber, Property_rights.share_numerator, Property_rights.share_denominator,Property_rights.regdate,Premise.area_rosreestr, Premise.id_premise, Owner.id_owner from Meeting,Building, Premise, Property_rights, Owner, Users where Meeting.id_meeting = ' + str(id_meeting) + ' AND Users.id = ' + str(id_user) + ' AND Users.id_owner = Owner.id_owner AND Meeting.id_building = Building.id_building AND Building.id_building = Premise.id_building AND Premise.id_premise = Property_rights.id_premise AND Property_rights.id_owner = Owner.id_owner'
+        result = self.__execute(SQL)
 
-        return self.__execute(SQL)
+        self.__debug(SQL, result)
+
+        return result
 
     def get_css(self, id_meeting):
         SQL = "select Markup_style.css_style from Markup_style, Meeting where Meeting.id_meeting="+ str(id_meeting) + " AND Markup_style.id_markup_style = Meeting.id_markup_style"
+        result = self.__execute(SQL)
 
-        return self.__execute(SQL)
+        self.__debug(SQL, result)
+
+        return result
+
+    def __debug(self, SQL, result):
+        if settings.IS_DEBUG:
+            print("SQL = " + SQL + "\n")
+            print("RETURN = " + result + '\n')
 
     def __execute(self, query):
         try:
