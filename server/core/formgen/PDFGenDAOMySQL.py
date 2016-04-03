@@ -27,8 +27,8 @@ class PDFGenDAOMySQL:
 
         return self.__execute(SQL)
 
-    def get_css(self):
-        SQL = "select Markup_style.css_style from Markup_style, Meeting where Markup_style.id_markup_style = Meeting.id_markup_style"
+    def get_css(self, id_meeting):
+        SQL = "select Markup_style.css_style from Markup_style, Meeting where Meeting.id_meeting="+ str(id_meeting) + " AND Markup_style.id_markup_style = Meeting.id_markup_style"
 
         return self.__execute(SQL)
 
