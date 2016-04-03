@@ -12,8 +12,9 @@ class PdfGen:
     __file_name = 'result.pdf'
     __result_dir = __dirToProject + "result/"
 
-    def execute(self, id_user, id_meeting):
-        render = RenderHtml(id_user, id_meeting, self.__dirToProject)
+    def execute(self, id_user, id_meeting, css=None, qs=None):
+        render = RenderHtml(id_user, id_meeting, self.__dirToProject, css=css, qs=qs)
+
         value = render.render_doc()
 
         with codecs.open(self.__dir, 'w', 'utf8') as file:

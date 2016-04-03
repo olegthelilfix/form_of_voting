@@ -10,11 +10,28 @@ class RenderHtml:
     formData = None
     resultList = []
     __dirToProject = ""
+    __big_qr_code = ""
+    __big_qr_code2 = ""
+    __css = ""
+    __questions = None
 
-    def __init__(self, id_user, id_meeting, dirToProject):
+    def __init__(self, id_user, id_meeting, dirToProject, qs=None, css=None):
         self.formData = FormData(id_user, id_meeting)
         self.__dirToProject = dirToProject
         self.qr = QrCodeGen(dirToProject)
+        if css is not None:
+            self.__css = css
+        else:
+            self.__css = self.formData.get_css()
+
+        if qs is not None:
+            self.__questions = qs
+        else:
+            self.__questions = self.formData.get_questions()
+
+    def set_css_qs(self, css, qs):
+        self.__css = css
+        self.__questions = qs
 
     def get_qs_and_small_qr_code(self, qs, date):
         i = 0
@@ -42,12 +59,10 @@ class RenderHtml:
                                                          formDateOfIssue=date["formDateOfIssue"],
                                                          propertyS=date["propertyS"],
                                                          share=date["share"],
-                                                         big_qr_code=self.qr.create_big_qr_code(
-                                                             self.formData.get_big_qr_code_date(), "img/big"),
+                                                         big_qr_code=self.__big_qr_code,
                                                          item_list=qs,
-                                                         big_qr_code2=self.qr.create_big_qr_code(
-                                                             self.formData.get_big_qr_code_date2(),"img/big2"),
-                                                           css=self.formData.get_css())
+                                                         big_qr_code2=self.__big_qr_code2,
+                                                         css=self.__css)
         self.formData.end()
 
         return result
@@ -63,10 +78,11 @@ class RenderHtml:
         self.resultList = []
 
         title_date = self.formData.get_date()
-        questions = self.formData.get_questions()
         small_qr_code_date = self.formData.get_small_qr_code_date()
+        self.__big_qr_code = self.qr.create_big_qr_code(self.formData.get_big_qr_code_date(), "img/big")
+        self.__big_qr_code2 = self.qr.create_big_qr_code(self.formData.get_big_qr_code_date2(),"img/big2")
 
-        return self.render_html(self.get_qs_and_small_qr_code(questions, small_qr_code_date), title_date)
+        return self.render_html(self.get_qs_and_small_qr_code(self.__questions, small_qr_code_date), title_date)
 
 
 
