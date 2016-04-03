@@ -50,8 +50,8 @@ class PDFGenDAOMySQL:
 
     def __debug(self, SQL, result):
         if settings.IS_DEBUG:
-            print("SQL = " + SQL + "\n")
-            print("RETURN = " + result + '\n')
+            print("SQL = " + str(SQL) + "\n")
+            print("RETURN = " + str(result) + '\n')
 
     def __execute(self, query):
         try:
