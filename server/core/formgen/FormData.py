@@ -24,6 +24,7 @@ class FormData:
     __share = '____________'
     __formDate = '_________'
     __propertyS = '___________'
+    __css = ''
 
     def __init__(self, id_user, id_meeting):
         # init db type
@@ -59,6 +60,8 @@ class FormData:
             self.__id_premise = str(result[0][13])
             self.__id_owner = str(result[0][14])
 
+        self.__css = self.__dao.get_css(id_meeting)
+
     def get_date(self):
         return {
             "fio": self.__fio,
@@ -93,6 +96,9 @@ class FormData:
 
     def get_small_qr_code_date(self):
         return self.__small_qr
+
+    def get_css(self):
+        return self.__css
 
     def end(self):
         self.__qs = []

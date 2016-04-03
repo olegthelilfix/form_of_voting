@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
-        .title {
-            text-align: center;
-        }
-
         .rightimg {
             float: right;
         }
@@ -28,16 +24,6 @@
             padding-right: 25px;
             display: inline-block;
             font-size: 20px;
-        }
-
-        .fio {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .address {
-            font-size: 16px;
-            font-weight: bold;
         }
 
         .td {
@@ -114,6 +100,7 @@
             page-break-inside: avoid;
         }
 
+        {{css}}
 
     </style>
 </head>
@@ -131,15 +118,19 @@
         <tr>
             <!--<td></td>-->
             <td class="bgtd">
-                Ф.И.О. собственника: <span class="fio">{{ fio }}</span><br>
-                Адрес помещения: город <span class="address">{{ city }}</span>,<br>
-                Улица: <span class="address"> {{ street }} </span> Дом: <span class="address">{{ houseNumb }}</span>,<br>
-                Квартира: <span class="address">{{ apartment }}</span>,<br>
-                Свидетельство о государственной регистрации права собственности: {{ formSeries }},
-                Дата выдачи: {{ formDateOfIssue }},<br>
-                Общая площадь помещения(кв.м): {{ propertyS }}<br>
-                Размер доли в праве собственности: {{ share }}<br>
-                Телефон: {{ phoneNumber }}
+                <span class="head" >
+                    Ф.И.О. собственника: <span class="fio">{{ fio }}</span><br>
+                    Адрес помещения: город <span class="address">{{ city }}</span>,<br>
+                    Улица: <span class="street"> {{ street }}</span>
+                    Дом: <span class="houseNumb">{{ houseNumb }}</span>,<br>
+                    Квартира: <span class="apartment">{{ apartment }}</span>,<br>
+                    Свидетельство о государственной регистрации права собственности:
+                                        <span class="formSeries">{{ formSeries }}</span> ,
+                    Дата выдачи: <span class="formDateOfIssue">{{ formDateOfIssue }}</span>,<br>
+                    Общая площадь помещения(кв.м): <span class="propertyS"> {{ propertyS }} </span><br>
+                    Размер доли в праве собственности:<span class="share"> {{ share }} </span> <br>
+                    Телефон: <span class="phoneNumber"> {{ phoneNumber }} </span>
+                </span>
             </td>
             <!--<td></td>-->
             <td><img src='{{ big_qr_code2 }}'></td>

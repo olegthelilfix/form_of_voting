@@ -17,13 +17,18 @@ class PDFGenDAOMySQL:
         self.conn.close()
 
     def check_premise(self, id_user):
-        return self.__execute("select id_premise from User where id_user = " + str(id_user))
+        return self.__execute("select id_premise from Users where id = " + str(id_user))
 
     def get_question(self, id_meeting):
         return self.__execute("select sequence_no, question, id_question  from Question where id_meeting = " + str(id_meeting) + " order by sequence_no asc")
 
     def get_title(self, id_meeting, id_user):
-        SQL='select Owner.name, Owner.patronymic, Owner.surname, Building.address, Building.street,Building.street_number,Premise.number,Building.block_type, Property_rights.regnumber, Property_rights.share_numerator, Property_rights.share_denominator,Property_rights.regdate,Premise.area_rosreestr, Premise.id_premise, Owner.id_owner from Meeting,Building, Premise, Property_rights, Owner, User where Meeting.id_meeting = ' + str(id_meeting) + ' AND User.id_user = ' + str(id_user) + ' AND User.id_owner = Owner.id_owner AND Meeting.id_building = Building.id_building AND Building.id_building = Premise.id_building AND Premise.id_premise = Property_rights.id_premise AND Property_rights.id_owner = Owner.id_owner'
+        SQL='select Owner.name, Owner.patronymic, Owner.surname, Building.address, Building.street,Building.street_number,Premise.number,Building.block_type, Property_rights.regnumber, Property_rights.share_numerator, Property_rights.share_denominator,Property_rights.regdate,Premise.area_rosreestr, Premise.id_premise, Owner.id_owner from Meeting,Building, Premise, Property_rights, Owner, Users where Meeting.id_meeting = ' + str(id_meeting) + ' AND Users.id = ' + str(id_user) + ' AND Users.id_owner = Owner.id_owner AND Meeting.id_building = Building.id_building AND Building.id_building = Premise.id_building AND Premise.id_premise = Property_rights.id_premise AND Property_rights.id_owner = Owner.id_owner'
+
+        return self.__execute(SQL)
+
+    def get_css(self):
+        SQL = "select Markup_style.css_style from Markup_style, Meeting where Markup_style.id_markup_style = Meeting.id_markup_style"
 
         return self.__execute(SQL)
 

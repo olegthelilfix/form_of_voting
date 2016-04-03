@@ -46,7 +46,8 @@ class RenderHtml:
                                                              self.formData.get_big_qr_code_date(), "img/big"),
                                                          item_list=qs,
                                                          big_qr_code2=self.qr.create_big_qr_code(
-                                                             self.formData.get_big_qr_code_date2(),"img/big2"))
+                                                             self.formData.get_big_qr_code_date2(),"img/big2"),
+                                                           css=self.formData.get_css())
         self.formData.end()
 
         return result
