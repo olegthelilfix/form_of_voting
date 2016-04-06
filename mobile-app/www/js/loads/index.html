@@ -3,6 +3,9 @@
         <ion-list>
             <ion-item collection-repeat="t in token" ng-class="{'red-item': t.success}">
                 {{t}}
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="token.splice($index, 1)">
+                </ion-delete-button>
             </ion-item>
         </ion-list>
     </ion-content>
