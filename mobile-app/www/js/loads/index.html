@@ -1,7 +1,7 @@
 <ion-view view-title="Loadings">
     <ion-content padding="true">
         <ion-list>
-            <ion-item collection-repeat="t in token" ng-class="{'red-item': t.success}">
+            <ion-item collection-repeat="t in token">
                 {{t}}
                 <ion-delete-button class="ion-minus-circled"
                                    ng-click="token.splice($index, 1)">
