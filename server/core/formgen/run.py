@@ -72,7 +72,7 @@ qs = " "
 def edit():
     global css
     global qs
-    return template(settings.DIR_TO_PROJECT + 'template/edit.html', css=css, qs=qs)
+    return template(settings.DIR_TO_PROJECT + 'template/edit.html', css=css, qs=qs[0])
 
 
 @post('/edit')
