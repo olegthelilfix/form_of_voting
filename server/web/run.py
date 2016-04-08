@@ -2,11 +2,12 @@ import io
 import json
 
 # from PIL import Image
+# from ScanFormAPI import *
+
 from beaker.middleware import SessionMiddleware
 from cork import Cork
 
 import bottle
-# from ScanFormAPI import *
 from bottle import *
 from uploadManager import UploadManager
 from tokenContainer import TokenContainer
@@ -77,7 +78,13 @@ def logout():
 @authorize()
 def check_status():
     session = bottle.request.environ.get('beaker.session')
-    return json.dumps(TokenContainer.get(session.get('username')))
+    result = []
+
+    for tid in TokenContainer.get(session.get('username')):
+        # result.append(getStatus(tid))
+        result.append(tid)
+
+    return json.dumps(result)
 
 
 @route('/upload', method='POST')
@@ -94,6 +101,7 @@ def do_upload():
     # UploadManager.submit(startScanForm, pil_image, id_token)
     # TokenContainer.add(session.get('username'), id_token)
 
+    TokenContainer.add(session.get('username'), "asdasd")
     TokenContainer.add(session.get('username'), "asdasd")
 
     return "success"

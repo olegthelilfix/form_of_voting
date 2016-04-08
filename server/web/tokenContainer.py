@@ -15,3 +15,7 @@ class TokenContainer:
     @classmethod
     def get(cls, uid):
         return cls.__container[uid]
+
+    @classmethod
+    def remove(cls, uid, token):
+        return cls.__container[uid].remove(token)
