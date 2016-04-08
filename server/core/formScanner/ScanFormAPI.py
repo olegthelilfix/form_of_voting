@@ -2,7 +2,7 @@ from ScanResult import *
 from TokenFileWorker import *
 from AlgorithmScan import *
 from PIL import Image
-
+import profile
 
 # Имя файла с изображением бланка.
 #---------------------------------------------------
@@ -45,8 +45,10 @@ def getStatus( idToken ):
 image = Image.open( SOURCE_IMAGE )
 idToken = generateIdToken()
 startScanForm( image,\
-              idToken )
-print( getStatus( idToken ) )
+               idToken )
+#profile.run('startScanForm( image,\
+#             idToken )')
+#print( getStatus( idToken ) )
 
     
 

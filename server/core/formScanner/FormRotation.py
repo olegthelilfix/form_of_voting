@@ -75,11 +75,12 @@ class FormRotation:
 
     #Возврат 1 - если был осуществлен доворот
     #        0 - если не был
+    # также осущ. возврат угла поворота
     def start( self ):
         result = 0
         image = self.imagePIL
         topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners = self.coordinatesOfQRCode
-        
+        rotationValue = 0
         if ( bottomLeftCorners[ X ] != topLeftCorners[ X ] ):
             rotationValue = self.getRotateValue( topLeftCorners, bottomLeftCorners, topRightCorners )
             #self.rotateImage( self.imageFileName, rotationValue )
@@ -88,4 +89,4 @@ class FormRotation:
             result = 1
             #self.imagePIL.save( "rotatiom.png" )
             
-        return result, image
+        return result, image, rotationValue
