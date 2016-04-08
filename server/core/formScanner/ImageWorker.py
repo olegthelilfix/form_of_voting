@@ -69,7 +69,7 @@ class ImageWorker:
             
             height, width = imageOpenCV.shape[:2]
             size = width, height
-            self.imagePIL = Image.fromstring( flagConvert, size, imageOpenCV.tostring())
+            self.imagePIL = Image.frombytes( flagConvert, size, imageOpenCV.tostring())
         
     def copyPILImageToOpenCV( self, imagePIL ):
         
