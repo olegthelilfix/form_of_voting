@@ -84,6 +84,7 @@ def check_status():
     session = bottle.request.environ.get('beaker.session')
     result = []
 
+    print("Start check status...")
     for tid in TokenContainer.get(session.get('username')):
         result.append(getStatus(tid))
 
@@ -96,11 +97,26 @@ def do_upload():
     session = bottle.request.environ.get('beaker.session')
     print("Session from simple_webapp", repr(session))
 
-    req_img = request.files.get('file')
+    print("Start geting image...")
+    req_image = request.files.get('file')
+    destination = os.path.abspath(os.pardir)
 
-    pil_image = Image.open(io.BytesIO(req_img.file.read()))
+    if os.path.isdir(destination):
+        destination = os.path.join(destination, req_image.filename)
+
+    if not os.path.exists(destination):
+        req_image.save(destination)
+    else:
+        print("Error: Image already upload")
+
+    print("Start convert... " + destination)
+    pil_image = Image.open(destination)
+
+    print("Generate token...")
     id_token = generateIdToken()
+    print(id_token)
 
+    print("Submit task...")
     UploadManager.submit(startScanForm, pil_image, id_token)
     TokenContainer.add(session.get('username'), id_token)
 

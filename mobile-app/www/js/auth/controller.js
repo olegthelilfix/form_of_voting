@@ -13,7 +13,7 @@ ctrl.controller('AuthCtrl', ['$scope', '$state', '$http', function ($scope, $sta
 
         $http({
             method: 'POST',
-            url: "http://13.69.244.156:80/auth",
+            url: "http://40.113.81.187:80/auth",
             data: {
                 username: user.username,
                 password: user.password

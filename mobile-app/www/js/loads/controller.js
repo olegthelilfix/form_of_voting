@@ -8,13 +8,13 @@ var ctrl = angular.module('voting.LoadsCtrl', [
 
 ctrl.controller('LoadsCtrl', ['$scope', '$http', '$interval', function ($scope, $http, $interval)
 {
-    $scope.token = ['asdasd', 'asdasdad', 'asdasdasd'];
+    $scope.token = [];
 
     function fn ()
     {
         $http({
             method: 'GET',
-            url: "http://13.69.244.156:80/check_status",
+            url: "http://40.113.81.187:80/check_status",
             headers: {'Content-Type': 'application/json'}
         }).
         success(function(token)

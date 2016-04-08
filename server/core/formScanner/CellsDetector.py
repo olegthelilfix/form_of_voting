@@ -121,32 +121,11 @@ class CellsDetector:
                                 width,
                                 height )
     
-    def cutCenterOfCell( self, imageCell ):
+    def start( self ):
 
-        #обрезаем по 3 рамки сверху,снизу,слева,справа
-        """
-        countWidthOfBox = 3
-        reserve = RESERVE_PIXELS_VALUE
-        xStart = self.getX_PixelsByMillimeters( WIDTH_OF_BOX ) * countWidthOfBox + reserve 
-        yStart = self.getX_PixelsByMillimeters( WIDTH_OF_BOX ) * countWidthOfBox + reserve 
-        width = imageCell.width - xStart * 2
-        height = imageCell.height - yStart * 3
-        return self.crop_image( imageCell, \
-                                0, \
-                                xStart, \
-                                yStart,
-                                width,
-                                height )
-        """
-        return imageCell
-    def start( self,\
-               firstCellFileName = "firstCell.png",\
-               secondCellFileName = "secondCell.png",\
-               thirdCellFileName = "thirdCell.png" ):
-        
-        self.cutFirstCell().save( firstCellFileName )
-        self.cutSecondCell().save( secondCellFileName )
-        self.cutThirdCell().save( thirdCellFileName )
+        return self.cutFirstCell(),\
+               self.cutSecondCell(),\
+               self.cutThirdCell()
         
                                  
                          
