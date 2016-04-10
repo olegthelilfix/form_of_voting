@@ -76,7 +76,7 @@ ctrl.controller('HomeCtrl', ['$scope', '$cordovaCamera', function ($scope, $cord
             options.chunkedMode = true;
 
             var ft = new FileTransfer();
-            ft.upload(fileURL, encodeURI("http://localhost:8085/upload"), onUploadSuccess, onUploadFail, options);
+            ft.upload(fileURL, encodeURI("http://13.69.244.156:80/upload"), onUploadSuccess, onUploadFail, options);
         }
         catch (err)
         {

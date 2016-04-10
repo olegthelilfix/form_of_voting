@@ -14,7 +14,7 @@ ctrl.controller('LoadsCtrl', ['$scope', '$http', '$interval', function ($scope, 
     {
         $http({
             method: 'GET',
-            url: "http://localhost:8085/check_status",
+            url: "http://13.69.244.156:80/check_status",
             headers: {'Content-Type': 'application/json'}
         }).
         success(function(token)

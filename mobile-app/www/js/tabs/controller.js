@@ -11,7 +11,7 @@ ctrl.controller('TabsCtrl', ['$scope', '$state', '$http', function ($scope, $sta
     {
         $http({
             method: 'GET',
-            url: "http://localhost:8085/logout",
+            url: "http://13.69.244.156:80/logout",
             headers: {'Content-Type': 'application/json'}
         });
 
