@@ -69,42 +69,6 @@ class PDFGenDAOPostgres:
     font-weight: bold;
 }
 
-.street {
-    font-size: 10px;
-}
-
-.houseNumb {
-    font-size: 10px;
-}
-
-.apartment {
-    font-size: 10px;
-}
-
-.formSeries {
-    font-size: 10px;
-}
-
-.formDateOfIssue{
-    font-size: 10px;
-}
-
-.propertyS {
-    font-size: 10px;
-}
-
-.share {
-    font-size: 10px;
-}
-
-.phoneNumber {
-    font-size: 10px;
-}
-
-.head {
-    font-size: 10px;
-}
-
 .title {
     text-align: center;
     font-size: 20px;
