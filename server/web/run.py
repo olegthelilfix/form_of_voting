@@ -98,19 +98,23 @@ def do_upload():
     print("Session from simple_webapp", repr(session))
 
     print("Start geting image...")
-    req_image = request.files.get('file')
-    destination = os.path.abspath(os.pardir)
+    req_img = request.files.get('file')
 
-    if os.path.isdir(destination):
-        destination = os.path.join(destination, req_image.filename)
+    print("Start convert... ")
+    pil_image = Image.open(io.BytesIO(req_img.file.read()))
 
-    if not os.path.exists(destination):
-        req_image.save(destination)
-    else:
-        print("Error: Image already upload")
-
-    print("Start convert... " + destination)
-    pil_image = Image.open(destination)
+    # destination = os.path.abspath(os.pardir)
+    #
+    # if os.path.isdir(destination):
+    #     destination = os.path.join(destination, req_image.filename)
+    #
+    # if not os.path.exists(destination):
+    #     req_image.save(destination)
+    # else:
+    #     print("Error: Image already upload")
+    #
+    # print("Start convert... " + destination)
+    # pil_image = Image.open(destination)
 
     print("Generate token...")
     id_token = generateIdToken()
