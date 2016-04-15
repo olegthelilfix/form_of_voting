@@ -59,7 +59,7 @@ class ListScanResult:
             scanResult = ScanResult()
             #большой код
             bigQRCodeData = BigQRCodeData()
-            bigQRCodeData.setData( item["m_BigQRCodeData"]["m_Data"] )
+            bigQRCodeData.setDataFromJSON( item["m_BigQRCodeData"] )
             scanResult.setBigQRCodeData(bigQRCodeData)
             scanResult.setIdToken( item["m_IdToken"] )
             scanResult.setStatus(item["m_Status"])

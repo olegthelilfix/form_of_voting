@@ -8,4 +8,4 @@ class UploadManager:
 
     @classmethod
     def submit(cls, fn, *args, **kwargs):
-        cls.__executor.submit(fn, args, kwargs)
+        return cls.__executor.submit(fn, *args, **kwargs)

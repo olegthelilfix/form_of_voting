@@ -1,8 +1,12 @@
 import io
 import json
+import sys
+import os
 
-# from PIL import Image
-# from ScanFormAPI import *
+sys.path.append(os.path.abspath(os.pardir) + '/core/formScanner')
+
+from PIL import Image
+from ScanFormAPI import *
 
 from beaker.middleware import SessionMiddleware
 from cork import Cork
@@ -80,9 +84,10 @@ def check_status():
     session = bottle.request.environ.get('beaker.session')
     result = []
 
+    print("Start check status...")
     for tid in TokenContainer.get(session.get('username')):
-        # result.append(getStatus(tid))
-        result.append(tid)
+        print("status of" + str(tid))
+        result.append(getStatus(tid))
 
     return json.dumps(result)
 
@@ -93,26 +98,29 @@ def do_upload():
     session = bottle.request.environ.get('beaker.session')
     print("Session from simple_webapp", repr(session))
 
+    print("Start geting image...")
     req_img = request.files.get('file')
 
-    # pil_image = Image.open(io.BytesIO(req_img.file))
-    # id_token = generateIdToken()
+    print("Start convertation...")
+    with io.BytesIO(req_img.file.read()) as b:
+        pil_image = Image.open(b)
 
-    # UploadManager.submit(startScanForm, pil_image, id_token)
-    # TokenContainer.add(session.get('username'), id_token)
+    print("Generate token...")
+    id_token = generateIdToken()
+    print(id_token)
 
-    TokenContainer.add(session.get('username'), "asdasd")
-    TokenContainer.add(session.get('username'), "asdasd")
+    print("Submit task...")
+    UploadManager.submit(startScanForm, pil_image, id_token)
+    TokenContainer.add(session.get('username'), id_token)
 
     return "success"
-
 
 # #  Web application main  # #
 
 def main():
     # Start the Bottle webapp
     bottle.debug(True)
-    bottle.run(host='localhost', port=8085, app=app, quiet=False, reloader=True)
+    bottle.run(host='0.0.0.0', port=80, app=app, quiet=False, reloader=True)
 
 
 if __name__ == "__main__":

@@ -21,7 +21,7 @@ FILED_SMALL_QR_CODE = 'THERE_IS_NOTHING_ABOUT_SMALL_QR_CODE'
 
 # Что-то пошло не так в распознавании бланка (помимо вышеописанных ситуаций
 # с QR кодами).
-FAILED = 'FAILED'
+FAILED = 'SOMETHING_IS_GOING_WRONG'
 
 # Запись о результет распознавания НЕДЕЙСТВИТЕЛЬНА.
 # Она не присутствует в базе.

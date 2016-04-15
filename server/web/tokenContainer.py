@@ -14,8 +14,12 @@ class TokenContainer:
 
     @classmethod
     def get(cls, uid):
-        return cls.__container[uid]
+        if uid in cls.__container:
+            return cls.__container[uid]
+        return []
 
     @classmethod
     def remove(cls, uid, token):
-        return cls.__container[uid].remove(token)
+        if uid in cls.__container:
+            return cls.__container[uid].remove(token)
+        return []

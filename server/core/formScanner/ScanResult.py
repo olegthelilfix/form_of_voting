@@ -1,6 +1,7 @@
 import json
 from ScanResultEnums import *
 from BigQRCodeData import *
+from SmallQRCodeData import *
 
 class ScanResult:
 
@@ -10,6 +11,7 @@ class ScanResult:
         self.m_Status = UNAVAILABLE_SCAN_RESULT_RECORD
         self.m_BigQRCodeData = BigQRCodeData()
         self.m_SmallQRCodeDataList = []
+        #self.m_SmallQRCodeDataList.append( SmallQRCodeData() )
 
     def addSmallQRCodeData( self,\
                             smallQRCodeData ):

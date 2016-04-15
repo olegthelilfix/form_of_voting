@@ -6,7 +6,7 @@ import profile
 
 # Имя файла с изображением бланка.
 #---------------------------------------------------
-SOURCE_IMAGE = "003.jpg"
+SOURCE_IMAGE = "001_2.jpg"
 #---------------------------------------------------
 
 tokenFileWorker = TokenFileWorker()
@@ -32,7 +32,15 @@ def startScanForm( image,\
     scanResult = startScan( image,
                             idToken )
     #заносим результат в TokeData( файл с результатами распознавания ).
-    tokenFileWorker.setScanResult( scanResult )
+    status = scanResult.getStatus()
+
+    # Если все ок - пишем результат ЦЕЛИКОМ.
+    if ( status == SUCCESS ):
+        tokenFileWorker.setScanResult( scanResult )
+    else:
+        # В противном случае, правим статус.
+        tokenFileWorker.setScanStatus( idToken,
+                                       status )
 
 # получаем статус распознавания по маркеру.
 def getStatus( idToken ):
@@ -42,10 +50,10 @@ def getStatus( idToken ):
     
 
 #ПРИМЕР ИСПОЛЬЗОВАНИЯ
-image = Image.open( SOURCE_IMAGE )
-idToken = generateIdToken()
-startScanForm( image,\
-               idToken )
+#image = Image.open( SOURCE_IMAGE )
+#idToken = generateIdToken()
+#startScanForm( image,\
+#               idToken )
 #profile.run('startScanForm( image,\
 #             idToken )')
 #print( getStatus( idToken ) )

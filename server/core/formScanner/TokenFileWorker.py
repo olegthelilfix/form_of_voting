@@ -14,15 +14,25 @@ class TokenFileWorker:
         def __init__( self,\
                       fileName = RESULTS_FILE_NAME ):
                 self.m_TokenFileName = fileName
-
+                
         # предназначен для ПЕРЕУСТАНОВКИ значения scanResult
         # по известному idToken
         # ПРЕДПОЛАГАЕТСЯ, ЧТО TOKEН СУЩЕСТВУЕТ
+                
         def setScanResult( self,\
                            scanResult ):
                 
                 self.addScanResult( scanResult,\
                                     TO_EXIST_SCAN_RESULT )
+
+
+        def setScanStatus( self,\
+                            idToken,\
+                            status ):
+                        scanResult = ScanResult()
+                        scanResult.setIdToken( idToken )
+                        scanResult.setStatus( status )
+                        self.setScanResult( scanResult )
                 
 
         def loadScanResults( self,\

@@ -1,20 +1,3 @@
-# Имена папок, от которых зависит работа исходного кода.
-#---------------------------------------------------
-FOLDER_POSSIBLE_BIG_QR_CODE = "possible big qr codes/"
-FOLDER_POSSIBLE_QR_CODE = "possible qr codes/"
-FOLDER_IMAGE_WITH_CELLS = "image with cells/"
-FOLDER_CELLS = "cells/"
-FOLDER_QR_CODES = "qr codes/"
-#---------------------------------------------------
-# Имена файлов, от которых НЕ зависит работа исходного кода.
-#---------------------------------------------------
-IMAGE_FILENAME_BIG_QR_CODE = "big_code.png"
-IMAGE_FILENAME_THRESH_BIG_QR_CODE = "thresh_big_code.png"
-IMAGE_FILENAME_WITH_POSSIBLE_QR_CODE = "img_with_possible_qr.png"
-IMAGE_FILENAME_ONLY_FORM = "onlyForm.png"
-IMAGE_FILENAME_IMAGE_WITH_CELLS = "image_with_cells.png"
-PREFIX_FOR_SMALL_QR_CODE_IMAGE_FILENAME = "small_qr_code_"
-PREFIX_FOR_CELL_IMAGE_FILENAME = "cell_"
 #---------------------------------------------------
 # Имя файла с изображением бланка.
 #---------------------------------------------------
@@ -42,6 +25,8 @@ from ScanResultEnums import *
 counter = 0
 
 COUNT_OF_QR_CODES_ON_PAGE = 3
+
+FAST_ALGORITHM_IS_WORKED = 0
 
 
 TRESHOLD_ON_MARKED_STATUS = 0.086
@@ -222,6 +207,32 @@ def getPILImageFromOpenCV( imageOpenCV ):
         return imagePIL
 
 
+def bigQRCodeIsNotOnTheFirstPage( coordinateOfQRCode,\
+                                  image):
+
+    topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners = coordinateOfQRCode
+   
+    widthOfQRCode = topRightCorners[ X ] - topLeftCorners[ X ]
+    PIXELS_DISTANCE_TO_LEFT_SIDE = getX_PixelsFromSourceImageByQRCode( widthOfQRCode, DISTANCE_FROM_CENTER_BIG_QR_CODE_TO_RIGHT_SIDE_BIG_QR_CODE )
+   
+    topLeftCorners = topLeftCorners[ x ] + PIXELS_DISTANCE_TO_LEFT_SIDE,\
+                     topLeftCorners[ y ]
+    bottomLeftCorners = bottomLeftCorners[x ] + PIXELS_DISTANCE_TO_LEFT_SIDE, \
+                        bottomLeftCorners[ y ]
+    topRightCorners = topRightCorners[ x ] + PIXELS_DISTANCE_TO_LEFT_SIDE, \
+                      topRightCorners[ y ]
+    bottomRightCorners = bottomRightCorners[ x ] + PIXELS_DISTANCE_TO_LEFT_SIDE, \
+                         bottomRightCorners[ y ]
+    coordinateOfQRCode = topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners
+    return coordinateOfQRCode
+
+# Проверка - является ли код БОЛЬШИМ.
+# У Большого кода сперва следует прописной символ b (код по ASCII 98)
+def isItBigQRCode( symData ):
+
+        
+        return symData[0] == BIG_QR_CODE_SYMBOL_PREFIX
+
 # Пробуем отыскать большой QR код на листе СРАЗУ.
 # Это в разы ускорит процесс
 def tryToFindBigQRCodeInFullForm( imageWorker ):
@@ -229,6 +240,7 @@ def tryToFindBigQRCodeInFullForm( imageWorker ):
 
         res = 0
         coordinateOfQRCode = []
+        symData = ""
         for i in range( 1, 10 ):
                         #print( "HI!")
 
@@ -240,24 +252,25 @@ def tryToFindBigQRCodeInFullForm( imageWorker ):
                         i#mageWorker.getPILImage().save("JUST_FOR_TEST_1.jpg")
                         symbols = scanImageForQRCode( imageWorker.getPILImage(), 0 )
                         if ( len( symbols ) > 0 ):
-                                print(len(symbols))
+                                #print(len(symbols))
                                 k = 0
                                 for sym in symbols:
                                         sym = symbols[ k ]
                                         k = k + 1
                                         symData = sym.data
                                         # ЭТО БОЛЬШОЙ КОД
-                                        print( 'YES!')
-                                        print(symData[0])
-                                        if ( symData[0] == 98 ):
-                                                print('QR CODE ALREASDY!')
+                                        #print( 'YES!')
+                                        #print(symData)
+                                        if ( isItBigQRCode( symData ) ):
+                                                #print('QR CODE ALREASDY!')
+                                                FAST_ALGORITHM_IS_WORKED = 1
                                                 topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners = [item for item in sym.locator]
                                                 coordinateOfQRCode = topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners
                                                 res = 1
-                                                return res, coordinateOfQRCode
+                                                return res, coordinateOfQRCode, symData
                                         
                         
-        return res, coordinateOfQRCode
+        return res, coordinateOfQRCode, symData
 
         
 #ВОЗВРАЩАЕТ ЛИСТ
@@ -287,7 +300,10 @@ def thirdVariantOfAlgorithm( imageWorker, \
         coordinateOfQRCode = []
 
         imageWorker.copyPILImageToOpenCV(sourceImage)
-        res, coordinateOfQRCode = tryToFindBigQRCodeInFullForm( imageWorker )
+
+        # Пытаемся сперва СРАЗУ обнаружить коды
+        res, coordinateOfQRCode, symData = tryToFindBigQRCodeInFullForm( imageWorker )
+        
         while( 1 ):
                 if ( res == 0 ):
                         crop_img = crop_image( sourceImage,\
@@ -310,13 +326,19 @@ def thirdVariantOfAlgorithm( imageWorker, \
                                 if ( len( symbols ) > 0 ):
                                         sym = symbols[ 0 ]
                                         symData = sym.data
-                                        topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners = [item for item in sym.locator]
-                                        coordinateOfQRCode = topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners
-                                        break
+                                        if ( isItBigQRCode( symData ) ):
+                                                topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners = [item for item in sym.locator]
+                                                coordinateOfQRCode = topLeftCorners,bottomLeftCorners,bottomRightCorners,topRightCorners
+                                                break
                 #coordinateOfQRCode = findFirstQRCode( crop_img )
                 if ( len( coordinateOfQRCode ) != 0 ):
-                            print("start_x, y", start_x, start_y)
+                            #print("start_x, y", start_x, start_y)
 
+                            bigQRCodeData = BigQRCodeData()
+                            #print( symData )
+                            bigQRCodeData.parseDataFromStr( str(symData) )
+
+                                
                             if ( res == 0 ):
                                     coordinateOfQRCode = correctCoordinateOfQRCode( coordinateOfQRCode, start_x, start_y )
 
@@ -336,7 +358,7 @@ def thirdVariantOfAlgorithm( imageWorker, \
                             #сохранение попытки поворота
                             #imageRotated.save("tryToRotate.png")
                             #print( result )
-                            #Если был поворот и мы еще не поворачивали - снова ищем код, т.к. координаты сменились
+                            #Если был поворот
                             if ( result == 1 and rotatedStatus == IS_NOT_ROTATED ):
 
                                     #image = imageRotated
@@ -347,15 +369,33 @@ def thirdVariantOfAlgorithm( imageWorker, \
                                     xCenterPoint = int ( width_source_image / 2 );
                                     
                                     yCenterPoint = int ( height_source_mage / 2 )
-                                    print( "Before getNewPointByCoordinates", coordinateOfQRCode )
-                                    coordinateOfQRCode = getNewPointByCoordinatesOfCode( coordinateOfQRCode,\
-                                                                                         xCenterPoint,\
-                                                                                         yCenterPoint,\
-                                                                                         rotationValue )
-                                    print( "After getNewPointByCoordinates", coordinateOfQRCode )
+                                    #print( "Before getNewPointByCoordinates", coordinateOfQRCode )
+
+                                    # если сработал быстрый алгоритм можно быстро отыскать НОВЫЕ координаты.
+                                    #print(FAST_ALGORITHM_IS_WORKED)
+                                    if ( FAST_ALGORITHM_IS_WORKED == 0 ):
+                                            #print("FAST")
+                                            imageWorker.copyPILImageToOpenCV(imageRotated)
+                                            res, coordinateOfQRCode, symData = tryToFindBigQRCodeInFullForm( imageWorker )
+                                            
+                                    else:
+                                            #print("NOT FAST")
+                                            coordinateOfQRCode = getNewPointByCoordinatesOfCode( coordinateOfQRCode,\
+                                                                                                 xCenterPoint,\
+                                                                                                 yCenterPoint,\
+                                                                                                 rotationValue )
+                                    #print( "After getNewPointByCoordinates", coordinateOfQRCode )
                                                                     
 
-                            print ( coordinateOfQRCode )
+                            #print ( coordinateOfQRCode )
+                            # Это код НЕ первой страницы?
+                            if ( bigQRCodeData.getPageBit() == str(0) ):
+                                # корректируем его координаты.
+                                #print("CORRECT BIG CODE")
+                                coordinateOfQRCode = bigQRCodeIsNotOnTheFirstPage( coordinateOfQRCode,\
+                                                                                   imageRotated )
+                            #print ( "NEW",coordinateOfQRCode )
+                            
                             sourceImage, coordinateOfQRCode = detectFormByBigQRCode( imageRotated,\
                                                                                      coordinateOfQRCode )
 
@@ -382,7 +422,7 @@ def getNewPoint( xStartPoint,\
                  currentAngle ):
 
         original = abs(currentAngle)
-        print( currentAngle )
+        #print( currentAngle )
         currentAngle = abs(currentAngle)
         if ( currentAngle > 0 ):
                 currentAngle = math.radians( currentAngle )                     
@@ -398,8 +438,8 @@ def getNewPoint( xStartPoint,\
                             yStartPoint * math.cos( currentAngle ) )
                 
 
-        print ( xCenterPoint )
-        print( xEndPoint )
+        #print ( xCenterPoint )
+        #print( xEndPoint )
 
         #45.5 = ПЕЧАЛЬ БЕДА
         xEndPoint = int( xEndPoint + int ( original ) * 45.5  )
@@ -633,104 +673,119 @@ def startScan( sourceImage,\
 
         imageWorker = ImageWorker( sourceImage,\
                                    PIL_IMAGE )
-        # Заносим информацию о том, что распознавание НАЧАЛОСЬ
-        tokenFileWorker = TokenFileWorker()
-        scanResult = ScanResult()
-        scanResult.setIdToken( idToken )
-        scanResult.setStatus( IN_PROGRESS )
-        tokenFileWorker.setScanResult( scanResult )
-
-        #ВАРИАНТ ГРУБОЙ СИЛЫ
-        coordinateOfQRCode, imageWorker, symData = thirdVariantOfAlgorithm( imageWorker )
-        #sourceImage.save( "check1.png" )
-        #coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( sourceImage, \
-        #                                                                    WAS_ROTATED )
-        sourceImage = imageWorker.getPILImage()
-        #sourceImage.save( IMAGE_FILENAME_ONLY_FORM )
         
-        #sourceImage.save( "check.png" )
-        if ( len( coordinateOfQRCode ) > 0 ):
-               
-                bootomLeftCorners = coordinateOfQRCode[ 1 ]
-                bottomRightCorners = coordinateOfQRCode[ 2 ]
-                start_x = bottomRightCorners[ x ] - int ( ( bottomRightCorners[ x ] - bootomLeftCorners[ x ]  ) / 2 )
-                start_y = bottomRightCorners[ y ]
-                listOfQRCodes, dataList = findAllQRCodeOnColumn( imageWorker, start_x, start_y )
-                if ( len ( listOfQRCodes ) > 0 ):
-                        #выводим и записываем большой QR
-                        bigQRCodeData = BigQRCodeData()
-                        bigQRCodeData.setData( str( symData ) )
-                        scanResult.setBigQRCodeData( bigQRCodeData )
-                        sys.stdout.write( str( symData ) + "\n" )
-                        #print( symData )
-                        #начинаем вырезать ячейки по каждому коду
+        # Заносим информацию о том, что распознавание НАЧАЛОСЬ
+        # также, создаем объект scanResult, который будет содержать в себе
+        # всю информацию по результату распознавания
 
-                        for i in range( 0, int( len( listOfQRCodes) / 2 ) ):
-                                
-                                #print( dataList[ i ] )
-                                smallQRCodeData = SmallQRCodeData()
-                                smallQRCodeData.setData( str( dataList[ i ] ) )
-                                sys.stdout.write( str( dataList[ i ] ) + "\n" ) 
-                                listOfResult = []
-                                #fileNameImageWithCells = FOLDER_IMAGE_WITH_CELLS + \
-                                #                         str( i ) + \
-                                #                         IMAGE_FILENAME_IMAGE_WITH_CELLS
+        try:
+                tokenFileWorker = TokenFileWorker()
+                scanResult = ScanResult()
+                scanResult.setIdToken( idToken )
+                scanResult.setStatus( IN_PROGRESS )
+                tokenFileWorker.setScanResult( scanResult )
+
+
+
+                #ВАРИАНТ ГРУБОЙ СИЛЫ
+                coordinateOfQRCode, imageWorker, symData = thirdVariantOfAlgorithm( imageWorker )
+
+                #sourceImage.save( "check1.png" )
+                #coordinateOfQRCode, sourceImage, symData = thirdVariantOfAlgorithm( sourceImage, \
+                #                                                                    WAS_ROTATED )
+                sourceImage = imageWorker.getPILImage()
+                #sourceImage.save( "OnlyForm.jpg" )
                 
-                                imgWithCells = getImageWithCells( sourceImage, listOfQRCodes[ i * 2 + 1 ] )
-                                thresholdValue = 200
-                                squares, imgWithCellsThresh = find_squares( imgWithCells, imageWorker, thresholdValue )
-                                #imageWorker.copyOpenCVImageToPIL(imgWithCellsThresh, 1)
-                                #imgWithCells = imgWithCellsThresh
-                                #cv2.imwrite("NEW_image_with_cells.jpg", imgWithCells)
-                                countOfCells = len ( squares )
-                                #3 ячейки!
-                                cells = []
-                                listOfResult = []
-                                if ( countOfCells == 3 ):
-                                        #изображения с ячейками
-                                        for k in range ( 0, countOfCells):
+                #sourceImage.save( "check.png" )
+                if ( len( coordinateOfQRCode ) > 0 ):
+                        
+                        bootomLeftCorners = coordinateOfQRCode[ 1 ]
+                        bottomRightCorners = coordinateOfQRCode[ 2 ]
+                        start_x = bottomRightCorners[ x ] - int ( ( bottomRightCorners[ x ] - bootomLeftCorners[ x ]  ) / 2 )
+                        start_y = bottomRightCorners[ y ]
+                        listOfQRCodes, dataList = findAllQRCodeOnColumn( imageWorker, start_x, start_y )
 
-                                                #imgWithCells.save("image_with_cells.jpg")
-                                                #imageWorker.copyPILImageToOpenCV(imgWithCells)
-                                                cellImage = getImageByContour( squares[ k ],\
-                                                                               imgWithCellsThresh)
+                        
+                        if ( len ( listOfQRCodes ) > 0 ):
+                                #выводим и записываем большой QR
+                                bigQRCodeData = BigQRCodeData()
+                                bigQRCodeData.parseDataFromStr( str( symData ) )
+                                scanResult.setBigQRCodeData( bigQRCodeData )
+                                sys.stdout.write( str( symData ) + "\n" )
+                                #print( symData )
+                                #начинаем вырезать ячейки по каждому коду
 
-                                                #cv2.imwrite("test_cell.jpg", cellImage)
-                                                
-                                                imageWorker.copyOpenCVImageToPIL( cellImage, 1 )
-                                                image = prepareCell( imageWorker.getPILImage(), \
-                                                                     sourceImage )
-                                                cells.append( image )
-                                                #image.save( cellFileName )
-                                                #image.save("cell.jpg")
-                                                listOfResult.append( checkImageOnMark( image ) )
-                                        sys.stdout.write( str( listOfResult ) + "\n" )
-                                        #print( listOfResult )
-                                else:
-                                        # Если вдруг, по результатам алгоритма поиска ячеек (по контурам),
-                                        # их оказалось БОЛЕЕ 3-ех. Тогда вырезаем ВРУЧНУЮ (опираясь на
-                                        # ИЗВЕСТНОЕ расстояние между ячейками в пикселях.
+                                for i in range( 0, int( len( listOfQRCodes) / 2 ) ):
+                                        
+                                        #print( dataList[ i ] )
+                                        smallQRCodeData = SmallQRCodeData()
+                                        smallQRCodeData.setData( str( dataList[ i ] ) )
+                                        sys.stdout.write( str( dataList[ i ] ) + "\n" ) 
+                                        listOfResult = []
+                                        #fileNameImageWithCells = FOLDER_IMAGE_WITH_CELLS + \
+                                        #                         str( i ) + \
+                                        #                         IMAGE_FILENAME_IMAGE_WITH_CELLS
+                        
+                                        imgWithCells = getImageWithCells( sourceImage, listOfQRCodes[ i * 2 + 1 ] )
+                                        thresholdValue = 200
+                                        squares, imgWithCellsThresh = find_squares( imgWithCells, imageWorker, thresholdValue )
+                                        #imageWorker.copyOpenCVImageToPIL(imgWithCellsThresh, 1)
+                                        #imgWithCells = imgWithCellsThresh
+                                        #cv2.imwrite("NEW_image_with_cells.jpg", imgWithCells)
+                                        countOfCells = len ( squares )
+                                        #3 ячейки!
+                                        cells = []
+                                        listOfResult = []
+                                        if ( countOfCells == 3 ):
+                                                #изображения с ячейками
+                                                for k in range ( 0, countOfCells):
 
-                                        cellsDetector = CellsDetector( sourceImage,\
-                                                                       imgWithCells )
-                                       
-                                        firstCellImg, secondCellImg, thirdCellImg  = cellsDetector.start()
-                                        listOfResult.append( checkImageOnMark( firstCellImg ) )
-                                        listOfResult.append( checkImageOnMark( secondCellImg ) )
-                                        listOfResult.append( checkImageOnMark( thirdCellImg ) )
-                                        sys.stdout.write( str( listOfResult ) + "\n" )
-                                smallQRCodeData.setResultList( listOfResult )
-                                scanResult.addSmallQRCodeData( smallQRCodeData )
-                                
-                        scanResult.setStatus( SUCCESS )
-                                
-                                
+                                                        #imgWithCells.save("image_with_cells.jpg")
+                                                        #imageWorker.copyPILImageToOpenCV(imgWithCells)
+                                                        cellImage = getImageByContour( squares[ k ],\
+                                                                                       imgWithCellsThresh)
+
+                                                        #cv2.imwrite("test_cell.jpg", cellImage)
+                                                        
+                                                        imageWorker.copyOpenCVImageToPIL( cellImage, 1 )
+                                                        image = prepareCell( imageWorker.getPILImage(), \
+                                                                             sourceImage )
+                                                        cells.append( image )
+                                                        #image.save( cellFileName )
+                                                        #image.save("cell.jpg")
+                                                        listOfResult.append( checkImageOnMark( image ) )
+                                                sys.stdout.write( str( listOfResult ) + "\n" )
+                                                #print( listOfResult )
+                                        else:
+                                                # Если вдруг, по результатам алгоритма поиска ячеек (по контурам),
+                                                # их оказалось БОЛЕЕ 3-ех. Тогда вырезаем ВРУЧНУЮ (опираясь на
+                                                # ИЗВЕСТНОЕ расстояние между ячейками в пикселях.
+
+                                                cellsDetector = CellsDetector( sourceImage,\
+                                                                               imgWithCells )
+                                               
+                                                firstCellImg, secondCellImg, thirdCellImg  = cellsDetector.start()
+                                                listOfResult.append( checkImageOnMark( firstCellImg ) )
+                                                listOfResult.append( checkImageOnMark( secondCellImg ) )
+                                                listOfResult.append( checkImageOnMark( thirdCellImg ) )
+                                                sys.stdout.write( str( listOfResult ) + "\n" )
+                                        smallQRCodeData.setResultList( listOfResult )
+                                        scanResult.addSmallQRCodeData( smallQRCodeData )
+                                        
+                                scanResult.setStatus( SUCCESS )
+                                        
+                                        
+                        else:
+                                #print( "there is no something about small QR codes :(");
+                                sys.stderr.write( str( SMALL_QR_CODES_ARE_NOT_HERE ) )
+                                scanResult.setStatus( FILED_SMALL_QR_CODE )
                 else:
-                        #print( "there is no something about small QR codes :(");
-                        sys.stderr.write( str( SMALL_QR_CODES_ARE_NOT_HERE ) )
-                        scanResult.setStatus( FAILED )
-        else:
-                sys.stderr.write( str( FORM_NOT_FOUNDED ) )
+                        sys.stderr.write( str( FORM_NOT_FOUNDED ) )
+                        # Не найден большой QR код.
+                        scanResult.setStatus( FAILED_BIG_QR_CODE )
+                        
+        except BaseException:
+                
                 scanResult.setStatus( FAILED )
 
         return scanResult

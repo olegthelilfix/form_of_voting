@@ -13,7 +13,7 @@ ctrl.controller('AuthCtrl', ['$scope', '$state', '$http', function ($scope, $sta
 
         $http({
             method: 'POST',
-            url: "http://localhost:8085/auth",
+            url: "http://40.113.81.187:80/auth",
             data: {
                 username: user.username,
                 password: user.password
@@ -22,10 +22,10 @@ ctrl.controller('AuthCtrl', ['$scope', '$state', '$http', function ($scope, $sta
         }).
         success(function(status)
         {
-            //if (status == "OK")
-            //{
+            if (status == "OK")
+            {
                 $state.go('tabs.home');
-            //}
+            }
         }).
         error(function(error)
         {

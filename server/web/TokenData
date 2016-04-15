@@ -1,0 +1,69 @@
+{
+    "m_ScanResultList": [
+        {
+            "m_BigQRCodeData": {
+                "m_Data": ""
+            },
+            "m_IdToken": 0,
+            "m_SmallQRCodeDataList": [],
+            "m_Status": "BEFORE_SCAN"
+        },
+        {
+            "m_BigQRCodeData": {
+                "m_Data": ""
+            },
+            "m_IdToken": 1,
+            "m_SmallQRCodeDataList": [],
+            "m_Status": "BEFORE_SCAN"
+        },
+        {
+            "m_BigQRCodeData": {
+                "m_Data": ""
+            },
+            "m_IdToken": 2,
+            "m_SmallQRCodeDataList": [],
+            "m_Status": "BEFORE_SCAN"
+        },
+        {
+            "m_BigQRCodeData": {
+                "m_Data": ""
+            },
+            "m_IdToken": 3,
+            "m_SmallQRCodeDataList": [],
+            "m_Status": "BEFORE_SCAN"
+        },
+        {
+            "m_BigQRCodeData": {
+                "m_Data": ""
+            },
+            "m_IdToken": 4,
+            "m_SmallQRCodeDataList": [],
+            "m_Status": "BEFORE_SCAN"
+        },
+        {
+            "m_BigQRCodeData": {
+                "m_Data": ""
+            },
+            "m_IdToken": 5,
+            "m_SmallQRCodeDataList": [
+                {
+                    "m_ResultList": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "m_Title": "b's1'"
+                },
+                {
+                    "m_ResultList": [
+                        1,
+                        0,
+                        1
+                    ],
+                    "m_Title": "b's2'"
+                }
+            ],
+            "m_Status": "SUCCESS"
+        }
+    ]
+}

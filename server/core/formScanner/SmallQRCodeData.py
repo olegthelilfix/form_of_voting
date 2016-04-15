@@ -9,6 +9,8 @@ class SmallQRCodeData:
         
         self.m_Title = ''
         self.m_ResultList = []
+        # resultList = [ -1, -1, -1 ]
+        # self.m_ResultList.append( resultList )
 
     def setData( self,\
                  data):        
