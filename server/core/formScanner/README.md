@@ -6,7 +6,7 @@ ScanFormAPI.py предоставляет интерфейс для генерации маркера и старта работы алг
 делается поправка значения константы **RESULTS_FILE_NAME** в файле ScanResultEnums.py
 
 Фотографии бланка:
-https://www.sendspace.com/file/z0w20p
+https://www.sendspace.com/file/tdub0o
 
 **Необходимые библиотеки:**
 
