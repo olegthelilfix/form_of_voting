@@ -86,6 +86,7 @@ def check_status():
 
     print("Start check status...")
     for tid in TokenContainer.get(session.get('username')):
+        print("status of" + str(tid))
         result.append(getStatus(tid))
 
     return json.dumps(result)
@@ -100,21 +101,9 @@ def do_upload():
     print("Start geting image...")
     req_img = request.files.get('file')
 
-    print("Start convert... ")
-    pil_image = Image.open(io.BytesIO(req_img.file.read()))
-
-    # destination = os.path.abspath(os.pardir)
-    #
-    # if os.path.isdir(destination):
-    #     destination = os.path.join(destination, req_image.filename)
-    #
-    # if not os.path.exists(destination):
-    #     req_image.save(destination)
-    # else:
-    #     print("Error: Image already upload")
-    #
-    # print("Start convert... " + destination)
-    # pil_image = Image.open(destination)
+    print("Start convertation...")
+    with io.BytesIO(req_img.file.read()) as b:
+        pil_image = Image.open(b)
 
     print("Generate token...")
     id_token = generateIdToken()
@@ -125,7 +114,6 @@ def do_upload():
     TokenContainer.add(session.get('username'), id_token)
 
     return "success"
-
 
 # #  Web application main  # #
 
