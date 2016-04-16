@@ -8,7 +8,8 @@ var app = angular.module('voting', [
     'ngCordova',
     'voting.AuthCtrl',
     'voting.HomeCtrl',
-    'voting.TabsCtrl'
+    'voting.TabsCtrl',
+    'voting.LoadsCtrl'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
@@ -38,11 +39,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         }
     });
 
-    $stateProvider.state('tabs.about', {
-        url: '/about',
+    $stateProvider.state('tabs.loads', {
+        url: '/loads',
         views: {
-            'about-tab': {
-                templateUrl: 'templates/about.html'
+            'loads-tab': {
+                templateUrl: 'js/loads/index.html',
+                controller: 'LoadsCtrl'
             }
         }
     });

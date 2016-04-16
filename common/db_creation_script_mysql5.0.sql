@@ -57,9 +57,7 @@ create table Answer_type
    primary key (id_answer_type)
 );
 
-alter table Answer_type comment 'Тип ответа на вопрос голосования
-
-За, против, во';
+alter table Answer_type comment 'Тип ответа на вопрос голосования За, против, во';
 
 /*==============================================================*/
 /* Table: Building                                              */
@@ -75,9 +73,7 @@ create table Building
    primary key (id_building)
 );
 
-alter table Building comment 'Здание
-
-Общая информация о здании (адрес, количе';
+alter table Building comment 'Здание Общая информация о здании (адрес, количе';
 
 /*==============================================================*/
 /* Table: Contact                                               */
@@ -92,9 +88,7 @@ create table Contact
    primary key (id_contact)
 );
 
-alter table Contact comment 'Контактная информация
-
-Контакты вледельца помеще';
+alter table Contact comment 'Контактная информация Контакты вледельца помеще';
 
 /*==============================================================*/
 /* Table: Contact_type                                          */
@@ -106,9 +100,7 @@ create table Contact_type
    primary key (id_contact_type)
 );
 
-alter table Contact_type comment 'Тип контактной информации
-
-Мобильный телефон, до';
+alter table Contact_type comment 'Тип контактной информации Мобильный телефон, до';
 
 /*==============================================================*/
 /* Table: Family                                                */
@@ -124,9 +116,7 @@ create table Family
    primary key (id_family)
 );
 
-alter table Family comment 'Семья
-
-Данные по семьям, проживающим (зарегестри';
+alter table Family comment 'Семья Данные по семьям, проживающим (зарегестри';
 
 /*==============================================================*/
 /* Table: Meeting                                               */
@@ -141,9 +131,7 @@ create table Meeting
    primary key (id_meeting)
 );
 
-alter table Meeting comment 'Общее собрание собственников
-
-id_meeting - идент';
+alter table Meeting comment 'Общее собрание собственников id_meeting - идент';
 
 /*==============================================================*/
 /* Table: Owner                                                 */
@@ -159,9 +147,7 @@ create table Owner
    primary key (id_owner)
 );
 
-alter table Owner comment 'Собственник
-
-ФИО (для физ лица), название для юр';
+alter table Owner comment 'Собственник ФИО (для физ лица), название для юр';
 
 /*==============================================================*/
 /* Table: Owner_type                                            */
@@ -173,9 +159,7 @@ create table Owner_type
    primary key (id_owner_type)
 );
 
-alter table Owner_type comment 'Тип собственника
-
-Физическое лицо, юридическое л';
+alter table Owner_type comment 'Тип собственника Физическое лицо, юридическое л';
 
 /*==============================================================*/
 /* Table: Premise                                               */
@@ -199,9 +183,7 @@ create table Premise
    primary key (id_premise)
 );
 
-alter table Premise comment 'Помещение
-
-Описание помещения в здании (квартиры';
+alter table Premise comment 'Помещение Описание помещения в здании (квартиры';
 
 /*==============================================================*/
 /* Table: Property_rights                                       */
@@ -220,9 +202,7 @@ create table Property_rights
    primary key (id_rights)
 );
 
-alter table Property_rights comment 'Права собственности
-
-Информация о правах собстве';
+alter table Property_rights comment 'Права собственности Информация о правах собстве';
 
 /*==============================================================*/
 /* Table: Property_type                                         */
@@ -235,9 +215,7 @@ create table Property_type
    primary key (id_property_type)
 );
 
-alter table Property_type comment 'Тип собственности
-
-Частная, долевая, государстве';
+alter table Property_type comment 'Тип собственностиастная, долевая, государстве';
 
 /*==============================================================*/
 /* Table: Question                                              */
@@ -251,9 +229,7 @@ create table Question
    primary key (id_question)
 );
 
-alter table Question comment 'Вопрос на собрании собственников
-
-id_question - ';
+alter table Question comment 'Вопрос на собрании собственниковid_question - ';
 
 /*==============================================================*/
 /* Table: User                                                  */

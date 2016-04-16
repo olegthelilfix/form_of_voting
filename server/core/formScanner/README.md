@@ -1,8 +1,12 @@
-**Константы в начале файла main.py определяют относительные пути к папкам, от которых зависит исходный код.**
 Имя исходного файла с изображением бланка задается как значение константы **SOURCE_IMAGE**, либо в качестве параметра командной строки.
 
+ScanFormAPI.py предоставляет интерфейс для генерации маркера и старта работы алгоритма распознавания.
+
+Файл TokenData содержит в себе информацию о результатах распознавания. При необходимости размещать эти данные в файле с другим именем 
+делается поправка значения константы **RESULTS_FILE_NAME** в файле ScanResultEnums.py
+
 Фотографии бланка:
-https://www.sendspace.com/file/z0w20p
+https://www.sendspace.com/file/tdub0o
 
 **Необходимые библиотеки:**
 
@@ -19,5 +23,12 @@ http://pillow.readthedocs.org/en/3.1.x/installation.html
 *libzbar*
 
 https://pypi.python.org/pypi/libzbar-cffi
+
+*lockfile*
+
+git clone https://git.openstack.org/openstack/pylockfile
+
+sudo pip3 install lockfile
+
 
 *numpy*

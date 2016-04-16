@@ -1,0 +1,12 @@
+         149380 function calls (80659 primitive calls) in 2.391 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   
+      115    1.211    0.011    1.211    0.011 :0(zbar_scan_image)
+      115    0.001    0.000    0.100    0.001 AlgorithmScan.py:488(doThreshold)
+        1    0.000    0.000    0.454    0.454 Image.py:1571(rotate)
+        2    0.000    0.000    0.384    0.192 ListScanResult.py:50(toJSON)
+        2    0.000    0.000    0.394    0.197 TokenFileWorker.py:21(setScanResult)
+   

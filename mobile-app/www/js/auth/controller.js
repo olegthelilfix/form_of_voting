@@ -9,9 +9,11 @@ ctrl.controller('AuthCtrl', ['$scope', '$state', '$http', function ($scope, $sta
 {
     $scope.signIn = function(user)
     {
+        $state.go('tabs.home');
+
         $http({
             method: 'POST',
-            url: "http://localhost:8085/auth",
+            url: "http://40.113.81.187:80/auth",
             data: {
                 username: user.username,
                 password: user.password
