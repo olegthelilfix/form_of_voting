@@ -1,22 +1,31 @@
 # -*- coding: utf8 -*-
 __author__ = 'Aleksandrov Oleg, 4231'
 
-from server.core.formgen.RenderHtml import RenderHtml
+from RenderHtml import RenderHtml
 from weasyprint import HTML
 import codecs
-import os
+import settings
 
 class PdfGen:
-    __dir = os.getcwd() + "/result/htmlcode.html"
-    __result_dir = os.getcwd() + "/result/result.pdf"
+    __dirToProject = settings.DIR_TO_PROJECT
+    __dir = __dirToProject + "result/htmlcode.html"
+    __file_name = 'result.pdf'
+    __result_dir = __dirToProject + "result/"
 
-    def execute(self, id_user, id_meeting):
-        render = RenderHtml(id_user, id_meeting)
-        value = render.split_question_on_pages()
-        with codecs.open(self.__dir, 'w', 'utf8') as f2:
-            f2.write(value)
+    def execute(self, id_user, id_meeting, css=None, qs=None):
+        render = RenderHtml(id_user, id_meeting, self.__dirToProject, css=css, qs=qs)
+
+        value = render.render_doc()
+
+        with codecs.open(self.__dir, 'w', 'utf8') as file:
+            file.write(value)
 
         pdf = HTML(self.__dir)
-        pdf.write_pdf(self.__result_dir)
+        newName = str(id_user) + str(id_meeting) + self.__file_name
+        pdf.write_pdf(self.__result_dir + newName)
 
-        return self.__result_dir
+        res = []
+        res.append(newName)
+        res.append(self.__result_dir)
+
+        return res
