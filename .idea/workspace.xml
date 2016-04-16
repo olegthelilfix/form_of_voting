@@ -2,75 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12c517e9-5b27-4690-bc32-af8036136c8a" name="Default" comment="Merge branch 'master' of https://github.com/legionem/form_of_voting_gen into issue#17&#10;&#10;Conflicts:&#10;&#9;server/core/formScanner/BaseEnums.py&#10;&#9;server/core/formScanner/FormRotation.py&#10;&#9;server/core/formScanner/main.py&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/cdv_photo_117.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/TokenData" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile-app/www/js/loads/controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile-app/www/js/loads/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/AlgorithmScan.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/BigQRCodeData.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/ImageWorker.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/ListScanResult.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/ScanFormAPI.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/ScanResult.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/ScanResultEnums.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/SmallQRCodeData.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/TokenFileWorker.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/core/formScanner/profile_1" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/web/TokenData" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/web/bottle.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/web/config/register.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/web/config/roles.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/web/config/users.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/web/tokenContainer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/web/uploadManager.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formScanner/cells/.gitkeep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formScanner/image with cells/.gitkeep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formScanner/possible big qr codes/.gitkeep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formScanner/possible qr codes/.gitkeep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formScanner/qr codes/.gitkeep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small13.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small14.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small15.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small16.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small17.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small18.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small19.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small20.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small21.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small22.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small23.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small24.PNG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small25.PNG" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/server/bottle-server/run.py" afterPath="$PROJECT_DIR$/server/web/run.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/bottle-server" afterPath="$PROJECT_DIR$/server/bottle-server" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/big.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/big.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small0.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small0.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small1.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small1.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small10.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small10.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small11.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small11.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small12.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small12.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small2.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small2.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small3.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small3.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small4.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small4.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small5.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small5.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small6.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small6.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small7.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small7.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small8.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small8.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formgen/result/img/small9.PNG" afterPath="$PROJECT_DIR$/server/core/formgen/result/img/small9.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/db_creation_script_mysql5.0.sql" afterPath="$PROJECT_DIR$/common/db_creation_script_mysql5.0.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile-app/www/css/style.css" afterPath="$PROJECT_DIR$/mobile-app/www/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile-app/www/index.html" afterPath="$PROJECT_DIR$/mobile-app/www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile-app/www/js/app.js" afterPath="$PROJECT_DIR$/mobile-app/www/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile-app/www/js/auth/controller.js" afterPath="$PROJECT_DIR$/mobile-app/www/js/auth/controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile-app/www/js/home/controller.js" afterPath="$PROJECT_DIR$/mobile-app/www/js/home/controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile-app/www/js/home/index.html" afterPath="$PROJECT_DIR$/mobile-app/www/js/home/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile-app/www/js/tabs/controller.js" afterPath="$PROJECT_DIR$/mobile-app/www/js/tabs/controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile-app/www/js/tabs/index.html" afterPath="$PROJECT_DIR$/mobile-app/www/js/tabs/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formScanner/BaseEnums.py" afterPath="$PROJECT_DIR$/server/core/formScanner/BaseEnums.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formScanner/CellsDetector.py" afterPath="$PROJECT_DIR$/server/core/formScanner/CellsDetector.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formScanner/FormRotation.py" afterPath="$PROJECT_DIR$/server/core/formScanner/FormRotation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formScanner/README.md" afterPath="$PROJECT_DIR$/server/core/formScanner/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/core/formScanner/main.py" afterPath="$PROJECT_DIR$/server/core/formScanner/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="form_of_voting_gen.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -896,17 +828,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="24" width="1915" height="1055" extended-state="0" />
+    <frame x="1" y="24" width="1915" height="1055" extended-state="1" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1448203" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1448203" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32869378" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24960506" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28403002" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28403002" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
