@@ -1,3 +1,9 @@
+# Генерация бланка голосования
+Генерирует pdf файл на основе html шаблона в который подставляются необходимые данные
+ 
+ 
+# Зависимости проекта
+Для того что бы проект завелся под ubuntu необходимо выполнить следующие команды
 sudo apt-get install python3-dev
 sudo apt-get install libffi-dev
 sudo pip3 install cairocffi
